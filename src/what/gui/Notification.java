@@ -3,19 +3,31 @@ package what.gui;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.widget.Toast;
 /**
- * Display an alert pop up
+ * Different types of notifications
  * @author Tim
  *
  */
-public class AlertPopUp {
+public class Notification {
 	/**
-	 * Display popup
+	 * Display toast notification
+	 * @param message message to display
+	 * @param duration duration to display for
+	 * @param context context
+	 */
+	public void displayToast(String message, int duration, Context context) {
+		Toast toast = Toast.makeText(context, message, duration);
+		toast.show();
+	}
+	
+	/**
+	 * Display alert dialog
 	 * @param title title of popup
 	 * @param message message of popup
-	 * @param context
+	 * @param context context
 	 */
-	public void display(String title, String message, Context context) {
+	public void displayAlert(String title, String message, Context context) {
 		new AlertDialog.Builder(context)
 	    .setTitle(title)
 	    .setMessage(message)

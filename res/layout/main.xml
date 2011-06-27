@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout android:id="@+id/TableLayout1" xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
-    <ImageView android:src="@drawable/whatlogo" android:layout_width="fill_parent" android:id="@+id/logo" android:layout_height="175dip"></ImageView>
-    <RelativeLayout
-        android:id="@+id/welcomeLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" android:gravity="center_horizontal">
-        <TextView android:textAppearance="?android:attr/textAppearanceSmall" android:layout_height="wrap_content" android:id="@+id/textView3" android:text="@string/welcome" android:layout_width="wrap_content"></TextView>
-    </RelativeLayout>
-    <TextView android:layout_width="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_height="wrap_content" android:id="@+id/textView4" android:text="@string/blank"></TextView>
-    <TextView android:layout_width="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_height="wrap_content" android:id="@+id/textView1" android:text="@string/username" android:layout_gravity="center"></TextView>
-    <EditText android:inputType="textPersonName" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/username">
+    android:layout_height="fill_parent" android:gravity="clip_horizontal" android:baselineAligned="false" android:orientation="vertical">
+    <ImageView android:src="@drawable/whatlogo" android:id="@+id/imageView1" android:layout_height="wrap_content" android:layout_width="match_parent" android:layout_weight="30"></ImageView>
+    <TextView android:id="@+id/textView1" android:layout_height="wrap_content" android:layout_weight="0" android:layout_width="wrap_content" android:layout_gravity="center" android:text="@string/welcome"></TextView>
+    <TextView android:id="@+id/textView2" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/username" android:layout_weight="0"></TextView>
+    <EditText android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="textPersonName" android:layout_weight="0" android:id="@+id/username">
         <requestFocus></requestFocus>
     </EditText>
-    <TableRow android:id="@+id/tableRow1" android:layout_width="wrap_content" android:layout_height="wrap_content">
-        <TextView android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/textView2" android:text="@string/password"></TextView>
+    <TextView android:id="@+id/textView3" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/password" android:layout_weight="0"></TextView>
+    <EditText android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="textPassword" android:layout_weight="0" android:id="@+id/password"></EditText>
+    <CheckBox android:layout_width="wrap_content" android:layout_gravity="right" android:layout_height="wrap_content" android:text="@string/rememberme" android:layout_weight="6" android:id="@+id/checkbox"></CheckBox>
+    <TableRow
+        android:id="@+id/t"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_weight="0">
+        <TableRow
+            android:id="@+id/t"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:baselineAligned="false">
+            <Button android:text="@string/login" android:layout_height="wrap_content" android:layout_width="150dip" android:layout_weight="6" android:id="@+id/login"></Button>
+        </TableRow>
     </TableRow>
-    <EditText android:layout_width="fill_parent" android:layout_height="wrap_content" android:inputType="textPassword" android:id="@+id/password"></EditText>
-    <RelativeLayout android:id="@+id/relativeLayout1" android:layout_width="wrap_content" android:layout_height="wrap_content"></RelativeLayout>
-    <TableRow android:id="@+id/tableRow3" android:layout_width="wrap_content" android:layout_height="wrap_content"></TableRow>
-    <TableRow android:id="@+id/tableRow2" android:layout_width="wrap_content" android:layout_height="wrap_content"></TableRow>
-    <TableRow android:id="@+id/tableRow4" android:layout_width="wrap_content" android:layout_height="wrap_content"></TableRow>
-    <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/login" android:id="@+id/login"></Button>
-</TableLayout>
+</LinearLayout>

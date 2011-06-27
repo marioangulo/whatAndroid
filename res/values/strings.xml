@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, WhatAndroidActivity!</string>
     <string name="app_name">WhatAndroid</string>
-    <string name="Username">usernameString</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
-    <string name="welcome">You’ve stumbled upon a door where your mind is the key. There are none who will lend you guidance; these trials are yours to conquer alone. Entering here will take more than mere logic and strategy, but the criteria are just as hidden as what they reveal. Find yourself, and you will find the very thing hidden behind this page. Beyond here is something like a utopia - beyond here is What.CD.This is a mirage.</string>
+    <string name="welcome">You’ve stumbled upon a door where your mind is the key. There are none who will lend you guidance; these trials are yours to conquer alone. Entering here will take more than mere logic and strategy, but the criteria are just as hidden as what they reveal. Find yourself, and you will find the very thing hidden behind this page. Beyond here is something like a utopia - beyond here is What.CD. This is a mirage.</string>
     <string name="blank"></string>
+    <string name="rememberme">Remember me</string>
 </resources>
