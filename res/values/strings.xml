@@ -2,4 +2,8 @@
 <resources>
     <string name="hello">Hello World, WhatAndroidActivity!</string>
     <string name="app_name">WhatAndroid</string>
+    <string name="Username">usernameString</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
 </resources>
