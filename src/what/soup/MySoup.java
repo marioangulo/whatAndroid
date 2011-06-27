@@ -24,12 +24,12 @@ public class MySoup {
 			Connection.Response res = Jsoup.connect(url)
 			.data("username", username, "password", password)
 			.method(Method.POST)
-			.execute();
+			.execute();	
 			//set cookie
 			sessionId = res.cookie("session");
 		} catch (IOException e) {
-			System.err.println("Couldn't login");
-			e.printStackTrace();
+			/*System.err.println("Couldn't login");
+			e.printStackTrace();*/
 		}
 	}
 	/**
@@ -45,8 +45,25 @@ public class MySoup {
 			.get();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+		/*	e.printStackTrace();*/
 		}
 		return doc;
+	}
+	/**
+	 * Return a Document of a page that has a cookie
+	 * @param page
+	 * @return Document
+	 */
+	public static String test(String page) {
+		Document doc=null;
+		try {
+			doc = Jsoup.connect(page)
+			.cookie("session", sessionId)
+			.get();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		/*	e.printStackTrace();*/
+		}
+		return doc.toString();
 	}
 }

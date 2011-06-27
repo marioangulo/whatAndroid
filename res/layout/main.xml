@@ -2,7 +2,15 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
-    <ImageView android:src="@drawable/whatlogo" android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/logo"></ImageView>
+    <ImageView android:src="@drawable/whatlogo" android:layout_width="fill_parent" android:id="@+id/logo" android:layout_height="175dip"></ImageView>
+    <RelativeLayout
+        android:id="@+id/welcomeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" android:gravity="center_horizontal">
+        <TextView android:textAppearance="?android:attr/textAppearanceSmall" android:layout_height="wrap_content" android:id="@+id/textView3" android:text="@string/welcome" android:layout_width="wrap_content"></TextView>
+    </RelativeLayout>
+    <TextView android:layout_width="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_height="wrap_content" android:id="@+id/textView4" android:text="@string/blank"></TextView>
     <TextView android:layout_width="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_height="wrap_content" android:id="@+id/textView1" android:text="@string/username" android:layout_gravity="center"></TextView>
     <EditText android:inputType="textPersonName" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/username">
         <requestFocus></requestFocus>
