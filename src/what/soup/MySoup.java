@@ -49,21 +49,4 @@ public class MySoup {
 		}
 		return doc;
 	}
-	/**
-	 * Return a Document of a page that has a cookie
-	 * @param page
-	 * @return Document
-	 */
-	public static String test(String page) {
-		Document doc=null;
-		try {
-			doc = Jsoup.connect(page)
-			.cookie("session", sessionId)
-			.get();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-		/*	e.printStackTrace();*/
-		}
-		return doc.toString();
-	}
 }

@@ -1,6 +1,8 @@
 package what.gui;
 import what.soup.MySoup;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -43,10 +45,13 @@ public class WhatAndroidActivity extends Activity implements OnClickListener
     	String passwordString = password.getText().toString();
     	String loginURL = "http://what.cd/login.php";
 
-    	MySoup.login(loginURL, usernameString, passwordString);
+    	//MySoup.login(loginURL, usernameString, passwordString);
     }	
     @Override
 	public void onClick(View e) {
+    	AlertPopUp p = new AlertPopUp();
+    	p.display("New Subscriptions", "2 unread threads", this);
+    	
     	if(username.getText() != null && password.getText() != null) {
 			login();
 		}
