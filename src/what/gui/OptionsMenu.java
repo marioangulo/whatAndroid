@@ -1,6 +1,5 @@
 package what.gui;
 
-import android.app.Activity;
 import android.app.ExpandableListActivity;
 import android.view.Menu;
 import android.view.MenuInflater;

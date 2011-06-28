@@ -1,6 +1,8 @@
 package what.parser;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SectionParser {
 	/**
@@ -8,12 +10,36 @@ public class SectionParser {
 	 * @return
 	 * @throws IOException
 	 */
-	public static String[] parseSections() {
-		String[] section = {"Announcements", "What.CD", "Projects", "The Laboratory", "Suggestions / Ideas", "Bugs",
+	public static String[] parseSiteSections() {
+		/*String[] section = {"Announcements", "What.CD", "Projects", "The Laboratory", "Suggestions / Ideas", "Bugs",
 				"The Lounge","The Library","Power Users","Comics","Technology","Invites",
 				"Music","Vanity House","The Studio","Offered","Vinyl",
 				"Help","Tutorials","BitTorrent",
+				"Resolved Bugs","Trash"};*/
+		String[] section = {"Announcements", "What.CD", "Projects", "The Laboratory", "Suggestions / Ideas", "Bugs"};
+		return section;
+	}
+	public static String[] parseCommunitySections() {
+		String[] section = {
+				"The Lounge","The Library","Power Users","Comics","Technology","Invites",};
+		return section;
+	}
+	public static String[] parseMusicSections() {
+		String[] section = {
+				"Music","Vanity House","The Studio","Offered","Vinyl"};
+		return section;
+	}
+	public static String[] parseHelpSections() {
+		String[] section = {
+				"Music","Vanity House","The Studio","Offered","Vinyl"};
+		return section;
+	}
+	public static String[] parseTrashSections() {
+		String[] section = {
 				"Resolved Bugs","Trash"};
 		return section;
 	}
+	
 }
+
+

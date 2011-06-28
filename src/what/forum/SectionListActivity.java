@@ -1,126 +1,63 @@
+/***
+	Copyright (c) 2008-2011 CommonsWare, LLC
+	Licensed under the Apache License, Version 2.0 (the "License"); you may not
+	use this file except in compliance with the License. You may obtain	a copy
+	of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
+	by applicable law or agreed to in writing, software distributed under the
+	License is distributed on an "AS IS" BASIS,	WITHOUT	WARRANTIES OR CONDITIONS
+	OF ANY KIND, either express or implied. See the License for the specific
+	language governing permissions and limitations under the License.
+
+	From _The Busy Coder's Guide to Advanced Android Development_
+		http://commonsware.com/AdvAndroid
+ */
+
 package what.forum;
-import android.app.ExpandableListActivity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.SimpleExpandableListAdapter;
-import android.widget.Toast;
-
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
-
-import what.gui.Notification;
-import what.gui.OptionsMenu;
 import what.gui.R;
+import what.parser.SectionParser;
+import android.app.ListActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
-public class SectionListActivity extends OptionsMenu implements OnClickListener
-{
-	Button optionsButton;
-	Notification n = new Notification();
-	static final String colors[] = what.parser.SectionParser.parseSections();/* = {
-		"grey",
-		"blue",
-		"yellow",
-		"red"
-	};*/
 
-	static final String shades[][] = {
-		// Shades of grey
-		{
-			"lightgrey","#D3D3D3",
-			"dimgray","#696969",
-			"sgi gray 92","#EAEAEA"
-		},
-		// Shades of blue
-		{
-			"dodgerblue 2","#1C86EE",
-			"steelblue 2","#5CACEE",
-			"powderblue","#B0E0E6"
-		},
-		// Shades of yellow
-		{
-			"yellow 1","#FFFF00",
-			"gold 1","#FFD700",
-			"darkgoldenrod 1","	#FFB90F"
-		},
-		// Shades of red
-		{
-			"indianred 1","#FF6A6A",
-			"firebrick 1","#FF3030",
-			"maroon","#800000"
+
+public class SectionListActivity extends ListActivity {
+	private static String[] site = SectionParser.parseSiteSections();
+	private static String[] community = SectionParser.parseCommunitySections();
+	private static String[] music = SectionParser.parseMusicSections();
+	private static String[] help = SectionParser.parseHelpSections();
+	private static String[] trash = SectionParser.parseTrashSections();
+	@Override
+	public void onCreate(Bundle b) {
+		super.onCreate(b);
+		setContentView(R.layout.section);
+
+		adapter.addSection("Site",new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,site));
+
+		adapter.addSection("Community",new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,community));
+
+		adapter.addSection("Music",new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,music));
+
+		adapter.addSection("Help",new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,help));
+
+		adapter.addSection("Trash",	new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,trash));
+
+		setListAdapter(adapter);
+	}
+
+	ListAdapter adapter=new ListAdapter() {
+		protected View getHeaderView(String caption, int index, View convertView, ViewGroup parent) {
+			TextView result=(TextView)convertView;
+
+			if (convertView==null) {
+				result=(TextView)getLayoutInflater().inflate(R.layout.header,null);
+			}
+
+			result.setText(caption);
+			return(result);
 		}
 	};
-
-	@Override
-	public void onCreate(Bundle icicle)
-	{
-		super.onCreate(icicle);
-		setContentView(R.layout.explist);
-		SimpleExpandableListAdapter expListAdapter =
-			new SimpleExpandableListAdapter(
-					this,
-					createGroupList(),	// groupData describes the first-level entries
-					R.layout.child_row,	// Layout for the first-level entries
-					new String[] { "colorName" },	// Key in the groupData maps to display
-					new int[] { R.id.childname },		// Data under "colorName" key goes into this TextView
-					createChildList(),	// childData describes second-level entries
-					R.layout.child_row,	// Layout for second-level entries
-					new String[] { "shadeName", "rgb" },	// Keys in childData maps to display
-					new int[] { R.id.childname, R.id.rgb }	// Data under the keys above go into these TextViews
-			);
-		optionsButton = (Button)this.findViewById(R.id.OptionsButton);
-		optionsButton.setOnClickListener(this);
-		setListAdapter( expListAdapter );
-	}
-
-	/**
-	 * Creates the group list out of the colors[] array according to
-	 * the structure required by SimpleExpandableListAdapter. The resulting
-	 * List contains Maps. Each Map contains one entry with key "colorName" and
-	 * value of an entry in the colors[] array.
-	 */
-	private List createGroupList() {
-		ArrayList result = new ArrayList();
-		for( int i = 0 ; i < colors.length ; ++i ) {
-			HashMap m = new HashMap();
-			m.put( "colorName",colors[i] );
-			result.add( m );
-		}
-		return (List)result;
-	}
-
-	/**
-	 * Creates the child list out of the shades[] array according to the
-	 * structure required by SimpleExpandableListAdapter. The resulting List
-	 * contains one list for each group. Each such second-level group contains
-	 * Maps. Each such Map contains two keys: "shadeName" is the name of the
-	 * shade and "rgb" is the RGB value for the shade.
-	 */
-	private List createChildList() {
-		ArrayList result = new ArrayList();
-		for( int i = 0 ; i < shades.length ; ++i ) {
-			// Second-level lists
-			ArrayList secList = new ArrayList();
-			for( int n = 0 ; n < shades[i].length ; n += 2 ) {
-				HashMap child = new HashMap();
-				child.put( "shadeName", shades[i][n] );
-				child.put( "rgb", shades[i][n+1] );
-				secList.add( child );
-			}
-			result.add( secList );
-		}
-		return result;
-	}
-
-	public void onClick(View v) {
-		n.displayToast("I am a piece of burn black toast", Toast.LENGTH_LONG, this);
-		//this.openOptionsMenu();
-	}
-
 }
