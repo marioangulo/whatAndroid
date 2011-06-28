@@ -1,6 +1,6 @@
 package what.gui;
 
-import android.app.ExpandableListActivity;
+import android.app.ListActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -9,7 +9,7 @@ import android.view.MenuItem;
  * @author Tim	
  *
  */
-public class OptionsMenu extends ExpandableListActivity {
+public class OptionsMenu extends ListActivity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -19,7 +19,7 @@ public class OptionsMenu extends ExpandableListActivity {
 	}
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
-	    case R.id.close:
+	    case R.id.closeItem:
 	        closeOptionsMenu();
 	        return true;
 	    default:

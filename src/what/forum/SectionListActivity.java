@@ -13,40 +13,52 @@
  */
 
 package what.forum;
+import what.gui.OptionsMenu;
 import what.gui.R;
 import what.parser.SectionParser;
-import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 
+public class SectionListActivity extends OptionsMenu implements OnClickListener   {
 
-public class SectionListActivity extends ListActivity {
 	private static String[] site = SectionParser.parseSiteSections();
 	private static String[] community = SectionParser.parseCommunitySections();
 	private static String[] music = SectionParser.parseMusicSections();
 	private static String[] help = SectionParser.parseHelpSections();
 	private static String[] trash = SectionParser.parseTrashSections();
+
+	Button optionsButton;
 	@Override
 	public void onCreate(Bundle b) {
 		super.onCreate(b);
 		setContentView(R.layout.section);
 
 		adapter.addSection("Site",new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,site));
-
 		adapter.addSection("Community",new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,community));
-
 		adapter.addSection("Music",new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,music));
-
 		adapter.addSection("Help",new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,help));
-
 		adapter.addSection("Trash",	new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,trash));
-
 		setListAdapter(adapter);
+		optionsButton = (Button)this.findViewById(R.id.menuButton);
+		optionsButton.setOnClickListener(this);
+
+
 	}
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		Intent prefIntent = new Intent(this,what.login.WhatAndroidActivity.class);
+		startActivity(prefIntent);
+		super.onListItemClick(l, v, position, id);
+	}
+
 
 	ListAdapter adapter=new ListAdapter() {
 		protected View getHeaderView(String caption, int index, View convertView, ViewGroup parent) {
@@ -60,4 +72,13 @@ public class SectionListActivity extends ListActivity {
 			return(result);
 		}
 	};
+
+	@Override
+	public void onClick(View v) {
+		switch(v.getId()) {
+		case R.id.menuButton:
+			this.openOptionsMenu();
+			break;
+		}
+	}
 }
