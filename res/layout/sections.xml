@@ -20,17 +20,22 @@
     -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent" android:orientation="vertical" android:layout_width="match_parent">
 
     <ListView android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1.0" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:text="@string/app_name" android:id="@+id/OptionButton"/>
+    <TableRow
+        android:id="@+id/buttonrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        
+        <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="left" android:id="@+id/backButton" android:text="@string/back"></Button>
+    	
+        <Button
+            android:layout_height="wrap_content" android:text="@string/app_name" android:id="@+id/OptionButton" android:layout_width="wrap_content" android:layout_gravity="center"/>
+  		<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="right" android:id="@+id/forwardButton" android:text="@string/forward"></Button>
+    </TableRow>
 
 </LinearLayout>

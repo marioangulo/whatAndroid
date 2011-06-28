@@ -8,4 +8,7 @@
     <string name="blank"></string>
     <string name="rememberme">Remember me</string>
     <string name="close">Close</string>
+    <string name="back">Back</string>
+    <string name="forward">Forward</string>
+    <string name="profile">My Profile</string>
 </resources>

@@ -9,7 +9,23 @@ import android.content.Intent;
  *
  */
 public class ActivitySwitcher {
+	static Class<?> currentClass;
 	
+	public enum ActivityEnum {
+		LOGIN, SECTION,
+	}
+	ActivityEnum activityEnum;
+	public void setClass() {
+		switch(activityEnum) {
+		case LOGIN:
+			break;
+		case SECTION:
+			break;
+		}
+	}
+	public static void switchActivity(ActivityEnum e) {
+		
+	}
 	/**
 	 * Switch Activity
 	 * @param context context
@@ -18,5 +34,9 @@ public class ActivitySwitcher {
 	public static void switchActivity(Context context, Class<?> c) {
 		@SuppressWarnings("unused")
 		Intent myIntent = new Intent(context, c);
+		currentClass = c;
+	}
+	public static Class<?> getCurrentActivity() {
+		return currentClass;
 	}
 }

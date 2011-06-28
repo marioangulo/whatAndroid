@@ -6,7 +6,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 /**
  * Options Menu
- * @author Tim
+ * @author Tim	
  *
  */
 public class OptionsMenu extends Activity {

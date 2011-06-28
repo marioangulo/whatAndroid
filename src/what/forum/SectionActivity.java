@@ -19,6 +19,7 @@ public class SectionActivity extends ListActivity implements OnClickListener {
 
 	String[] sections;
 	Button optionsButton;
+	Button backButton, forwardButton;
 	Notification notif = new Notification();
 	OptionsMenu optionsMenu = new OptionsMenu();
 	
@@ -34,6 +35,12 @@ public class SectionActivity extends ListActivity implements OnClickListener {
 
 		optionsButton = (Button) this.findViewById(R.id.OptionButton);
 		optionsButton.setOnClickListener(this);
+		
+		backButton = (Button)this.findViewById(R.id.backButton);
+		backButton.setOnClickListener(this);
+		
+		forwardButton = (Button)this.findViewById(R.id.forwardButton);
+		forwardButton.setOnClickListener(this);
 	}
 
 	@Override

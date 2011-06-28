@@ -15,11 +15,15 @@ public final class R {
         public static final int whatlogo=0x7f020001;
     }
     public static final class id {
-        public static final int OptionButton=0x7f06000b;
+        public static final int OptionButton=0x7f06000d;
         public static final int TableLayout1=0x7f060000;
+        public static final int backButton=0x7f06000c;
+        public static final int buttonrow=0x7f06000b;
         public static final int checkbox=0x7f060007;
-        public static final int close=0x7f06000c;
+        public static final int close=0x7f06000f;
+        public static final int forwardButton=0x7f06000e;
         public static final int imageView1=0x7f060001;
+        public static final int item1=0x7f060010;
         public static final int list=0x7f06000a;
         public static final int login=0x7f060009;
         public static final int password=0x7f060006;
@@ -38,10 +42,13 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f040000;
+        public static final int back=0x7f040008;
         public static final int blank=0x7f040005;
         public static final int close=0x7f040007;
+        public static final int forward=0x7f040009;
         public static final int login=0x7f040003;
         public static final int password=0x7f040002;
+        public static final int profile=0x7f04000a;
         public static final int rememberme=0x7f040006;
         public static final int username=0x7f040001;
         public static final int welcome=0x7f040004;

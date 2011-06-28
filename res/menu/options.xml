@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
   xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:visible="true" android:title="@string/close" android:id="@+id/close"></item>
+    <item android:id="@+id/close" android:visible="true" android:title="@string/close"></item><item android:visible="true" android:title="@string/profile" android:id="@+id/item1"></item>
+    
     
 </menu>
