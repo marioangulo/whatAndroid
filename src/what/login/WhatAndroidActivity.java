@@ -1,11 +1,12 @@
 package what.login;
-import what.forum.SectionActivity;
+import what.forum.SectionListActivity;
 import what.gui.ActivitySwitcher;
 import what.gui.R;
 import what.soup.MySoup;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -56,7 +57,7 @@ public class WhatAndroidActivity extends Activity implements OnClickListener
 
 		//MySoup.login(loginURL, usernameString, passwordString);
 		
-		ActivitySwitcher.switchActivity(this, SectionActivity.class);
+		//ActivitySwitcher.switchActivity(this, what.forum.SectionActivity.class);
 	}	
 	@Override
 	public void onClick(View v) {
@@ -65,11 +66,12 @@ public class WhatAndroidActivity extends Activity implements OnClickListener
 		switch(v.getId()) {
 		
 		case R.id.checkbox:
-			checkbox.toggle();
+			checkbox.setSelected(true);
 			//TODO read/write to settings file
 			break;
 		case R.id.login:
-			ActivitySwitcher.switchActivity(this, SectionActivity.class);
+			  Intent prefIntent = new Intent(this,what.forum.SectionListActivity.class);
+		      startActivity(prefIntent);
 			if(username.getText() != null && password.getText() != null) {
 				login();	
 			}

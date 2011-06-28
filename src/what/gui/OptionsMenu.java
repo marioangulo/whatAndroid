@@ -1,6 +1,7 @@
 package what.gui;
 
 import android.app.Activity;
+import android.app.ExpandableListActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -9,7 +10,7 @@ import android.view.MenuItem;
  * @author Tim	
  *
  */
-public class OptionsMenu extends Activity {
+public class OptionsMenu extends ExpandableListActivity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

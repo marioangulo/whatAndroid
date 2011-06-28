@@ -1,5 +1,6 @@
 package what.gui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
@@ -9,7 +10,8 @@ import android.content.Intent;
  *
  */
 public class ActivitySwitcher {
-	static Class<?> currentClass;
+	 Activity activity = new Activity();
+	 Class<?> currentClass;
 	
 	public enum ActivityEnum {
 		LOGIN, SECTION,
@@ -23,7 +25,7 @@ public class ActivitySwitcher {
 			break;
 		}
 	}
-	public static void switchActivity(ActivityEnum e) {
+	public  void switchActivity(ActivityEnum e) {
 		
 	}
 	/**
@@ -31,12 +33,13 @@ public class ActivitySwitcher {
 	 * @param context context
 	 * @param c class
 	 */
-	public static void switchActivity(Context context, Class<?> c) {
+	public void switchActivity(Context context, Class<?> c) {
 		@SuppressWarnings("unused")
 		Intent myIntent = new Intent(context, c);
+		activity.startActivity(myIntent);
 		currentClass = c;
 	}
-	public static Class<?> getCurrentActivity() {
+	public  Class<?> getCurrentActivity() {
 		return currentClass;
 	}
 }
