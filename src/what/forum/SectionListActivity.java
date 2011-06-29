@@ -43,9 +43,6 @@ public class SectionListActivity extends OptionsMenu implements OnClickListener 
 	private static String[] music = SectionParser.parseMusicSections();
 	private static String[] help = SectionParser.parseHelpSections();
 	private static String[] trash = SectionParser.parseTrashSections();
-
-	Button optionsButton;
-	Button backButton, forwardButton;
 	Intent intent;
 	@Override
 	public void onCreate(Bundle b) {
@@ -58,15 +55,9 @@ public class SectionListActivity extends OptionsMenu implements OnClickListener 
 		adapter.addSection("Help",new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,help));
 		adapter.addSection("Trash",	new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,trash));
 		setListAdapter(adapter);
+		
+		addButtons();
 
-		optionsButton = (Button)this.findViewById(R.id.menuButton);
-		optionsButton.setOnClickListener(this);
-
-		backButton = (Button)this.findViewById(R.id.backButton);
-		backButton.setOnClickListener(this);
-
-		forwardButton = (Button)this.findViewById(R.id.forwardButton);
-		forwardButton.setOnClickListener(this);
 	}
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
@@ -75,6 +66,7 @@ public class SectionListActivity extends OptionsMenu implements OnClickListener 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		intent = new Intent(this,what.forum.ThreadListActivity.class);
 		startActivity(intent);
 		ActivityStack.push(what.forum.ThreadListActivity.class);
@@ -106,18 +98,4 @@ public class SectionListActivity extends OptionsMenu implements OnClickListener 
 			return(result);
 		}
 	};
-
-	@Override
-	public void onClick(View v) {
-		switch(v.getId()) {
-		case R.id.menuButton:
-			this.openOptionsMenu();
-			break;
-		case R.id.backButton:
-			finish();
-			break;
-		case R.id.forwardButton:
-			break;
-		}
-	}
 }

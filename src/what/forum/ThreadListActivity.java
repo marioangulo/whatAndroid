@@ -32,13 +32,9 @@ import api.forum.Manager;
 
 
 public class ThreadListActivity extends OptionsMenu implements OnClickListener   {
-
-
-	Button optionsButton;
-	Button backButton, forwardButton;
 	Intent threadIntent;
 	private String[] createItems() {
-		String[] threadsList = Manager.getForum().getSectionByName("The Lounge").getThreadsString();
+		String[] threadsList = Manager.getForum().getSectionByName("The Lounge").getThreadsArray();
 		return threadsList;
 	}
 	@Override
@@ -48,15 +44,8 @@ public class ThreadListActivity extends OptionsMenu implements OnClickListener  
 
 		adapter.addSection("Threads",new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,createItems()));
 		setListAdapter(adapter);
-
-		optionsButton = (Button)this.findViewById(R.id.menuButton);
-		optionsButton.setOnClickListener(this);
-
-		backButton = (Button)this.findViewById(R.id.backButton);
-		backButton.setOnClickListener(this);
-
-		forwardButton = (Button)this.findViewById(R.id.forwardButton);
-		forwardButton.setOnClickListener(this);
+		
+		addButtons();
 	}
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
@@ -86,18 +75,4 @@ public class ThreadListActivity extends OptionsMenu implements OnClickListener  
 			return(result);
 		}
 	};
-
-	@Override
-	public void onClick(View v) {
-		switch(v.getId()) {
-		case R.id.menuButton:
-			this.openOptionsMenu();
-			break;
-		case R.id.backButton:
-			finish();
-			break;
-		case R.id.forwardButton:
-			break;
-		}
-	}
 }

@@ -37,14 +37,7 @@ public class ActivityStack {
 	 * Looks at top of stack but doesn't remove anything
 	 * @return element at top of stack
 	 */
-	public static Object peek() {
+	public static Class<?> peek() {
 		return stack.peek();
-	}
-	/**
-	 * Gets the current activity
-	 * @return current activity
-	 */
-	public static Class<?> getCurrentActivity() {
-		return what.forum.ThreadListActivity.class;
 	}
 }
