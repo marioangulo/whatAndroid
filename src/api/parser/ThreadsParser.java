@@ -10,6 +10,8 @@ import java.util.LinkedList;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+
+import api.soup.MySoup;
 import api.util.*;
 import api.forum.*;
 
@@ -23,8 +25,8 @@ public class ThreadsParser {
 		LinkedList<Triple<String,String,String>> threadList = new LinkedList<Triple<String,String,String>>();
 		if(s.getSectionTitle().equalsIgnoreCase("The Lounge")) {
 			//TODO Scrape
-			File input = new File("assets/sectiontest.html");
-			Document doc = Jsoup.parse(input, "UTF-8", "");
+			//File input = new File("assets/sectiontest.html");
+			Document doc = MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=7"); // Jsoup.parse(input, "UTF-8", "");
 			Elements rowsa = doc.getElementsByClass("rowa");
 			Elements rowsb = doc.getElementsByClass("rowb");
 			for(int i = 0; i<rowsb.size(); i++) {

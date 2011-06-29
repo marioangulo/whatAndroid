@@ -13,8 +13,11 @@
  */
 
 package what.forum;
+import java.io.IOException;
 import java.util.LinkedList;
 
+import what.gui.ActivityStack;
+import what.gui.ListAdapter;
 import what.gui.OptionsMenu;
 import what.gui.R;
 import android.content.Intent;
@@ -43,7 +46,7 @@ public class SectionListActivity extends OptionsMenu implements OnClickListener 
 
 	Button optionsButton;
 	Button backButton, forwardButton;
-	Intent threadIntent;
+	Intent intent;
 	@Override
 	public void onCreate(Bundle b) {
 		super.onCreate(b);
@@ -67,22 +70,27 @@ public class SectionListActivity extends OptionsMenu implements OnClickListener 
 	}
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-		/*Intent prefIntent = new Intent(this,what.login.WhatAndroidActivity.class);
-		startActivity(prefIntent);*/
-		openSection(position);
+		try {
+			Manager.getForum().getSectionByName("The Lounge").addThreads();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		intent = new Intent(this,what.forum.ThreadListActivity.class);
+		startActivity(intent);
+		ActivityStack.push(what.forum.ThreadListActivity.class);
+
 		super.onListItemClick(l, v, position, id);
 	}
 	/**
 	 * Opens a section corresponding to it's position in the list
 	 * @param j position in list
+	 * @throws IOException 
 	 */
-	private void openSection(int j) {
-	//	String list[] = Manager.getForum().getSections().toArray().
+	private void openSection(int j) throws IOException {
 		LinkedList<?> list = Manager.getForum().getSections();
 		for(int i=0; i<list.size(); i++) {
 			if((j-1)==i) {
-				//Log.e("tag" ,MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=7").text());
-				Log.e("TAG", Manager.getForum().getSections().toString());
+
 			}
 		}
 	}

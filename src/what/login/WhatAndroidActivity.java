@@ -7,6 +7,7 @@ import what.gui.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -55,13 +56,15 @@ public class WhatAndroidActivity extends Activity implements OnClickListener
 		String passwordString = password.getText().toString();
 		String loginURL = "http://what.cd/login.php";
 
-		//MySoup.login(loginURL, usernameString, passwordString);
-		Intent prefIntent = new Intent(this,what.forum.SectionListActivity.class);
-		startActivity(prefIntent);
-		
+		MySoup.login(loginURL, usernameString, passwordString);
+		Log.v(TAG,MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=7").text());
 		ActivityStack.push(what.forum.SectionListActivity.class);
 		//TODO more suitable location
 		Manager.createForum("what.cd Forum");
+		
+		Intent prefIntent = new Intent(this,what.forum.SectionListActivity.class);
+		startActivity(prefIntent);
+		
 	}	
 	@Override
 	public void onClick(View v) {

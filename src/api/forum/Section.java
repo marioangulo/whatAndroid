@@ -25,10 +25,17 @@ public class Section {
 	 * Add threads to the section using the thread parser
 	 * @throws IOException
 	 */
-	private void addThreads() throws IOException {
+	public void addThreads() throws IOException {
 		for (Triple<String, String, String> t : ThreadsParser.parseThreads(this)) {
-			//threadsList.add(new Threads(t.getA(), t.getB(),t.getC()));
+			threadsList.add(new Threads(t.getA(), t.getB(),t.getC()));
 		}
+	}
+	public String[] getThreadsArray() {
+		String[] s = new String[threadsList.size()];
+		for(int i=0;i<s.length; i++) {
+			s[i] = threadsList.get(i).getThreadTitle();
+		}
+		return s;
 	}
 	/**
 	 * Get a LinkedList of type Threads
@@ -36,6 +43,12 @@ public class Section {
 	 */
 	public LinkedList<Threads> getThreads() {
 		return threadsList;
+	}
+	/**
+	 * Clear the threads list
+	 */
+	public void clearThreadsList() {
+		threadsList.clear();
 	}
 	/**
 	 * Get title of section
@@ -48,7 +61,7 @@ public class Section {
 	 * String representation of a section and everything in it
 	 */
 	public String toString() {
-		String toReturn = sectionTitle + "\n" /*+ getThreads().toString()*/;
+		String toReturn = sectionTitle + "\n" + getThreads().toString();
 		toReturn = toReturn.replace("[", "");
 		toReturn = toReturn.replace("]", "");
 		return toReturn;

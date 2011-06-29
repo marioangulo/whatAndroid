@@ -38,6 +38,7 @@ public final class R {
         public static final int header=0x7f030000;
         public static final int main=0x7f030001;
         public static final int section=0x7f030002;
+        public static final int threads=0x7f030003;
     }
     public static final class menu {
         public static final int options=0x7f050000;
@@ -50,6 +51,7 @@ public final class R {
         public static final int forums=0x7f04000b;
         public static final int forward=0x7f040009;
         public static final int login=0x7f040003;
+        public static final int lounge=0x7f04000d;
         public static final int menu=0x7f04000c;
         public static final int password=0x7f040002;
         public static final int profile=0x7f04000a;
