@@ -1,5 +1,8 @@
 package what.login;
 
+import java.io.IOException;
+
+import what.gui.ActivityStack;
 import what.gui.R;
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +12,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import api.forum.Manager;
+import api.soup.MySoup;
 
 /**
  * Login screen
@@ -43,31 +48,39 @@ public class WhatAndroidActivity extends Activity implements OnClickListener
 
 	/**
 	 * Login to what.cd
+	 * @throws IOException 
 	 */
-	private void login() {
+	private void login() throws IOException {
 		String usernameString = username.getText().toString();
 		String passwordString = password.getText().toString();
 		String loginURL = "http://what.cd/login.php";
 
 		//MySoup.login(loginURL, usernameString, passwordString);
+		Intent prefIntent = new Intent(this,what.forum.SectionListActivity.class);
+		startActivity(prefIntent);
 		
-		//ActivitySwitcher.switchActivity(this, what.forum.SectionActivity.class);
+		ActivityStack.push(what.forum.SectionListActivity.class);
+		//TODO more suitable location
+		Manager.createForum("what.cd Forum");
 	}	
 	@Override
 	public void onClick(View v) {
 		/*Notification notification = new Notification();
     	notification.displayAlert("New Subscriptions", "2 unread threads", this);*/
 		switch(v.getId()) {
-		
+
 		case R.id.checkbox:
 			checkbox.setSelected(true);
 			//TODO read/write to settings file
 			break;
 		case R.id.login:
-			  Intent prefIntent = new Intent(this,what.forum.SectionListActivity.class);
-		      startActivity(prefIntent);
 			if(username.getText() != null && password.getText() != null) {
-				login();	
+				try {
+					login();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
 			}
 			break;
 		}
