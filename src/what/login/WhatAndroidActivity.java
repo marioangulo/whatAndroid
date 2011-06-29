@@ -52,7 +52,8 @@ public class WhatAndroidActivity extends Activity implements OnClickListener
 	 * @throws IOException 
 	 */
 	private void login() throws IOException {
-		String usernameString = username.getText().toString();
+		
+		/*String usernameString = username.getText().toString();
 		String passwordString = password.getText().toString();
 		String loginURL = "http://what.cd/login.php";
 
@@ -62,8 +63,8 @@ public class WhatAndroidActivity extends Activity implements OnClickListener
 		//TODO more suitable location
 		Manager.createForum("what.cd Forum");
 		
-		Intent prefIntent = new Intent(this,what.forum.SectionListActivity.class);
-		startActivity(prefIntent);
+		Intent intent = new Intent(this,what.forum.SectionListActivity.class);
+		startActivity(intent);*/
 		
 	}	
 	@Override
@@ -80,6 +81,8 @@ public class WhatAndroidActivity extends Activity implements OnClickListener
 			if(username.getText() != null && password.getText() != null) {
 				try {
 					login();
+					Intent prefIntent = new Intent(this,what.forum.tablelayout.class);
+					startActivity(prefIntent);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

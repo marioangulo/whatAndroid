@@ -33,16 +33,14 @@ import api.forum.Manager;
 
 public class ThreadListActivity extends OptionsMenu implements OnClickListener   {
 	Intent threadIntent;
-	private String[] createItems() {
-		String[] threadsList = Manager.getForum().getSectionByName("The Lounge").getThreadsArray();
-		return threadsList;
-	}
+	String[] threadsList = Manager.getForum().getSectionByName("The Lounge").getThreadsArray();
+	
 	@Override
 	public void onCreate(Bundle b) {
 		super.onCreate(b);
 		setContentView(R.layout.threads);
 
-		adapter.addSection("Threads",new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,createItems()));
+		adapter.addSection("Threads",new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,threadsList));
 		setListAdapter(adapter);
 		
 		addButtons();
