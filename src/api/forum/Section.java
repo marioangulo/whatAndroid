@@ -30,10 +30,24 @@ public class Section {
 			threadsList.add(new Threads(t.getA(), t.getB(),t.getC()));
 		}
 	}
-	public String[] getThreadsArray() {
+	public String[] getThreadsTitleArray() {
 		String[] s = new String[threadsList.size()];
 		for(int i=0;i<s.length; i++) {
 			s[i] = threadsList.get(i).getThreadTitle();
+		}
+		return s;
+	}
+	public String[] getThreadsLastPosterArray() {
+		String[] s = new String[threadsList.size()];
+		for(int i=0;i<s.length; i++) {
+			s[i] = threadsList.get(i).getThreadLastPoster();
+		}
+		return s;
+	}
+	public String[] getThreadsAuthorArray() {
+		String[] s = new String[threadsList.size()];
+		for(int i=0;i<s.length; i++) {
+			s[i] = threadsList.get(i).getThreadAuthor();
 		}
 		return s;
 	}

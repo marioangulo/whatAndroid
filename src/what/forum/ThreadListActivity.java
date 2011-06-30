@@ -1,76 +1,101 @@
-/***
-	Copyright (c) 2008-2011 CommonsWare, LLC
-	Licensed under the Apache License, Version 2.0 (the "License"); you may not
-	use this file except in compliance with the License. You may obtain	a copy
-	of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
-	by applicable law or agreed to in writing, software distributed under the
-	License is distributed on an "AS IS" BASIS,	WITHOUT	WARRANTIES OR CONDITIONS
-	OF ANY KIND, either express or implied. See the License for the specific
-	language governing permissions and limitations under the License.
-
-	From _The Busy Coder's Guide to Advanced Android Development_
-		http://commonsware.com/AdvAndroid
- */
-
 package what.forum;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Random;
 
-import what.gui.ListAdapter;
+import what.gui.Notification;
 import what.gui.OptionsMenu;
 import what.gui.R;
-import android.content.Intent;
+import android.app.Activity;
 import android.os.Bundle;
+import android.widget.TableLayout;
+import android.widget.TextView;
 import android.util.Log;
 import android.view.View;
+
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.CheckBox;
+import android.widget.TableRow;
+import android.widget.TableRow.LayoutParams;
+import android.widget.Toast;
 import api.forum.Manager;
 
+public class ThreadListActivity extends OptionsMenu implements OnClickListener {
 
-public class ThreadListActivity extends OptionsMenu implements OnClickListener   {
-	Intent threadIntent;
-	String[] threadsList = Manager.getForum().getSectionByName("The Lounge").getThreadsArray();
-	
+	ArrayList<TableRow> row = new ArrayList<TableRow>();
+	ArrayList<TextView> textview1 = new ArrayList<TextView>();
+	ArrayList<TextView> textview2 = new ArrayList<TextView>();
+	ArrayList<TextView> textview3 = new ArrayList<TextView>();
+	Notification n = new Notification();
+	int counter = 0;
 	@Override
-	public void onCreate(Bundle b) {
-		super.onCreate(b);
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		// setup the layout
 		setContentView(R.layout.threads);
-
-		adapter.addSection("Threads",new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,threadsList));
-		setListAdapter(adapter);
-		
 		addButtons();
-	}
-	@Override
-	protected void onListItemClick(ListView l, View v, int position, long id) {
-		openSection(position);
-		super.onListItemClick(l, v, position, id);
-	}
-	/**
-	 * Opens a section corresponding to it's position in the list
-	 * @param j position in list
-	 */
-	private void openSection(int j) {
-		LinkedList<?> list = Manager.getForum().getSections();
-		for(int i=0; i<list.size(); i++) {
-			if((j-1)==i) {
-			}
+
+		for(int i=0; i<Manager.getForum().getSectionByName("The Lounge").getThreads().size(); i++) {
+			populateTable(Manager.getForum().getSectionByName("The Lounge").getThreadsTitleArray()[i],
+					Manager.getForum().getSectionByName("The Lounge").getThreadsLastPosterArray()[i],
+					Manager.getForum().getSectionByName("The Lounge").getThreadsAuthorArray()[i]);
 		}
 	}
-	ListAdapter adapter=new ListAdapter() {
-		protected View getHeaderView(String caption, int index, View convertView, ViewGroup parent) {
-			TextView result=(TextView)convertView;
+	public void populateTable(String a, String b, String c) {
+		Random random = new Random(19580427);
 
-			if (convertView==null) {
-				result=(TextView)getLayoutInflater().inflate(R.layout.header,null);
+		TableLayout table = (TableLayout) findViewById(R.id.TableLayout01);
+		
+		row.add(new TableRow(this));
+
+		textview1.add(new TextView(this));
+		textview1.get(counter).setText(a);
+		textview1.get(counter).setOnClickListener(this);
+		textview1.get(counter).setId(counter*random.nextInt(1000));
+
+		textview2.add(new TextView(this));
+		textview2.get(counter).setText(b +"\n");
+		textview2.get(counter).setOnClickListener(this);
+		textview2.get(counter).setId(counter*random.nextInt(1000));
+
+
+		textview3.add(new TextView(this));
+		textview3.get(counter).setText(c);
+		textview3.get(counter).setOnClickListener(this);
+		textview3.get(counter).setId(counter*random.nextInt(1000));
+
+		row.get(counter).addView(textview1.get(counter));
+		row.get(counter).addView(textview2.get(counter));
+		row.get(counter).addView(textview3.get(counter));
+
+		table.addView(row.get(counter),new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+
+		counter++;
+	}
+	public void onClick(View v) {
+		setMenuButtonsListener(v);
+		for(int i=0; i<row.size(); i++) {
+			if(v.getId() == textview1.get(i).getId()) {
+				n.displayToast(textview1.get(i).getText().toString(), Toast.LENGTH_SHORT, this);
 			}
-
-			result.setText(caption);
-			return(result);
+			if(v.getId() == textview2.get(i).getId()) {
+				n.displayToast(textview1.get(i).getText().toString(), Toast.LENGTH_SHORT, this);
+			}
+			if(v.getId() == textview3.get(i).getId()) {
+				n.displayToast(textview1.get(i).getText().toString(), Toast.LENGTH_SHORT, this);
+			}
 		}
-	};
+		/*if(v.getId() == textview.get(0).getId() ) {
+			n.displayToast("Pressed 0", Toast.LENGTH_SHORT, this);
+		}
+		if(v.getId() == textview.get(1).getId() ) {
+			n.displayToast("Pressed 1", Toast.LENGTH_SHORT, this);
+		}
+		if(v.getId() == textview2.get(2).getId() ) {
+			n.displayToast("SUCESSSSSS", Toast.LENGTH_SHORT, this);
+		}
+		if(v.getId() == textview.get(3).getId() ) {
+			n.displayToast("Pressed 3", Toast.LENGTH_SHORT, this);
+		}*/
+	}
 }

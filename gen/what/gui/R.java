@@ -15,25 +15,21 @@ public final class R {
         public static final int whatlogo=0x7f020001;
     }
     public static final class id {
-        public static final int Button01=0x7f06000e;
-        public static final int CheckBox01=0x7f060013;
         public static final int FrameLayout01=0x7f06000a;
-        public static final int ScrollView01=0x7f06000f;
-        public static final int TableLayout01=0x7f060010;
+        public static final int ScrollView01=0x7f06000e;
+        public static final int TableLayout01=0x7f06000f;
         public static final int TableLayout1=0x7f060000;
-        public static final int TableRow01=0x7f060011;
-        public static final int TextView01=0x7f060012;
         public static final int backButton=0x7f06000d;
         public static final int checkbox=0x7f060007;
-        public static final int closeItem=0x7f060017;
+        public static final int closeItem=0x7f060013;
         public static final int forwardButton=0x7f06000c;
         public static final int imageView1=0x7f060001;
         public static final int login=0x7f060009;
         public static final int menuButton=0x7f06000b;
         public static final int password=0x7f060006;
-        public static final int profileItem=0x7f060015;
-        public static final int searchItem=0x7f060016;
-        public static final int subscriptionsItem=0x7f060014;
+        public static final int profileItem=0x7f060011;
+        public static final int searchItem=0x7f060012;
+        public static final int subscriptionsItem=0x7f060010;
         public static final int t=0x7f060008;
         public static final int textView1=0x7f060002;
         public static final int textView2=0x7f060003;

@@ -13,10 +13,8 @@
  */
 
 package what.forum;
-import java.io.IOException;
 import java.util.LinkedList;
 
-import what.gui.ActivityStack;
 import what.gui.ListAdapter;
 import what.gui.OptionsMenu;
 import what.gui.R;
@@ -31,62 +29,38 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import api.forum.Manager;
-import api.parser.SectionParser;
-import api.soup.MySoup;
 
 
-public class SectionListActivity extends OptionsMenu implements OnClickListener   {
-
-	//TODO have api fully handle this
-	private static String[] site = SectionParser.parseSiteSections();
-	private static String[] community = SectionParser.parseCommunitySections();
-	private static String[] music = SectionParser.parseMusicSections();
-	private static String[] help = SectionParser.parseHelpSections();
-	private static String[] trash = SectionParser.parseTrashSections();
-	Intent intent;
+public class ThreadListActivity2 extends OptionsMenu implements OnClickListener   {
+/*	Intent threadIntent;
+	String[] threadsList = Manager.getForum().getSectionByName("The Lounge").getThreadsArray();
+	
 	@Override
 	public void onCreate(Bundle b) {
 		super.onCreate(b);
-		setContentView(R.layout.section);
+		setContentView(R.layout.threads);
 
-		adapter.addSection("Site",new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,site));
-		adapter.addSection("Community",new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,community));
-		adapter.addSection("Music",new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,music));
-		adapter.addSection("Help",new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,help));
-		adapter.addSection("Trash",	new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,trash));
+		adapter.addSection("Threads",new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,threadsList));
 		setListAdapter(adapter);
 		
 		addButtons();
-
 	}
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-		try {
-			Manager.getForum().getSectionByName("The Lounge").addThreads();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		intent = new Intent(this,what.forum.ThreadListActivity.class);
-		startActivity(intent);
-		ActivityStack.push(what.forum.ThreadListActivity.class);
-
+		openSection(position);
 		super.onListItemClick(l, v, position, id);
 	}
-	/**
-	  Opens a section corresponding to it's position in the list
-	  @param j position in list
-	  @throws IOException 
-	 */
-	private void openSection(int j) throws IOException {
+	*//**
+	 * Opens a section corresponding to it's position in the list
+	 * @param j position in list
+	 *//*
+	private void openSection(int j) {
 		LinkedList<?> list = Manager.getForum().getSections();
 		for(int i=0; i<list.size(); i++) {
 			if((j-1)==i) {
-
 			}
 		}
 	}
-	
 	ListAdapter adapter=new ListAdapter() {
 		protected View getHeaderView(String caption, int index, View convertView, ViewGroup parent) {
 			TextView result=(TextView)convertView;
@@ -98,5 +72,5 @@ public class SectionListActivity extends OptionsMenu implements OnClickListener 
 			result.setText(caption);
 			return(result);
 		}
-	};
+	};*/
 }

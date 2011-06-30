@@ -5,20 +5,26 @@
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
 
-	<Button android:id="@+id/Button01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Add row"></Button>
- 
-<ScrollView android:id="@+id/ScrollView01" android:layout_width="wrap_content" android:layout_height="wrap_content">
- 
-  <TableLayout android:id="@+id/TableLayout01" android:layout_width="fill_parent" android:layout_height="wrap_content" android:stretchColumns="0">
- 
-    <TableRow android:id="@+id/TableRow01" android:layout_width="wrap_content" android:layout_height="wrap_content">
-      <TextView android:id="@+id/TextView01" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="textfield 1-1"></TextView>
- 
-      <CheckBox android:id="@+id/CheckBox01" android:layout_width="wrap_content" android:layout_height="wrap_content"></CheckBox>
-    </TableRow>
- 
-  </TableLayout>
-</ScrollView>
+	  <FrameLayout android:id="@+id/FrameLayout01" 
+      android:layout_width="fill_parent" 
+      android:layout_height="wrap_content">
+         <Button android:layout_width="wrap_content" 
+              android:layout_height="wrap_content" 
+              android:layout_gravity="center_horizontal" android:text="@string/menu" android:id="@+id/menuButton">
+        </Button>
+         <Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_gravity="right" android:id="@+id/forwardButton" android:text="@string/forward"></Button>
+         <Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/back" android:id="@+id/backButton"></Button>
+    </FrameLayout>
+	
+	<ScrollView android:id="@+id/ScrollView01"
+		android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+		<TableLayout android:id="@+id/TableLayout01"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:stretchColumns="0">
+
+		</TableLayout>
+	</ScrollView>
 
 </LinearLayout>
 

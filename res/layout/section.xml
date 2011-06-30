@@ -5,14 +5,7 @@
       android:layout_height="fill_parent"
       android:background="#000000"
   >
-      <TextView android:id="@+id/textView1" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/forums"></TextView>
-	<ListView android:id="@android:id/list"
- 	  android:layout_width="wrap_content" 
-      android:layout_height="wrap_content" 
-      android:layout_weight="1">
-    </ListView>
-
-    <FrameLayout android:id="@+id/FrameLayout01" 
+   <FrameLayout android:id="@+id/FrameLayout01" 
       android:layout_width="fill_parent" 
       android:layout_height="wrap_content">
          <Button android:layout_width="wrap_content" 
@@ -22,6 +15,14 @@
          <Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_gravity="right" android:id="@+id/forwardButton" android:text="@string/forward"></Button>
          <Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/back" android:id="@+id/backButton"></Button>
     </FrameLayout>
+      <TextView android:id="@+id/textView1" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/forums"></TextView>
+	<ListView android:id="@android:id/list"
+ 	  android:layout_width="wrap_content" 
+      android:layout_height="wrap_content" 
+      android:layout_weight="1">
+    </ListView>
+
+   
   </LinearLayout>
   
   <!-- <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

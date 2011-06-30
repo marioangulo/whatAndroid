@@ -1,5 +1,6 @@
 package what.gui;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.view.Menu;
@@ -54,8 +55,7 @@ public class OptionsMenu extends ListActivity implements OnClickListener {
 		forwardButton = (Button)this.findViewById(R.id.forwardButton);
 		forwardButton.setOnClickListener(this);
 	}
-	@Override
-	public void onClick(View v) {
+	public void setMenuButtonsListener(View v) {
 		switch(v.getId()) {
 		case R.id.menuButton:
 			this.openOptionsMenu();
@@ -64,11 +64,15 @@ public class OptionsMenu extends ListActivity implements OnClickListener {
 			finish();
 			break;
 		case R.id.forwardButton:
-			Intent intent;
+		/*	Intent intent;
 			Class<?> c = ActivityStack.peek();
 			intent = new Intent(this,c);
-			startActivity(intent);
+			startActivity(intent);*/
 			break;
 		}
+	}
+	@Override
+	public void onClick(View v) {
+		setMenuButtonsListener(v);
 	}
 }

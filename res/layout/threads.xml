@@ -1,20 +1,11 @@
- 
-  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-      android:orientation="vertical"
-      android:layout_width="fill_parent"
-      android:layout_height="fill_parent"
-      android:background="#000000"
-  >
-      <TextView android:id="@+id/textView1" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/lounge"></TextView>
-	<ListView android:id="@android:id/list"
- 	  android:layout_width="wrap_content" 
-      android:layout_height="wrap_content" 
-      android:layout_weight="1">
-  
-       
-    </ListView>
+<?xml version="1.0" encoding="utf-8"?>
 
-    <FrameLayout android:id="@+id/FrameLayout01" 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+
+	  <FrameLayout android:id="@+id/FrameLayout01" 
       android:layout_width="fill_parent" 
       android:layout_height="wrap_content">
          <Button android:layout_width="wrap_content" 
@@ -24,15 +15,20 @@
          <Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_gravity="right" android:id="@+id/forwardButton" android:text="@string/forward"></Button>
          <Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/back" android:id="@+id/backButton"></Button>
     </FrameLayout>
-  </LinearLayout>
-  
-  <!-- <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/l" android:layout_width="match_parent"
-	android:layout_height="match_parent" android:orientation="vertical">
-	<TextView android:id="@+id/textView1" android:textAppearance="?android:attr/textAppearanceLarge"
-		android:layout_height="wrap_content" android:layout_width="wrap_content"
-		android:text="@string/forums"></TextView>
-	<ListView android:id="@android:id/list" android:layout_width="match_parent"
-		android:layout_height="match_parent" android:drawSelectorOnTop="true" />
+	
+	<ScrollView android:id="@+id/ScrollView01"
+		android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+		<TableLayout android:id="@+id/TableLayout01"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:stretchColumns="0">
+
+		</TableLayout>
+	</ScrollView>
+<ListView android:id="@android:id/list"
+ 	  android:layout_width="wrap_content" 
+      android:layout_height="wrap_content" 
+      android:layout_weight="1">
+    </ListView>
 </LinearLayout>
- -->
+

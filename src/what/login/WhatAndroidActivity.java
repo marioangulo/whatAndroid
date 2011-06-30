@@ -45,6 +45,7 @@ public class WhatAndroidActivity extends Activity implements OnClickListener
 		checkbox.setOnClickListener(this);
 		login = (Button)this.findViewById(R.id.login);
 		login.setOnClickListener(this);
+		
 	}
 
 	/**
@@ -53,7 +54,7 @@ public class WhatAndroidActivity extends Activity implements OnClickListener
 	 */
 	private void login() throws IOException {
 		
-		/*String usernameString = username.getText().toString();
+		String usernameString = username.getText().toString();
 		String passwordString = password.getText().toString();
 		String loginURL = "http://what.cd/login.php";
 
@@ -64,7 +65,7 @@ public class WhatAndroidActivity extends Activity implements OnClickListener
 		Manager.createForum("what.cd Forum");
 		
 		Intent intent = new Intent(this,what.forum.SectionListActivity.class);
-		startActivity(intent);*/
+		startActivity(intent);
 		
 	}	
 	@Override
@@ -81,8 +82,8 @@ public class WhatAndroidActivity extends Activity implements OnClickListener
 			if(username.getText() != null && password.getText() != null) {
 				try {
 					login();
-					Intent prefIntent = new Intent(this,what.forum.tablelayout.class);
-					startActivity(prefIntent);
+					/*Intent prefIntent = new Intent(this,what.forum.SectionListActivity.class);
+					startActivity(prefIntent);*/
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
