@@ -1,8 +1,6 @@
 package what.gui;
 
-import android.app.Activity;
 import android.app.ListActivity;
-import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,25 +12,31 @@ import android.widget.Button;
  * @author Tim	
  *
  */
-public class OptionsMenu extends ListActivity implements OnClickListener {
-//TODO rename
+public class GUITools extends ListActivity implements OnClickListener {
+	//TODO rename
 	Button optionsButton;
 	Button backButton, forwardButton;
 
+	public Notification notification = new Notification();
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.options, menu);
-	    return true;
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.options, menu);
+		return true;
 	}
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId()) {
-	    case R.id.closeItem:
-	        closeOptionsMenu();
-	        return true;
-	    default:
-	        return super.onOptionsItemSelected(item);
-	    }
+		switch (item.getItemId()) {
+		case R.id.closeItem:
+			closeOptionsMenu();
+			break;
+		case R.id.searchItem:
+			startActivity(getIntent()); 
+			finish();
+			break;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+		return true;
 	}
 	@Override
 	public void openOptionsMenu() {
@@ -64,7 +68,7 @@ public class OptionsMenu extends ListActivity implements OnClickListener {
 			finish();
 			break;
 		case R.id.forwardButton:
-		/*	Intent intent;
+			/*Intent intent;
 			Class<?> c = ActivityStack.peek();
 			intent = new Intent(this,c);
 			startActivity(intent);*/

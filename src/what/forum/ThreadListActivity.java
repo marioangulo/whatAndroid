@@ -1,11 +1,10 @@
 package what.forum;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
 
 import what.gui.Notification;
-import what.gui.OptionsMenu;
+import what.gui.GUITools;
 import what.gui.R;
-import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -13,76 +12,89 @@ import android.util.Log;
 import android.view.View;
 
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
 import android.widget.Toast;
 import api.forum.Manager;
 
-public class ThreadListActivity extends OptionsMenu implements OnClickListener {
+public class ThreadListActivity extends GUITools implements OnClickListener {
 
-	ArrayList<TableRow> row = new ArrayList<TableRow>();
-	ArrayList<TextView> textview1 = new ArrayList<TextView>();
-	ArrayList<TextView> textview2 = new ArrayList<TextView>();
-	ArrayList<TextView> textview3 = new ArrayList<TextView>();
-	Notification n = new Notification();
-	int counter = 0;
+	ArrayList<TableRow> rowList = new ArrayList<TableRow>();
+	ArrayList<TextView> titleList = new ArrayList<TextView>();
+	ArrayList<TextView> lastPosterList = new ArrayList<TextView>();
+	ArrayList<TextView> authorList = new ArrayList<TextView>();
+	private int counter;
+	
+	String[] title, lastposter, author;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// setup the layout
 		setContentView(R.layout.threads);
 		addButtons();
-
+		loadThreads();
+		populateTable();
+		idGenerator();
+	}
+	
+	private void loadThreads() {
+		try {
+			Manager.getForum().getSectionByName("The Lounge").addThreads();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		title = Manager.getForum().getSectionByName("The Lounge").getThreadsTitleArray();
+		lastposter = Manager.getForum().getSectionByName("The Lounge").getThreadsLastPosterArray();
+		author = Manager.getForum().getSectionByName("The Lounge").getThreadsAuthorArray();
+		Log.v("TAG", author[3]);
+	}
+	private void populateTable() {
 		for(int i=0; i<Manager.getForum().getSectionByName("The Lounge").getThreads().size(); i++) {
-			populateTable(Manager.getForum().getSectionByName("The Lounge").getThreadsTitleArray()[i],
-					Manager.getForum().getSectionByName("The Lounge").getThreadsLastPosterArray()[i],
-					Manager.getForum().getSectionByName("The Lounge").getThreadsAuthorArray()[i]);
+			addRow(title[i],lastposter[i],author[i]);
 		}
 	}
-	public void populateTable(String a, String b, String c) {
-		Random random = new Random(19580427);
-
+	private void addRow(String a, String b, String c) {
 		TableLayout table = (TableLayout) findViewById(R.id.TableLayout01);
+
+		rowList.add(new TableRow(this));
+
+		titleList.add(new TextView(this));
+		titleList.get(counter).setText(a);
+		titleList.get(counter).setOnClickListener(this);
+
+		lastPosterList.add(new TextView(this));
+		lastPosterList.get(counter).setText(b +"\n");
+		lastPosterList.get(counter).setOnClickListener(this);
+
+		authorList.add(new TextView(this));
+		authorList.get(counter).setText(c);
+		authorList.get(counter).setOnClickListener(this);
 		
-		row.add(new TableRow(this));
+		rowList.get(counter).addView(titleList.get(counter));
+		rowList.get(counter).addView(lastPosterList.get(counter));
+		rowList.get(counter).addView(authorList.get(counter));
 
-		textview1.add(new TextView(this));
-		textview1.get(counter).setText(a);
-		textview1.get(counter).setOnClickListener(this);
-		textview1.get(counter).setId(counter*random.nextInt(1000));
-
-		textview2.add(new TextView(this));
-		textview2.get(counter).setText(b +"\n");
-		textview2.get(counter).setOnClickListener(this);
-		textview2.get(counter).setId(counter*random.nextInt(1000));
-
-
-		textview3.add(new TextView(this));
-		textview3.get(counter).setText(c);
-		textview3.get(counter).setOnClickListener(this);
-		textview3.get(counter).setId(counter*random.nextInt(1000));
-
-		row.get(counter).addView(textview1.get(counter));
-		row.get(counter).addView(textview2.get(counter));
-		row.get(counter).addView(textview3.get(counter));
-
-		table.addView(row.get(counter),new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+		table.addView(rowList.get(counter),new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
 		counter++;
 	}
+	private void idGenerator() {
+		for(int i=0;i<counter;i++) {
+			titleList.get(i).setId(i);
+			lastPosterList.get(i).setId(i+counter);
+			authorList.get(i).setId(i+(2*counter));
+		}
+	}
 	public void onClick(View v) {
 		setMenuButtonsListener(v);
-		for(int i=0; i<row.size(); i++) {
-			if(v.getId() == textview1.get(i).getId()) {
-				n.displayToast(textview1.get(i).getText().toString(), Toast.LENGTH_SHORT, this);
+		for(int i=0; i<rowList.size(); i++) {
+			if(v.getId() == titleList.get(i).getId()) {
+				notification.displayToast(Integer.toString(titleList.get(i).getId()), Toast.LENGTH_SHORT, this);
 			}
-			if(v.getId() == textview2.get(i).getId()) {
-				n.displayToast(textview1.get(i).getText().toString(), Toast.LENGTH_SHORT, this);
+			if(v.getId() == lastPosterList.get(i).getId()) {
+				notification.displayToast(Integer.toString(lastPosterList.get(i).getId()), Toast.LENGTH_SHORT, this);
 			}
-			if(v.getId() == textview3.get(i).getId()) {
-				n.displayToast(textview1.get(i).getText().toString(), Toast.LENGTH_SHORT, this);
+			if(v.getId() == authorList.get(i).getId()) {
+				notification.displayToast(Integer.toString(authorList.get(i).getId()), Toast.LENGTH_SHORT, this);
 			}
 		}
 		/*if(v.getId() == textview.get(0).getId() ) {

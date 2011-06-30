@@ -18,7 +18,7 @@ import java.util.LinkedList;
 
 import what.gui.ActivityStack;
 import what.gui.ListAdapter;
-import what.gui.OptionsMenu;
+import what.gui.GUITools;
 import what.gui.R;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,7 +35,7 @@ import api.parser.SectionParser;
 import api.soup.MySoup;
 
 
-public class SectionListActivity extends OptionsMenu implements OnClickListener   {
+public class SectionListActivity extends GUITools implements OnClickListener   {
 
 	//TODO have api fully handle this
 	private static String[] site = SectionParser.parseSiteSections();
@@ -61,12 +61,6 @@ public class SectionListActivity extends OptionsMenu implements OnClickListener 
 	}
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-		try {
-			Manager.getForum().getSectionByName("The Lounge").addThreads();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
 		intent = new Intent(this,what.forum.ThreadListActivity.class);
 		startActivity(intent);
 		ActivityStack.push(what.forum.ThreadListActivity.class);

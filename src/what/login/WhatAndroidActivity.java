@@ -38,14 +38,12 @@ public class WhatAndroidActivity extends Activity implements OnClickListener
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		//create widgets
 		username = (TextView)this.findViewById(R.id.username);
 		password = (TextView)this.findViewById(R.id.password);
 		checkbox = (CheckBox)this.findViewById(R.id.checkbox);
 		checkbox.setOnClickListener(this);
 		login = (Button)this.findViewById(R.id.login);
 		login.setOnClickListener(this);
-		
 	}
 
 	/**
@@ -59,7 +57,6 @@ public class WhatAndroidActivity extends Activity implements OnClickListener
 		String loginURL = "http://what.cd/login.php";
 
 		MySoup.login(loginURL, usernameString, passwordString);
-		Log.v(TAG,MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=7").text());
 		ActivityStack.push(what.forum.SectionListActivity.class);
 		//TODO more suitable location
 		Manager.createForum("what.cd Forum");
@@ -70,8 +67,7 @@ public class WhatAndroidActivity extends Activity implements OnClickListener
 	}	
 	@Override
 	public void onClick(View v) {
-		/*Notification notification = new Notification();
-    	notification.displayAlert("New Subscriptions", "2 unread threads", this);*/
+	
 		switch(v.getId()) {
 
 		case R.id.checkbox:
@@ -82,8 +78,6 @@ public class WhatAndroidActivity extends Activity implements OnClickListener
 			if(username.getText() != null && password.getText() != null) {
 				try {
 					login();
-					/*Intent prefIntent = new Intent(this,what.forum.SectionListActivity.class);
-					startActivity(prefIntent);*/
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

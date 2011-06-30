@@ -28,6 +28,7 @@ public final class R {
         public static final int menuButton=0x7f06000b;
         public static final int password=0x7f060006;
         public static final int profileItem=0x7f060011;
+        public static final int refreshItem=0x7f060014;
         public static final int searchItem=0x7f060012;
         public static final int subscriptionsItem=0x7f060010;
         public static final int t=0x7f060008;
