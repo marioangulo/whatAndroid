@@ -2,8 +2,6 @@ package api.forum;
 
 import java.io.IOException;
 import java.util.LinkedList;
-import api.parser.*;
-import api.util.*;
 
 /**
  * A Thread in the forum

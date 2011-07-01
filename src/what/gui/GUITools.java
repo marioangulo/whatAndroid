@@ -13,7 +13,6 @@ import android.widget.Button;
  *
  */
 public class GUITools extends ListActivity implements OnClickListener {
-	//TODO rename
 	Button optionsButton;
 	Button backButton, forwardButton;
 
@@ -29,7 +28,8 @@ public class GUITools extends ListActivity implements OnClickListener {
 		case R.id.closeItem:
 			closeOptionsMenu();
 			break;
-		case R.id.searchItem:
+		case R.id.refreshItem:
+			//refresh activity
 			startActivity(getIntent()); 
 			finish();
 			break;

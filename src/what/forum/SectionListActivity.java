@@ -1,22 +1,4 @@
-/***
-	Copyright (c) 2008-2011 CommonsWare, LLC
-	Licensed under the Apache License, Version 2.0 (the "License"); you may not
-	use this file except in compliance with the License. You may obtain	a copy
-	of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
-	by applicable law or agreed to in writing, software distributed under the
-	License is distributed on an "AS IS" BASIS,	WITHOUT	WARRANTIES OR CONDITIONS
-	OF ANY KIND, either express or implied. See the License for the specific
-	language governing permissions and limitations under the License.
-
-	From _The Busy Coder's Guide to Advanced Android Development_
-		http://commonsware.com/AdvAndroid
- */
-
 package what.forum;
-import java.io.IOException;
-import java.util.LinkedList;
-
-import what.gui.ActivityStack;
 import what.gui.ListAdapter;
 import what.gui.GUITools;
 import what.gui.R;
@@ -27,14 +9,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import api.forum.Manager;
 import api.parser.SectionParser;
-import api.soup.MySoup;
 
-
+/**
+ * View of all the Sections 
+ * @author Tim
+ *
+ */
 public class SectionListActivity extends GUITools implements OnClickListener   {
 
 	//TODO have api fully handle this
@@ -43,6 +26,7 @@ public class SectionListActivity extends GUITools implements OnClickListener   {
 	private static String[] music = SectionParser.parseMusicSections();
 	private static String[] help = SectionParser.parseHelpSections();
 	private static String[] trash = SectionParser.parseTrashSections();
+	private static String[] masterList = SectionParser.getMasterList();
 	Intent intent;
 	@Override
 	public void onCreate(Bundle b) {
@@ -61,24 +45,40 @@ public class SectionListActivity extends GUITools implements OnClickListener   {
 	}
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-		intent = new Intent(this,what.forum.ThreadListActivity.class);
-		startActivity(intent);
-		ActivityStack.push(what.forum.ThreadListActivity.class);
-
+		openSection(position);
 		super.onListItemClick(l, v, position, id);
 	}
 	/**
 	  Opens a section corresponding to it's position in the list
 	  @param j position in list
-	  @throws IOException 
 	 */
-	private void openSection(int j) throws IOException {
-		LinkedList<?> list = Manager.getForum().getSections();
-		for(int i=0; i<list.size(); i++) {
-			if((j-1)==i) {
-
-			}
+	private void openSection(int j) {
+		//TODO make this more beutiful
+		String sectionTitle = null;
+		if(j < 7) {
+			sectionTitle = masterList[j-1];
 		}
+		if(j > 7 && j < 14) {
+			sectionTitle = masterList[j-2];
+		}
+		if(j > 14 && j < 20) {
+			sectionTitle = masterList[j-3];
+		}
+		if(j > 20 && j < 24) {
+			sectionTitle = masterList[j-4];
+		}
+		if(j > 24) {
+			sectionTitle = masterList[j-5];
+		}
+		for(int i=0;i<masterList.length;i++) {
+			Log.v("TAG",masterList[i]);
+		}
+		//start new intent and send sectiontitle in the bundle
+		intent = new Intent(this,what.forum.ThreadListActivity.class);
+		Bundle b = new Bundle();
+		b.putString("sectionTitle", sectionTitle);
+		intent.putExtras(b);
+		startActivityForResult(intent, 0);
 	}
 	
 	ListAdapter adapter=new ListAdapter() {

@@ -67,14 +67,13 @@ public class WhatAndroidActivity extends Activity implements OnClickListener
 	}	
 	@Override
 	public void onClick(View v) {
-	
 		switch(v.getId()) {
-
 		case R.id.checkbox:
 			checkbox.setSelected(true);
 			//TODO read/write to settings file
 			break;
 		case R.id.login:
+			//TODO fix null problem
 			if(username.getText() != null && password.getText() != null) {
 				try {
 					login();

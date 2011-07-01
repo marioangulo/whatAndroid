@@ -31,7 +31,7 @@ public class SectionParser {
 	}
 	public static String[] parseHelpSections() {
 		String[] section = {
-				"Music","Vanity House","The Studio","Offered","Vinyl"};
+				"Help","Tutorials","BitTorrent"};
 		return section;
 	}
 	public static String[] parseTrashSections() {
