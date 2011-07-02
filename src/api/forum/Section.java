@@ -19,15 +19,14 @@ public class Section {
 	 */
 	public Section(String sectionTitle) throws IOException {
 		this.sectionTitle = sectionTitle;
-		//addThreads();
 	}
 	/**
-	 * Add threads to the section using the thread parser
+	 * Populate the section with threads using the thread parser
 	 * @throws IOException
 	 */
 	public void addThreads() throws IOException {
-		for (Triple<String, String, String> t : ThreadsParser.parseThreads(this)) {
-			threadsList.add(new Threads(t.getA(), t.getB(),t.getC()));
+		for (Quadruple<String, String, String,String> t : ThreadsParser.parseThreads(this)) {
+			threadsList.add(new Threads(t.getA(), t.getB(),t.getC(), t.getD()));
 		}
 	}
 	public String[] getThreadsTitleArray() {
@@ -48,6 +47,13 @@ public class Section {
 		String[] s = new String[threadsList.size()];
 		for(int i=0;i<s.length; i++) {
 			s[i] = threadsList.get(i).getThreadAuthor();
+		}
+		return s;
+	}
+	public String[] getThreadsUrlArray() {
+		String[] s = new String[threadsList.size()];
+		for(int i=0;i<s.length; i++) {
+			s[i] = threadsList.get(i).getThreadUrl();
 		}
 		return s;
 	}

@@ -3,19 +3,19 @@ import java.io.IOException;
 import java.util.LinkedList;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-
 import api.soup.MySoup;
 import api.util.*;
 import api.forum.*;
 
 /**
  * @author Tim
- * Parses threads depending on sections
+ * Parses threads depending on section
+ * Returns a list threads, each thread contains <title, author, last poster, thread url>
  */
 public class ThreadsParser {
 	static RegexTools regex = new RegexTools();
-	public static LinkedList<Triple<String, String, String>> parseThreads(Section s) throws IOException {
-		LinkedList<Triple<String,String,String>> threadList = new LinkedList<Triple<String,String,String>>();
+	public static LinkedList<Quadruple<String, String, String, String>> parseThreads(Section s) throws IOException {
+		LinkedList<Quadruple <String,String,String,String>> threadList = new LinkedList<Quadruple <String,String,String,String>>();
 		if(s.getSectionTitle().equalsIgnoreCase("Announcements")) {
 			Document doc = MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=19");
 			Elements rowsa = doc.getElementsByClass("rowa");
@@ -30,9 +30,13 @@ public class ThreadsParser {
 				//get thread title
 				String titlea = regex.splitUser(rowsa.get(i).getElementsByTag("a").get(0).toString());
 				String titleb = regex.splitUser(rowsb.get(i).getElementsByTag("a").get(0).toString());
-
-				threadList.add(new Triple<String,String,String>(titlea,authora,lastPostera));
-				threadList.add(new Triple<String,String,String>(titleb,authorb,lastPosterb));
+				
+				//get thread url
+				String urla = regex.splitThreadUrl((rowsa.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				String urlb = regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				
+				threadList.add(new Quadruple<String,String,String,String>(titlea,authora,lastPostera,urla));
+				threadList.add(new Quadruple<String,String,String,String>(titleb,authorb,lastPosterb,urlb));
 			}
 		}
 		if(s.getSectionTitle().equalsIgnoreCase("What.CD")) {
@@ -50,8 +54,12 @@ public class ThreadsParser {
 				String titlea = regex.splitUser(rowsa.get(i).getElementsByTag("a").get(0).toString());
 				String titleb = regex.splitUser(rowsb.get(i).getElementsByTag("a").get(0).toString());
 
-				threadList.add(new Triple<String,String,String>(titlea,authora,lastPostera));
-				threadList.add(new Triple<String,String,String>(titleb,authorb,lastPosterb));
+				//get thread url
+				String urla = regex.splitThreadUrl((rowsa.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				String urlb = regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				
+				threadList.add(new Quadruple<String,String,String,String>(titlea,authora,lastPostera,urla));
+				threadList.add(new Quadruple<String,String,String,String>(titleb,authorb,lastPosterb,urlb));
 			}
 		}
 		if(s.getSectionTitle().equalsIgnoreCase("Projects")) {
@@ -69,8 +77,12 @@ public class ThreadsParser {
 				String titlea = regex.splitUser(rowsa.get(i).getElementsByTag("a").get(0).toString());
 				String titleb = regex.splitUser(rowsb.get(i).getElementsByTag("a").get(0).toString());
 
-				threadList.add(new Triple<String,String,String>(titlea,authora,lastPostera));
-				threadList.add(new Triple<String,String,String>(titleb,authorb,lastPosterb));
+				//get thread url
+				String urla = regex.splitThreadUrl((rowsa.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				String urlb = regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				
+				threadList.add(new Quadruple<String,String,String,String>(titlea,authora,lastPostera,urla));
+				threadList.add(new Quadruple<String,String,String,String>(titleb,authorb,lastPosterb,urlb));
 			}
 		}
 		if(s.getSectionTitle().equalsIgnoreCase("The Laboratory")) {
@@ -88,8 +100,12 @@ public class ThreadsParser {
 				String titlea = regex.splitUser(rowsa.get(i).getElementsByTag("a").get(0).toString());
 				String titleb = regex.splitUser(rowsb.get(i).getElementsByTag("a").get(0).toString());
 
-				threadList.add(new Triple<String,String,String>(titlea,authora,lastPostera));
-				threadList.add(new Triple<String,String,String>(titleb,authorb,lastPosterb));
+				//get thread url
+				String urla = regex.splitThreadUrl((rowsa.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				String urlb = regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				
+				threadList.add(new Quadruple<String,String,String,String>(titlea,authora,lastPostera,urla));
+				threadList.add(new Quadruple<String,String,String,String>(titleb,authorb,lastPosterb,urlb));
 			}
 		}
 		if(s.getSectionTitle().equalsIgnoreCase("Suggestions / Ideas")) {
@@ -107,8 +123,12 @@ public class ThreadsParser {
 				String titlea = regex.splitUser(rowsa.get(i).getElementsByTag("a").get(0).toString());
 				String titleb = regex.splitUser(rowsb.get(i).getElementsByTag("a").get(0).toString());
 
-				threadList.add(new Triple<String,String,String>(titlea,authora,lastPostera));
-				threadList.add(new Triple<String,String,String>(titleb,authorb,lastPosterb));
+				//get thread url
+				String urla = regex.splitThreadUrl((rowsa.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				String urlb = regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				
+				threadList.add(new Quadruple<String,String,String,String>(titlea,authora,lastPostera,urla));
+				threadList.add(new Quadruple<String,String,String,String>(titleb,authorb,lastPosterb,urlb));
 			}
 		}
 		if(s.getSectionTitle().equalsIgnoreCase("Bugs")) {
@@ -126,8 +146,12 @@ public class ThreadsParser {
 				String titlea = regex.splitUser(rowsa.get(i).getElementsByTag("a").get(0).toString());
 				String titleb = regex.splitUser(rowsb.get(i).getElementsByTag("a").get(0).toString());
 
-				threadList.add(new Triple<String,String,String>(titlea,authora,lastPostera));
-				threadList.add(new Triple<String,String,String>(titleb,authorb,lastPosterb));
+				//get thread url
+				String urla = regex.splitThreadUrl((rowsa.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				String urlb = regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				
+				threadList.add(new Quadruple<String,String,String,String>(titlea,authora,lastPostera,urla));
+				threadList.add(new Quadruple<String,String,String,String>(titleb,authorb,lastPosterb,urlb));
 			}
 		}
 		if(s.getSectionTitle().equalsIgnoreCase("The Lounge")) {
@@ -145,8 +169,12 @@ public class ThreadsParser {
 				String titlea = regex.splitUser(rowsa.get(i).getElementsByTag("a").get(0).toString());
 				String titleb = regex.splitUser(rowsb.get(i).getElementsByTag("a").get(0).toString());
 
-				threadList.add(new Triple<String,String,String>(titlea,authora,lastPostera));
-				threadList.add(new Triple<String,String,String>(titleb,authorb,lastPosterb));
+				//get thread url
+				String urla = regex.splitThreadUrl((rowsa.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				String urlb = regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				
+				threadList.add(new Quadruple<String,String,String,String>(titlea,authora,lastPostera,urla));
+				threadList.add(new Quadruple<String,String,String,String>(titleb,authorb,lastPosterb,urlb));
 			}
 		}
 		if(s.getSectionTitle().equalsIgnoreCase("The Library")) {
@@ -164,8 +192,12 @@ public class ThreadsParser {
 				String titlea = regex.splitUser(rowsa.get(i).getElementsByTag("a").get(0).toString());
 				String titleb = regex.splitUser(rowsb.get(i).getElementsByTag("a").get(0).toString());
 
-				threadList.add(new Triple<String,String,String>(titlea,authora,lastPostera));
-				threadList.add(new Triple<String,String,String>(titleb,authorb,lastPosterb));
+				//get thread url
+				String urla = regex.splitThreadUrl((rowsa.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				String urlb = regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				
+				threadList.add(new Quadruple<String,String,String,String>(titlea,authora,lastPostera,urla));
+				threadList.add(new Quadruple<String,String,String,String>(titleb,authorb,lastPosterb,urlb));
 			}
 		}
 		if(s.getSectionTitle().equalsIgnoreCase("Power Users")) {
@@ -183,8 +215,12 @@ public class ThreadsParser {
 				String titlea = regex.splitUser(rowsa.get(i).getElementsByTag("a").get(0).toString());
 				String titleb = regex.splitUser(rowsb.get(i).getElementsByTag("a").get(0).toString());
 
-				threadList.add(new Triple<String,String,String>(titlea,authora,lastPostera));
-				threadList.add(new Triple<String,String,String>(titleb,authorb,lastPosterb));
+				//get thread url
+				String urla = regex.splitThreadUrl((rowsa.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				String urlb = regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				
+				threadList.add(new Quadruple<String,String,String,String>(titlea,authora,lastPostera,urla));
+				threadList.add(new Quadruple<String,String,String,String>(titleb,authorb,lastPosterb,urlb));
 			}
 		}
 		if(s.getSectionTitle().equalsIgnoreCase("Comics")) {
@@ -202,8 +238,12 @@ public class ThreadsParser {
 				String titlea = regex.splitUser(rowsa.get(i).getElementsByTag("a").get(0).toString());
 				String titleb = regex.splitUser(rowsb.get(i).getElementsByTag("a").get(0).toString());
 
-				threadList.add(new Triple<String,String,String>(titlea,authora,lastPostera));
-				threadList.add(new Triple<String,String,String>(titleb,authorb,lastPosterb));
+				//get thread url
+				String urla = regex.splitThreadUrl((rowsa.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				String urlb = regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				
+				threadList.add(new Quadruple<String,String,String,String>(titlea,authora,lastPostera,urla));
+				threadList.add(new Quadruple<String,String,String,String>(titleb,authorb,lastPosterb,urlb));
 			}
 		}
 		if(s.getSectionTitle().equalsIgnoreCase("Technology")) {
@@ -221,8 +261,12 @@ public class ThreadsParser {
 				String titlea = regex.splitUser(rowsa.get(i).getElementsByTag("a").get(0).toString());
 				String titleb = regex.splitUser(rowsb.get(i).getElementsByTag("a").get(0).toString());
 
-				threadList.add(new Triple<String,String,String>(titlea,authora,lastPostera));
-				threadList.add(new Triple<String,String,String>(titleb,authorb,lastPosterb));
+				//get thread url
+				String urla = regex.splitThreadUrl((rowsa.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				String urlb = regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				
+				threadList.add(new Quadruple<String,String,String,String>(titlea,authora,lastPostera,urla));
+				threadList.add(new Quadruple<String,String,String,String>(titleb,authorb,lastPosterb,urlb));
 			}
 		}
 		if(s.getSectionTitle().equalsIgnoreCase("Invites")) {
@@ -240,8 +284,12 @@ public class ThreadsParser {
 				String titlea = regex.splitUser(rowsa.get(i).getElementsByTag("a").get(0).toString());
 				String titleb = regex.splitUser(rowsb.get(i).getElementsByTag("a").get(0).toString());
 
-				threadList.add(new Triple<String,String,String>(titlea,authora,lastPostera));
-				threadList.add(new Triple<String,String,String>(titleb,authorb,lastPosterb));
+				//get thread url
+				String urla = regex.splitThreadUrl((rowsa.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				String urlb = regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				
+				threadList.add(new Quadruple<String,String,String,String>(titlea,authora,lastPostera,urla));
+				threadList.add(new Quadruple<String,String,String,String>(titleb,authorb,lastPosterb,urlb));
 			}
 		}
 		if(s.getSectionTitle().equalsIgnoreCase("Music")) {
@@ -259,8 +307,12 @@ public class ThreadsParser {
 				String titlea = regex.splitUser(rowsa.get(i).getElementsByTag("a").get(0).toString());
 				String titleb = regex.splitUser(rowsb.get(i).getElementsByTag("a").get(0).toString());
 
-				threadList.add(new Triple<String,String,String>(titlea,authora,lastPostera));
-				threadList.add(new Triple<String,String,String>(titleb,authorb,lastPosterb));
+				//get thread url
+				String urla = regex.splitThreadUrl((rowsa.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				String urlb = regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				
+				threadList.add(new Quadruple<String,String,String,String>(titlea,authora,lastPostera,urla));
+				threadList.add(new Quadruple<String,String,String,String>(titleb,authorb,lastPosterb,urlb));
 			}
 		}
 		//////
@@ -279,8 +331,12 @@ public class ThreadsParser {
 				String titlea = regex.splitUser(rowsa.get(i).getElementsByTag("a").get(0).toString());
 				String titleb = regex.splitUser(rowsb.get(i).getElementsByTag("a").get(0).toString());
 
-				threadList.add(new Triple<String,String,String>(titlea,authora,lastPostera));
-				threadList.add(new Triple<String,String,String>(titleb,authorb,lastPosterb));
+				//get thread url
+				String urla = regex.splitThreadUrl((rowsa.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				String urlb = regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				
+				threadList.add(new Quadruple<String,String,String,String>(titlea,authora,lastPostera,urla));
+				threadList.add(new Quadruple<String,String,String,String>(titleb,authorb,lastPosterb,urlb));
 			}
 		}	
 		if(s.getSectionTitle().equalsIgnoreCase("The Studio")) {
@@ -298,8 +354,12 @@ public class ThreadsParser {
 				String titlea = regex.splitUser(rowsa.get(i).getElementsByTag("a").get(0).toString());
 				String titleb = regex.splitUser(rowsb.get(i).getElementsByTag("a").get(0).toString());
 
-				threadList.add(new Triple<String,String,String>(titlea,authora,lastPostera));
-				threadList.add(new Triple<String,String,String>(titleb,authorb,lastPosterb));
+				//get thread url
+				String urla = regex.splitThreadUrl((rowsa.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				String urlb = regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				
+				threadList.add(new Quadruple<String,String,String,String>(titlea,authora,lastPostera,urla));
+				threadList.add(new Quadruple<String,String,String,String>(titleb,authorb,lastPosterb,urlb));
 			}
 		}
 		if(s.getSectionTitle().equalsIgnoreCase("Offered")) {
@@ -317,8 +377,12 @@ public class ThreadsParser {
 				String titlea = regex.splitUser(rowsa.get(i).getElementsByTag("a").get(0).toString());
 				String titleb = regex.splitUser(rowsb.get(i).getElementsByTag("a").get(0).toString());
 
-				threadList.add(new Triple<String,String,String>(titlea,authora,lastPostera));
-				threadList.add(new Triple<String,String,String>(titleb,authorb,lastPosterb));
+				//get thread url
+				String urla = regex.splitThreadUrl((rowsa.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				String urlb = regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				
+				threadList.add(new Quadruple<String,String,String,String>(titlea,authora,lastPostera,urla));
+				threadList.add(new Quadruple<String,String,String,String>(titleb,authorb,lastPosterb,urlb));
 			}
 		}	if(s.getSectionTitle().equalsIgnoreCase("Vinyl")) {
 			Document doc = MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=36");
@@ -335,8 +399,12 @@ public class ThreadsParser {
 				String titlea = regex.splitUser(rowsa.get(i).getElementsByTag("a").get(0).toString());
 				String titleb = regex.splitUser(rowsb.get(i).getElementsByTag("a").get(0).toString());
 
-				threadList.add(new Triple<String,String,String>(titlea,authora,lastPostera));
-				threadList.add(new Triple<String,String,String>(titleb,authorb,lastPosterb));
+				//get thread url
+				String urla = regex.splitThreadUrl((rowsa.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				String urlb = regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				
+				threadList.add(new Quadruple<String,String,String,String>(titlea,authora,lastPostera,urla));
+				threadList.add(new Quadruple<String,String,String,String>(titleb,authorb,lastPosterb,urlb));
 			}
 		}	if(s.getSectionTitle().equalsIgnoreCase("Help")) {
 			Document doc = MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=8");
@@ -353,8 +421,12 @@ public class ThreadsParser {
 				String titlea = regex.splitUser(rowsa.get(i).getElementsByTag("a").get(0).toString());
 				String titleb = regex.splitUser(rowsb.get(i).getElementsByTag("a").get(0).toString());
 
-				threadList.add(new Triple<String,String,String>(titlea,authora,lastPostera));
-				threadList.add(new Triple<String,String,String>(titleb,authorb,lastPosterb));
+				//get thread url
+				String urla = regex.splitThreadUrl((rowsa.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				String urlb = regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				
+				threadList.add(new Quadruple<String,String,String,String>(titlea,authora,lastPostera,urla));
+				threadList.add(new Quadruple<String,String,String,String>(titleb,authorb,lastPosterb,urlb));
 			}
 		}	if(s.getSectionTitle().equalsIgnoreCase("Tutorials")) {
 			Document doc = MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=18");
@@ -371,8 +443,12 @@ public class ThreadsParser {
 				String titlea = regex.splitUser(rowsa.get(i).getElementsByTag("a").get(0).toString());
 				String titleb = regex.splitUser(rowsb.get(i).getElementsByTag("a").get(0).toString());
 
-				threadList.add(new Triple<String,String,String>(titlea,authora,lastPostera));
-				threadList.add(new Triple<String,String,String>(titleb,authorb,lastPosterb));
+				//get thread url
+				String urla = regex.splitThreadUrl((rowsa.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				String urlb = regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				
+				threadList.add(new Quadruple<String,String,String,String>(titlea,authora,lastPostera,urla));
+				threadList.add(new Quadruple<String,String,String,String>(titleb,authorb,lastPosterb,urlb));
 			}
 		}
 		if(s.getSectionTitle().equalsIgnoreCase("BitTorrent")) {
@@ -390,8 +466,12 @@ public class ThreadsParser {
 				String titlea = regex.splitUser(rowsa.get(i).getElementsByTag("a").get(0).toString());
 				String titleb = regex.splitUser(rowsb.get(i).getElementsByTag("a").get(0).toString());
 
-				threadList.add(new Triple<String,String,String>(titlea,authora,lastPostera));
-				threadList.add(new Triple<String,String,String>(titleb,authorb,lastPosterb));
+				//get thread url
+				String urla = regex.splitThreadUrl((rowsa.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				String urlb = regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				
+				threadList.add(new Quadruple<String,String,String,String>(titlea,authora,lastPostera,urla));
+				threadList.add(new Quadruple<String,String,String,String>(titleb,authorb,lastPosterb,urlb));
 			}
 		}
 		if(s.getSectionTitle().equalsIgnoreCase("Resolved Bugs")) {
@@ -409,8 +489,12 @@ public class ThreadsParser {
 				String titlea = regex.splitUser(rowsa.get(i).getElementsByTag("a").get(0).toString());
 				String titleb = regex.splitUser(rowsb.get(i).getElementsByTag("a").get(0).toString());
 
-				threadList.add(new Triple<String,String,String>(titlea,authora,lastPostera));
-				threadList.add(new Triple<String,String,String>(titleb,authorb,lastPosterb));
+				//get thread url
+				String urla = regex.splitThreadUrl((rowsa.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				String urlb = regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				
+				threadList.add(new Quadruple<String,String,String,String>(titlea,authora,lastPostera,urla));
+				threadList.add(new Quadruple<String,String,String,String>(titleb,authorb,lastPosterb,urlb));
 			}
 		}
 		if(s.getSectionTitle().equalsIgnoreCase("Trash")) {
@@ -428,8 +512,12 @@ public class ThreadsParser {
 				String titlea = regex.splitUser(rowsa.get(i).getElementsByTag("a").get(0).toString());
 				String titleb = regex.splitUser(rowsb.get(i).getElementsByTag("a").get(0).toString());
 
-				threadList.add(new Triple<String,String,String>(titlea,authora,lastPostera));
-				threadList.add(new Triple<String,String,String>(titleb,authorb,lastPosterb));
+				//get thread url
+				String urla = regex.splitThreadUrl((rowsa.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				String urlb = regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+				
+				threadList.add(new Quadruple<String,String,String,String>(titlea,authora,lastPostera,urla));
+				threadList.add(new Quadruple<String,String,String,String>(titleb,authorb,lastPosterb,urlb));
 			}
 		}
 		return threadList;

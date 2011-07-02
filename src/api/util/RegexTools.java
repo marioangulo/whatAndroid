@@ -11,7 +11,30 @@ import java.util.regex.Pattern;
  *
  */
 public class RegexTools {
-	public  String splitUser(String string) {
+	/**
+	 * Split the url of a thread in a section
+	 * @param string
+	 * @return url of thread
+	 */
+	public String splitThreadUrl(String string) {
+		Pattern pattern = Pattern.compile(".*<a href=\"(.*)\" title.*");
+		Matcher matcher = pattern.matcher(string);
+		if(matcher.matches()){
+			String s = matcher.group(1);
+			s = s.replace("amp;", "");
+			s = "http://what.cd/" + s;
+			return s;
+		}
+		return null;
+	}
+	/**
+	 * Split the user in a section
+	 * @param string
+	 * @return user name
+	 */
+	public String splitUser(String string) {
+		//TODO include user id
+		
 		Pattern pattern = Pattern.compile(".*>(.*)</a>.*");
 		Matcher matcher = pattern.matcher(string);
 		if(matcher.matches()){
@@ -19,7 +42,14 @@ public class RegexTools {
 		}
 		return null;
 	}
-	public  String split(String string, String from, String to) {
+	/**
+	 * Split a string
+	 * @param string String to split
+	 * @param from staring at which substring
+	 * @param to ending at which substring
+	 * @return the split string
+	 */
+	public String split(String string, String from, String to) {
 		Pattern pattern = Pattern.compile(".*"+from + "(.*)"+to + ".*");
 		Matcher matcher = pattern.matcher(string);
 		if(matcher.matches()){
@@ -27,6 +57,11 @@ public class RegexTools {
 		}
 		return null;
 	}
+	/**
+	 * Splits title of a thread
+	 * @param string
+	 * @return title of thread
+	 */
 	public  String splitTitle(String string) {
 		Pattern pattern = Pattern.compile(".*title=\"(.*)\">.*");
 		Matcher matcher = pattern.matcher(string);
@@ -55,6 +90,11 @@ public class RegexTools {
 		return toReturn;
 
 	}
+	/**
+	 * Splits the profile text of a user
+	 * @param string
+	 * @return profile text
+	 */
 	public  String splitProfileText(String string) {
 		Pattern pattern = Pattern.compile(".*<div class=\"pad\">(.*)</div>.*",Pattern.DOTALL);
 		Matcher matcher = pattern.matcher(string);
@@ -76,6 +116,11 @@ public class RegexTools {
 		}
 		return null;
 	}
+	/**
+	 * Splits the avatar
+	 * @param string
+	 * @return the avatar url
+	 */
 	public  String splitAvatar(String string) {
 		Pattern pattern = Pattern.compile(".*<img src=\"(.*)\" width=.*");
 		Matcher matcher = pattern.matcher(string);

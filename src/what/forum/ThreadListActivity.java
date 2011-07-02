@@ -25,7 +25,7 @@ public class ThreadListActivity extends GUITools implements OnClickListener {
 	ArrayList<TextView> authorList = new ArrayList<TextView>();
 	private int counter;
 
-	String[] title, lastposter, author;
+	String[] title, lastposter, author, threadurl;
 	String sectionTitle;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -57,6 +57,7 @@ public class ThreadListActivity extends GUITools implements OnClickListener {
 		title = Manager.getForum().getSectionByName(sectionTitle).getThreadsTitleArray();
 		lastposter = Manager.getForum().getSectionByName(sectionTitle).getThreadsLastPosterArray();
 		author = Manager.getForum().getSectionByName(sectionTitle).getThreadsAuthorArray();
+		threadurl = Manager.getForum().getSectionByName(sectionTitle).getThreadsUrlArray();
 	}
 	/**
 	 * Populate the table with the thread
@@ -111,7 +112,8 @@ public class ThreadListActivity extends GUITools implements OnClickListener {
 		setMenuButtonsListener(v);
 		for(int i=0; i<rowList.size(); i++) {
 			if(v.getId() == titleList.get(i).getId()) {
-				notification.displayToast(Integer.toString(titleList.get(i).getId()), Toast.LENGTH_SHORT, this);
+				notification.displayToast(title[i] + "," + threadurl[i], Toast.LENGTH_SHORT, this);
+				//notification.displayToast(Integer.toString(titleList.get(i).getId()), Toast.LENGTH_SHORT, this);
 			}
 			if(v.getId() == lastPosterList.get(i).getId()) {
 				notification.displayToast(Integer.toString(lastPosterList.get(i).getId()), Toast.LENGTH_SHORT, this);

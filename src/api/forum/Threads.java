@@ -12,6 +12,7 @@ public class Threads {
 	private String threadTitle;
 	private String threadAuthor;
 	private String threadLastPoster;
+	private String threadUrl;
 	private LinkedList<Post> postList = new LinkedList<Post>();
 	//TODO add userinforum 
 	/*public Threads(String threadTitle,UserInForum userInForum) throws IOException {
@@ -27,10 +28,11 @@ public class Threads {
 	 * @param threadLastPoster
 	 * @throws IOException 
 	 */
-	public Threads(String threadTitle, String threadAuthor, String threadLastPoster) throws IOException {
+	public Threads(String threadTitle, String threadAuthor, String threadLastPoster, String threadUrl) throws IOException {
 		this.threadTitle = threadTitle;
 		this.threadAuthor = threadAuthor;
 		this.threadLastPoster = threadLastPoster;
+		this.threadUrl = threadUrl;
 	}
 	/**
 	 * Get title of the thread
@@ -52,6 +54,13 @@ public class Threads {
 	 */
 	public String getThreadLastPoster() {
 		return threadLastPoster;
+	}
+	/**
+	 * Get the url of a thread
+	 * @return thread url
+	 */
+	public String getThreadUrl() {
+		return threadUrl;
 	}
 	/**
 	 * Add posts to a thread
