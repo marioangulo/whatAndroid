@@ -3,6 +3,9 @@ package api.forum;
 import java.io.IOException;
 import java.util.LinkedList;
 
+import api.parser.PostParser;
+import api.util.Triple;
+
 /**
  * A Thread in the forum
  * @author Tim
@@ -66,10 +69,31 @@ public class Threads {
 	 * Add posts to a thread
 	 * @throws IOException 
 	 */
-	public void addPost() throws IOException {
-		/*for (Triple<String, String, String> p : Parser.parsePosts(this)) {
-			//postList.add(new Post(new UserInForum(p.getA(),p.getB()),p.getC()));
-		}*/
+	public void addPosts() throws IOException {
+		for (Triple<String, String, String> p : PostParser.parsePosts(this)) {
+			postList.add(new Post(new UserInForum(p.getA(),p.getB()),p.getC()));
+		}
+	}
+	public String[] getPostUserArray() {
+		String[] s = new String[postList.size()];
+		for(int i=0;i<s.length; i++) {
+			s[i] = postList.get(i).getUserInForum().getUserName();
+		}
+		return s;
+	}
+	public String[] getPostUserIDArray() {
+		String[] s = new String[postList.size()];
+		for(int i=0;i<s.length; i++) {
+			s[i] = postList.get(i).getUserInForum().getUserID();
+		}
+		return s;
+	}
+	public String[] getPostBodyArray() {
+		String[] s = new String[postList.size()];
+		for(int i=0;i<s.length; i++) {
+			s[i] = postList.get(i).getPostBody();
+		}
+		return s;
 	}
 	/**
 	 * Get the original post in a thread

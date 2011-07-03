@@ -44,4 +44,19 @@ public class Notification {
 	     })
 	     .show();
 	}
+	/**
+	 * Display error dialog
+	 * @param title
+	 * @param message
+	 * @param context
+	 */
+	public void displayError(String title, String message, Context context) {
+		new AlertDialog.Builder(context).setTitle(title).setMessage(message)
+	    .setNegativeButton("Close", new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface arg0, int arg1) { 
+	        	arg0.dismiss();
+	        }
+	     })
+	     .show();
+	}
 }

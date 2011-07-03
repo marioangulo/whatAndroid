@@ -3,6 +3,8 @@ package what.login;
 import java.io.IOException;
 
 import what.gui.ActivityStack;
+import what.gui.GUITools;
+import what.gui.Notification;
 import what.gui.R;
 import android.app.Activity;
 import android.content.Intent;
@@ -28,6 +30,7 @@ public class WhatAndroidActivity extends Activity implements OnClickListener
 	TextView password;
 	Button login;
 	CheckBox checkbox;
+	Notification notification = new Notification();
 	private static final String TAG = "WhatAndroidActivity";
 
 	/** 
@@ -51,19 +54,22 @@ public class WhatAndroidActivity extends Activity implements OnClickListener
 	 * @throws IOException 
 	 */
 	private void login() throws IOException {
-		
+
 		String usernameString = username.getText().toString();
 		String passwordString = password.getText().toString();
 		String loginURL = "http://what.cd/login.php";
 
 		MySoup.login(loginURL, usernameString, passwordString);
-		ActivityStack.push(what.forum.SectionListActivity.class);
-		//TODO more suitable location
-		Manager.createForum("what.cd Forum");
-		
-		Intent intent = new Intent(this,what.forum.SectionListActivity.class);
-		startActivity(intent);
-		
+		if(MySoup.isLoggedIn()) {
+			ActivityStack.push(what.forum.SectionListActivity.class);
+			//TODO more suitable location
+			Manager.createForum("what.cd Forum");
+			Intent intent = new Intent(this,what.forum.SectionListActivity.class);
+			startActivity(intent);
+		}
+		else {
+			notification.displayError("Error", "Login failed, wrong username/password or a timeout, try again", this);
+		}
 	}	
 	@Override
 	public void onClick(View v) {
@@ -73,15 +79,13 @@ public class WhatAndroidActivity extends Activity implements OnClickListener
 			//TODO read/write to settings file
 			break;
 		case R.id.login:
-			//TODO fix null problem
-			if(username.getText() != null && password.getText() != null) {
-				try {
-					login();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}	
+			try {
+				login();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+			// TODO Auto-generated catch block
 			break;
 		}
 	}

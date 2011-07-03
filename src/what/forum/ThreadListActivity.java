@@ -3,9 +3,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import what.gui.GUITools;
 import what.gui.R;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TableRow;
@@ -27,13 +29,14 @@ public class ThreadListActivity extends GUITools implements OnClickListener {
 
 	String[] title, lastposter, author, threadurl;
 	String sectionTitle;
+	private Intent intent;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.threads);
 		addButtons();
 
-		getSectionTitle();
+		getBundle();
 		loadThreads();
 		populateTable();
 		idGenerator();
@@ -41,7 +44,7 @@ public class ThreadListActivity extends GUITools implements OnClickListener {
 	/**
 	 * Gets the title of section from the sent bundle
 	 */
-	private void getSectionTitle() {
+	private void getBundle() {
 		Bundle b = this.getIntent().getExtras();
 		sectionTitle = b.getString("sectionTitle");
 	}
@@ -79,7 +82,7 @@ public class ThreadListActivity extends GUITools implements OnClickListener {
 		rowList.add(new TableRow(this));
 
 		titleList.add(new TextView(this));
-		titleList.get(counter).setText(a);
+		titleList.get(counter).setText(a);		
 		titleList.get(counter).setOnClickListener(this);
 
 		lastPosterList.add(new TextView(this));
@@ -108,18 +111,33 @@ public class ThreadListActivity extends GUITools implements OnClickListener {
 			authorList.get(i).setId(i+(2*counter));
 		}
 	}
+	/**
+	 * Opens a thread in a new activity
+	 * @param j position of thread in the list
+	 */
+	private void openThread(int j) {
+		intent = new Intent(this,what.forum.PostListActivity.class);
+		Bundle b = new Bundle();
+		b.putString("sectionTitle", sectionTitle);
+		b.putInt("threadPosition", j);
+		b.putString("threadTitle", title[j]);
+		b.putString("threadAuthor", author[j]);
+		b.putString("threadUrl", threadurl[j]);
+		intent.putExtras(b);
+		Log.v("TAG", sectionTitle + "," + j + "," + title[j] + "," + author[j] + "," + threadurl[j]);
+		startActivityForResult(intent, 0);
+	}
 	public void onClick(View v) {
 		setMenuButtonsListener(v);
 		for(int i=0; i<rowList.size(); i++) {
 			if(v.getId() == titleList.get(i).getId()) {
-				notification.displayToast(title[i] + "," + threadurl[i], Toast.LENGTH_SHORT, this);
-				//notification.displayToast(Integer.toString(titleList.get(i).getId()), Toast.LENGTH_SHORT, this);
+				openThread(i);
 			}
 			if(v.getId() == lastPosterList.get(i).getId()) {
-				notification.displayToast(Integer.toString(lastPosterList.get(i).getId()), Toast.LENGTH_SHORT, this);
+				notification.displayToast(lastposter[i], Toast.LENGTH_SHORT, this);
 			}
 			if(v.getId() == authorList.get(i).getId()) {
-				notification.displayToast(Integer.toString(authorList.get(i).getId()), Toast.LENGTH_SHORT, this);
+				notification.displayToast(author[i], Toast.LENGTH_SHORT, this);
 			}
 		}
 	}

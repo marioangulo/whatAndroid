@@ -23,14 +23,22 @@ public class MySoup {
 			//login
 			Connection.Response res = Jsoup.connect(url)
 			.data("username", username, "password", password)
-			.method(Method.POST)
+			.method(Method.POST).timeout(6000)
 			.execute();	
 			//set cookie
 			sessionId = res.cookie("session");
 		} catch (IOException e) {
-			/*System.err.println("Couldn't login");
-			e.printStackTrace();*/
 		}
+	}
+	/**
+	 * Check if user was able to login
+	 * @return true if logged in
+	 */
+	public static boolean isLoggedIn() {
+		if(sessionId != null) {
+			return true;
+		}
+		return false;
 	}
 	/**
 	 * Return a Document of a page that has a cookie
@@ -45,7 +53,7 @@ public class MySoup {
 			.get();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-		/*	e.printStackTrace();*/
+			/*	e.printStackTrace();*/
 		}
 		return doc;
 	}
