@@ -23,7 +23,7 @@ public class MySoup {
 			//login
 			Connection.Response res = Jsoup.connect(url)
 			.data("username", username, "password", password)
-			.method(Method.POST).timeout(6000)
+			.method(Method.POST).timeout(30000)
 			.execute();	
 			//set cookie
 			sessionId = res.cookie("session");
@@ -49,7 +49,7 @@ public class MySoup {
 		Document doc=null;
 		try {
 			doc = Jsoup.connect(page)
-			.cookie("session", sessionId)
+			.cookie("session", sessionId).timeout(30000)
 			.get();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
