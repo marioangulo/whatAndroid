@@ -10,41 +10,42 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
-import android.widget.ScrollView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import api.forum.Manager;
 
 /**
- * @author Tim
- * The view of all posts in a section
+ * @author Tim The view of all posts in a section
  */
 
 public class PostListActivity extends Activity implements OnClickListener {
 	ScrollView scrollView;
 	LinearLayout linearLayout;
-	LinearLayout mainLayout; 
+	LinearLayout mainLayout;
 	FrameLayout topLayout;
 	TextView threadTitle;
 	ArrayList<TextView> postAuthor = new ArrayList<TextView>();
-	ArrayList <TextView> postBody = new ArrayList<TextView>();
+	ArrayList<TextView> postBody = new ArrayList<TextView>();
 	String[] user, id, body;
 	String sectionTitle;
 	String threadTitleString;
 	String threadAuthor;
 	int threadPosition;
 	int numberOfPosts;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		//addButtons();
+		// addButtons();
 		createLayout();
 		loadPosts();
 		populateView();
 		idGenerator();
 	}
+
 	/**
 	 * Create the base layout
 	 */
@@ -52,8 +53,8 @@ public class PostListActivity extends Activity implements OnClickListener {
 		mainLayout = new LinearLayout(this);
 		mainLayout.setOrientation(LinearLayout.VERTICAL);
 
-		scrollView= new ScrollView(this);
-		linearLayout= new LinearLayout(this);
+		scrollView = new ScrollView(this);
+		linearLayout = new LinearLayout(this);
 		linearLayout.setOrientation(LinearLayout.VERTICAL);
 		scrollView.addView(linearLayout);
 
@@ -65,6 +66,7 @@ public class PostListActivity extends Activity implements OnClickListener {
 		mainLayout.addView(scrollView);
 		this.setContentView(mainLayout);
 	}
+
 	/**
 	 * Loads posts and unload the bundle
 	 */
@@ -75,27 +77,36 @@ public class PostListActivity extends Activity implements OnClickListener {
 		threadTitleString = b.getString("threadTitle");
 		threadAuthor = b.getString("threadAuthor");
 		Log.v("TAG", sectionTitle + threadPosition);
+
 		try {
-			Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition).addPosts();
+			Manager.getForum().getSectionByName(sectionTitle).getThreads()
+					.get(threadPosition).addPosts();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		numberOfPosts = Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition).getPost().size();
-		user = Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition).getPostUserArray();
-		id = Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition).getPostUserIDArray();
-		body = Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition).getPostBodyArray();
+
+		numberOfPosts = Manager.getForum().getSectionByName(sectionTitle)
+				.getThreads().get(threadPosition).getPost().size();
+		user = Manager.getForum().getSectionByName(sectionTitle).getThreads()
+				.get(threadPosition).getPostUserArray();
+		id = Manager.getForum().getSectionByName(sectionTitle).getThreads()
+				.get(threadPosition).getPostUserIDArray();
+		body = Manager.getForum().getSectionByName(sectionTitle).getThreads()
+				.get(threadPosition).getPostBodyArray();
 
 	}
+
 	/**
 	 * Populate the view with posts
 	 */
 	public void populateView() {
-		threadTitle.setText(threadTitleString + "\t" + "  created by " + threadAuthor);
+		threadTitle.setText(threadTitleString + "\t" + "  created by "
+				+ threadAuthor);
 		threadTitle.setTextSize(22);
 		threadTitle.setOnClickListener(this);
-		//arbitrary id that doesn't colide with anyothers
+		// arbitrary id that doesn't colide with anyothers
 		threadTitle.setId(7795);
-		for(int i = 0; i < numberOfPosts; i++) {
+		for (int i = 0; i < numberOfPosts; i++) {
 			postAuthor.add(new TextView(this));
 			postAuthor.get(i).setText(user[i]);
 			postAuthor.get(i).setTextSize(17);
@@ -109,31 +120,31 @@ public class PostListActivity extends Activity implements OnClickListener {
 			linearLayout.addView(postBody.get(i));
 		}
 	}
+
 	/**
 	 * Generate ids for all elements
 	 */
 	private void idGenerator() {
-		for(int i=0;i<numberOfPosts;i++) {
+		for (int i = 0; i < numberOfPosts; i++) {
 			postAuthor.get(i).setId(i);
-			postBody.get(i).setId(i+numberOfPosts);
+			postBody.get(i).setId(i + numberOfPosts);
 		}
 	}
+
 	@Override
 	public void onClick(View v) {
 		Notification n = new Notification();
-		if(v.getId() == threadTitle.getId()) {
+		if (v.getId() == threadTitle.getId()) {
 			scrollView.fullScroll(ScrollView.FOCUS_UP);
 		}
-		for(int i=0; i<numberOfPosts; i++) {
-			if(v.getId() == postAuthor.get(i).getId()) {
+		for (int i = 0; i < numberOfPosts; i++) {
+			if (v.getId() == postAuthor.get(i).getId()) {
 				n.displayToast(user[i] + id[i], Toast.LENGTH_SHORT, this);
 			}
-			if(v.getId() == postBody.get(i).getId()) {
+			if (v.getId() == postBody.get(i).getId()) {
 				n.displayToast("Quoted", Toast.LENGTH_SHORT, this);
 			}
 
 		}
 	}
 }
-
-
