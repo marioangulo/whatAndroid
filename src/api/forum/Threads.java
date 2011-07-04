@@ -102,7 +102,7 @@ public class Threads {
 	public String[] getPostUserArray() {
 		String[] s = new String[postList.size()];
 		for (int i = 0; i < s.length; i++) {
-			s[i] = postList.get(i).getUserInForum().getUserName();
+			s[i] = postList.get(i).getPostAuthor();
 		}
 		return s;
 	}
@@ -110,7 +110,7 @@ public class Threads {
 	public String[] getPostUserIDArray() {
 		String[] s = new String[postList.size()];
 		for (int i = 0; i < s.length; i++) {
-			s[i] = postList.get(i).getUserInForum().getUserID();
+			s[i] = postList.get(i).getPostAuthorID();
 		}
 		return s;
 	}
@@ -155,8 +155,12 @@ public class Threads {
 	 */
 	@Override
 	public String toString() {
-		String toReturn = threadTitle + ", " + threadAuthor + ", "
-				+ threadLastPoster + "\n" /* + postList.toString */;
+		String toReturn = threadTitle + ", " + threadAuthor + ", " + threadLastPoster + "\n" /*
+																							 * +
+																							 * postList
+																							 * .
+																							 * toString
+																							 */;
 		return toReturn;
 	}
 }

@@ -64,22 +64,17 @@ public class ThreadListActivity extends GUITools implements OnClickListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		title = Manager.getForum().getSectionByName(sectionTitle)
-				.getThreadsTitleArray();
-		lastposter = Manager.getForum().getSectionByName(sectionTitle)
-				.getThreadsLastPosterArray();
-		author = Manager.getForum().getSectionByName(sectionTitle)
-				.getThreadsAuthorArray();
-		threadurl = Manager.getForum().getSectionByName(sectionTitle)
-				.getThreadsUrlArray();
+		title = Manager.getForum().getSectionByName(sectionTitle).getThreadsTitleArray();
+		lastposter = Manager.getForum().getSectionByName(sectionTitle).getThreadsLastPosterArray();
+		author = Manager.getForum().getSectionByName(sectionTitle).getThreadsAuthorArray();
+		threadurl = Manager.getForum().getSectionByName(sectionTitle).getThreadsUrlArray();
 	}
 
 	/**
 	 * Populate the table with the thread
 	 */
 	private void populateTable() {
-		for (int i = 0; i < Manager.getForum().getSectionByName(sectionTitle)
-				.getThreads().size(); i++) {
+		for (int i = 0; i < Manager.getForum().getSectionByName(sectionTitle).getThreads().size(); i++) {
 			addRow(title[i], lastposter[i], author[i]);
 		}
 	}
@@ -115,8 +110,7 @@ public class ThreadListActivity extends GUITools implements OnClickListener {
 		rowList.get(counter).addView(lastPosterList.get(counter));
 		rowList.get(counter).addView(authorList.get(counter));
 
-		table.addView(rowList.get(counter), new TableLayout.LayoutParams(
-				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+		table.addView(rowList.get(counter), new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
 		counter++;
 	}
@@ -147,8 +141,7 @@ public class ThreadListActivity extends GUITools implements OnClickListener {
 		b.putString("threadAuthor", author[j]);
 		b.putString("threadUrl", threadurl[j]);
 		intent.putExtras(b);
-		Log.v("TAG", sectionTitle + "," + j + "," + title[j] + "," + author[j]
-				+ "," + threadurl[j]);
+		Log.v("TAG", sectionTitle + "," + j + "," + title[j] + "," + author[j] + "," + threadurl[j]);
 		startActivityForResult(intent, 0);
 	}
 
