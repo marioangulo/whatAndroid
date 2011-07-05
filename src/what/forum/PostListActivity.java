@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import what.gui.Notification;
+import what.gui.TextViewBorder;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,7 +28,7 @@ public class PostListActivity extends Activity implements OnClickListener {
 	LinearLayout mainLayout;
 	FrameLayout topLayout;
 	TextView threadTitle;
-	ArrayList<TextView> postAuthor = new ArrayList<TextView>();
+	ArrayList<TextViewBorder> postAuthor = new ArrayList<TextViewBorder>();
 	ArrayList<TextView> postBody = new ArrayList<TextView>();
 	String[] user, id, body;
 	String sectionTitle;
@@ -34,6 +36,7 @@ public class PostListActivity extends Activity implements OnClickListener {
 	String threadAuthor;
 	int threadPosition;
 	int numberOfPosts;
+	Intent intent;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -79,20 +82,15 @@ public class PostListActivity extends Activity implements OnClickListener {
 		Log.v("TAG", sectionTitle + threadPosition);
 
 		try {
-			Manager.getForum().getSectionByName(sectionTitle).getThreads()
-					.get(threadPosition).addPosts();
+			Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition).addPosts();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		numberOfPosts = Manager.getForum().getSectionByName(sectionTitle)
-				.getThreads().get(threadPosition).getPost().size();
-		user = Manager.getForum().getSectionByName(sectionTitle).getThreads()
-				.get(threadPosition).getPostUserArray();
-		id = Manager.getForum().getSectionByName(sectionTitle).getThreads()
-				.get(threadPosition).getPostUserIDArray();
-		body = Manager.getForum().getSectionByName(sectionTitle).getThreads()
-				.get(threadPosition).getPostBodyArray();
+		numberOfPosts = Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition).getPost().size();
+		user = Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition).getPostUserArray();
+		id = Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition).getPostUserIDArray();
+		body = Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition).getPostBodyArray();
 
 	}
 
@@ -100,20 +98,20 @@ public class PostListActivity extends Activity implements OnClickListener {
 	 * Populate the view with posts
 	 */
 	public void populateView() {
-		threadTitle.setText(threadTitleString + "\t" + "  created by "
-				+ threadAuthor);
+		threadTitle.setText(threadTitleString + "\t" + "  created by " + threadAuthor);
 		threadTitle.setTextSize(22);
 		threadTitle.setOnClickListener(this);
 		// arbitrary id that doesn't colide with anyothers
 		threadTitle.setId(7795);
 		for (int i = 0; i < numberOfPosts; i++) {
-			postAuthor.add(new TextView(this));
+			postAuthor.add(new TextViewBorder(this));
 			postAuthor.get(i).setText(user[i]);
 			postAuthor.get(i).setTextSize(17);
 			postAuthor.get(i).setOnClickListener(this);
 
 			postBody.add(new TextView(this));
 			postBody.get(i).setText(body[i]);
+			postBody.get(i).setPadding(45, 0, 0, 0);
 			postBody.get(i).setOnClickListener(this);
 
 			linearLayout.addView(postAuthor.get(i));
@@ -131,6 +129,24 @@ public class PostListActivity extends Activity implements OnClickListener {
 		}
 	}
 
+	/**
+	 * Opens the user profile in a popup
+	 * 
+	 * @param j
+	 * @param k
+	 *            identifies between which userlist to choose from
+	 * 
+	 */
+	private void openUser(int j) {
+		intent = new Intent(this, what.user.UserProfileActivity.class);
+		Bundle b = new Bundle();
+		b.putString("userName", user[j]);
+		b.putString("userID", id[j]);
+		intent.putExtras(b);
+		startActivityForResult(intent, 0);
+
+	}
+
 	@Override
 	public void onClick(View v) {
 		Notification n = new Notification();
@@ -139,7 +155,7 @@ public class PostListActivity extends Activity implements OnClickListener {
 		}
 		for (int i = 0; i < numberOfPosts; i++) {
 			if (v.getId() == postAuthor.get(i).getId()) {
-				n.displayToast(user[i] + id[i], Toast.LENGTH_SHORT, this);
+				openUser(i);
 			}
 			if (v.getId() == postBody.get(i).getId()) {
 				n.displayToast("Quoted", Toast.LENGTH_SHORT, this);

@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.Gallery.LayoutParams;
 import android.widget.ImageView;
@@ -30,6 +31,8 @@ public class UserProfileActivity extends Activity implements OnClickListener {
 	ImageView avatarView;
 	Bitmap avatarImg;
 	TextView basicStatsView;
+	Button moreButton;
+	Button closeButton;
 	String userName, userID;
 	// TODO seperate api and gui
 	UserProfile userProfile;
@@ -52,6 +55,16 @@ public class UserProfileActivity extends Activity implements OnClickListener {
 
 		basicStatsView = new TextView(this);
 		mainLayout.addView(basicStatsView);
+
+		moreButton = new Button(this);
+		moreButton.setText("More Stats");
+		moreButton.setId(0);
+		moreButton.setOnClickListener(this);
+
+		closeButton = new Button(this);
+		closeButton.setText("Close");
+		moreButton.setId(1);
+		closeButton.setOnClickListener(this);
 
 		this.setContentView(mainLayout);
 	}
@@ -82,6 +95,12 @@ public class UserProfileActivity extends Activity implements OnClickListener {
 		basicStatsView.setText(text);
 	}
 
+	private void loadExtraStats() {
+		TextView extraStatsView = new TextView(this);
+		mainLayout.addView(extraStatsView);
+
+	}
+
 	private void downloadAvatar() {
 		String avatarURL = userProfile.getAvatarURL();
 		URL myFileUrl = null;
@@ -105,6 +124,11 @@ public class UserProfileActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-
+		if (v.getId() == moreButton.getId()) {
+			loadExtraStats();
+		}
+		if (v.getId() == closeButton.getId()) {
+			finish();
+		}
 	}
 }
