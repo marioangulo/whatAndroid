@@ -69,6 +69,22 @@ public class Section {
 		return s;
 	}
 
+	public String[] getThreadsLastPosterIDArray() {
+		String[] s = new String[threadsList.size()];
+		for (int i = 0; i < s.length; i++) {
+			s[i] = threadsList.get(i).getThreadLastPosterID();
+		}
+		return s;
+	}
+
+	public String[] getThreadsAuthorIDArray() {
+		String[] s = new String[threadsList.size()];
+		for (int i = 0; i < s.length; i++) {
+			s[i] = threadsList.get(i).getThreadAuthorID();
+		}
+		return s;
+	}
+
 	/**
 	 * Get a LinkedList of type Threads
 	 * 
@@ -104,4 +120,5 @@ public class Section {
 		toReturn = toReturn.replace("]", "");
 		return toReturn;
 	}
+
 }

@@ -14,7 +14,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
-import android.widget.Toast;
 import api.forum.Manager;
 
 /**
@@ -31,7 +30,7 @@ public class ThreadListActivity extends GUITools implements OnClickListener {
 	ArrayList<TextView> authorList = new ArrayList<TextView>();
 	private int counter;
 
-	String[] title, lastposter, author, threadurl;
+	String[] title, lastposter, author, threadurl, authoruserid, lastposteruserid;
 	String sectionTitle;
 	private Intent intent;
 
@@ -68,6 +67,8 @@ public class ThreadListActivity extends GUITools implements OnClickListener {
 		lastposter = Manager.getForum().getSectionByName(sectionTitle).getThreadsLastPosterArray();
 		author = Manager.getForum().getSectionByName(sectionTitle).getThreadsAuthorArray();
 		threadurl = Manager.getForum().getSectionByName(sectionTitle).getThreadsUrlArray();
+		authoruserid = Manager.getForum().getSectionByName(sectionTitle).getThreadsAuthorIDArray();
+		lastposteruserid = Manager.getForum().getSectionByName(sectionTitle).getThreadsLastPosterIDArray();
 	}
 
 	/**
@@ -149,8 +150,23 @@ public class ThreadListActivity extends GUITools implements OnClickListener {
 	 * Opens the user profile in a popup
 	 * 
 	 * @param j
+	 * @param k
+	 *            identifies between which userlist to choose from
+	 * 
 	 */
-	private void openUser(int j) {
+	private void openUser(int j, int k) {
+		intent = new Intent(this, what.user.UserProfileActivity.class);
+		Bundle b = new Bundle();
+		if (k == 0) {
+			b.putString("userName", lastposter[j]);
+			b.putString("userID", lastposteruserid[j]);
+		}
+		if (k == 1) {
+			b.putString("userName", author[j]);
+			b.putString("userID", authoruserid[j]);
+		}
+		intent.putExtras(b);
+		startActivityForResult(intent, 0);
 
 	}
 
@@ -162,10 +178,10 @@ public class ThreadListActivity extends GUITools implements OnClickListener {
 				openThread(i);
 			}
 			if (v.getId() == lastPosterList.get(i).getId()) {
-
+				openUser(i, 0);
 			}
 			if (v.getId() == authorList.get(i).getId()) {
-				notification.displayToast(author[i], Toast.LENGTH_SHORT, this);
+				openUser(i, 1);
 			}
 		}
 	}

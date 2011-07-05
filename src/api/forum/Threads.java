@@ -58,7 +58,7 @@ public class Threads {
 	 * @return
 	 */
 	public String getThreadAuthorID() {
-		return threadAuthor.getUserName();
+		return threadAuthor.getUserID();
 	}
 
 	/**
@@ -156,10 +156,7 @@ public class Threads {
 	@Override
 	public String toString() {
 		String toReturn = threadTitle + ", " + threadAuthor + ", " + threadLastPoster + "\n" /*
-																							 * +
-																							 * postList
-																							 * .
-																							 * toString
+																							 * + postList . toString
 																							 */;
 		return toReturn;
 	}
