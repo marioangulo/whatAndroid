@@ -4,18 +4,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
+	<TextView android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_height="wrap_content" android:layout_width="wrap_content"
+		android:text="" android:id="@+id/sectionTitle"></TextView>
 
-	  <FrameLayout android:id="@+id/FrameLayout01" 
-      android:layout_width="fill_parent" 
-      android:layout_height="wrap_content">
-         <Button android:layout_width="wrap_content" 
-              android:layout_height="wrap_content" 
-              android:layout_gravity="center_horizontal" android:text="@string/menu" android:id="@+id/menuButton">
-        </Button>
-         <Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_gravity="right" android:id="@+id/forwardButton" android:text="@string/forward"></Button>
-         <Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/back" android:id="@+id/backButton"></Button>
-    </FrameLayout>
-	
 	<ScrollView android:id="@+id/ScrollView01"
 		android:layout_width="wrap_content" android:layout_height="wrap_content">
 
@@ -25,10 +17,8 @@
 
 		</TableLayout>
 	</ScrollView>
-<ListView android:id="@android:id/list"
- 	  android:layout_width="wrap_content" 
-      android:layout_height="wrap_content" 
-      android:layout_weight="1">
-    </ListView>
+	<ListView android:id="@android:id/list" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:layout_weight="1">
+	</ListView>
 </LinearLayout>
 

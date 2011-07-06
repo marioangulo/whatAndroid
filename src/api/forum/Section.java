@@ -29,10 +29,12 @@ public class Section {
 	/**
 	 * Populate the section with threads using the thread parser
 	 * 
+	 * @param page
+	 *            the page of the section to get threads from
 	 * @throws IOException
 	 */
-	public void addThreads() throws IOException {
-		for (Sextuple<String, String, String, String, String, String> t : ThreadsParser.parseThreads(this)) {
+	public void addThreads(int page) throws IOException {
+		for (Sextuple<String, String, String, String, String, String> t : ThreadsParser.parseThreads(this, page)) {
 			threadsList.add(new Threads(t.getA(), new UserInForum(t.getB(), t.getC()), new UserInForum(t.getD(), t.getE()), t.getF()));
 		}
 	}

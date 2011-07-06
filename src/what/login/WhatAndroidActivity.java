@@ -3,13 +3,11 @@ package what.login;
 import java.io.IOException;
 
 import what.gui.ActivityStack;
-import what.gui.GUITools;
 import what.gui.Notification;
 import what.gui.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -20,12 +18,12 @@ import api.soup.MySoup;
 
 /**
  * Login screen
+ * 
  * @author Tim
- *
+ * 
  */
 @SuppressWarnings("unused")
-public class WhatAndroidActivity extends Activity implements OnClickListener 
-{
+public class WhatAndroidActivity extends Activity implements OnClickListener {
 	TextView username;
 	TextView password;
 	Button login;
@@ -33,25 +31,26 @@ public class WhatAndroidActivity extends Activity implements OnClickListener
 	Notification notification = new Notification();
 	private static final String TAG = "WhatAndroidActivity";
 
-	/** 
-	 * Called when the activity is first created. 
+	/**
+	 * Called when the activity is first created.
 	 * */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		username = (TextView)this.findViewById(R.id.username);
-		password = (TextView)this.findViewById(R.id.password);
-		checkbox = (CheckBox)this.findViewById(R.id.checkbox);
+		username = (TextView) this.findViewById(R.id.username);
+		password = (TextView) this.findViewById(R.id.password);
+		checkbox = (CheckBox) this.findViewById(R.id.checkbox);
 		checkbox.setOnClickListener(this);
-		login = (Button)this.findViewById(R.id.login);
+		login = (Button) this.findViewById(R.id.login);
 		login.setOnClickListener(this);
 	}
 
 	/**
 	 * Login to what.cd
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
 	private void login() throws IOException {
 
@@ -60,23 +59,23 @@ public class WhatAndroidActivity extends Activity implements OnClickListener
 		String loginURL = "http://what.cd/login.php";
 
 		MySoup.login(loginURL, usernameString, passwordString);
-		if(MySoup.isLoggedIn()) {
+		if (MySoup.isLoggedIn()) {
 			ActivityStack.push(what.forum.SectionListActivity.class);
-			//TODO more suitable location
+			// TODO more suitable location
 			Manager.createForum("what.cd Forum");
-			Intent intent = new Intent(this,what.forum.SectionListActivity.class);
+			Intent intent = new Intent(this, what.forum.SectionListActivity.class);
 			startActivity(intent);
-		}
-		else {
+		} else {
 			notification.displayError("Error", "Login failed, wrong username/password or a timeout, try again", this);
 		}
-	}	
+	}
+
 	@Override
 	public void onClick(View v) {
-		switch(v.getId()) {
+		switch (v.getId()) {
 		case R.id.checkbox:
 			checkbox.setSelected(true);
-			//TODO read/write to settings file
+			// TODO read/write to settings file
 			break;
 		case R.id.login:
 			try {

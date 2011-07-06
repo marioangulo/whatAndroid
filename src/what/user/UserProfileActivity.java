@@ -51,6 +51,9 @@ public class UserProfileActivity extends Activity implements OnClickListener {
 		avatarView = new ImageView(this);
 		avatarView.setAdjustViewBounds(true); // set the ImageView bounds to match the Drawable's dimensions
 		avatarView.setLayoutParams(new Gallery.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+		avatarView.setAdjustViewBounds(true);
+		avatarView.setMaxHeight(400);
+		avatarView.setMaxWidth(150);
 		mainLayout.addView(avatarView);
 
 		basicStatsView = new TextView(this);

@@ -18,10 +18,11 @@ import api.util.Sextuple;
 public class ThreadsParser {
 	static RegexTools regex = new RegexTools();
 
-	public static LinkedList<Sextuple<String, String, String, String, String, String>> parseThreads(Section s) throws IOException {
+	public static LinkedList<Sextuple<String, String, String, String, String, String>> parseThreads(Section s, int page) throws IOException {
 		LinkedList<Sextuple<String, String, String, String, String, String>> threadList = new LinkedList<Sextuple<String, String, String, String, String, String>>();
 		if (s.getSectionTitle().equalsIgnoreCase("Announcements")) {
-			Document doc = MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=19");
+			Document doc = MySoup.scrape("http://what.cd/forums.php?page=" + page + "&action=viewforum&forumid=19");
+
 			Elements rowsa = doc.getElementsByClass("rowa");
 			Elements rowsb = doc.getElementsByClass("rowb");
 			for (int i = 0; i < rowsb.size(); i++) {
@@ -52,7 +53,7 @@ public class ThreadsParser {
 			}
 		}
 		if (s.getSectionTitle().equalsIgnoreCase("What.CD")) {
-			Document doc = MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=13");
+			Document doc = MySoup.scrape("http://what.cd/forums.php?page=" + page + "&action=viewforum&forumid=13");
 			Elements rowsa = doc.getElementsByClass("rowa");
 			Elements rowsb = doc.getElementsByClass("rowb");
 			for (int i = 0; i < rowsb.size(); i++) {
@@ -83,7 +84,7 @@ public class ThreadsParser {
 			}
 		}
 		if (s.getSectionTitle().equalsIgnoreCase("Projects")) {
-			Document doc = MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=45");
+			Document doc = MySoup.scrape("http://what.cd/forums.php?page=" + page + "&action=viewforum&forumid=45");
 			Elements rowsa = doc.getElementsByClass("rowa");
 			Elements rowsb = doc.getElementsByClass("rowb");
 			for (int i = 0; i < rowsb.size(); i++) {
@@ -114,7 +115,7 @@ public class ThreadsParser {
 			}
 		}
 		if (s.getSectionTitle().equalsIgnoreCase("The Laboratory")) {
-			Document doc = MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=43");
+			Document doc = MySoup.scrape("http://what.cd/forums.php?page=" + page + "&action=viewforum&forumid=43");
 			Elements rowsa = doc.getElementsByClass("rowa");
 			Elements rowsb = doc.getElementsByClass("rowb");
 			for (int i = 0; i < rowsb.size(); i++) {
@@ -145,7 +146,7 @@ public class ThreadsParser {
 			}
 		}
 		if (s.getSectionTitle().equalsIgnoreCase("Suggestions / Ideas")) {
-			Document doc = MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=9");
+			Document doc = MySoup.scrape("http://what.cd/forums.php?page=" + page + "&action=viewforum&forumid=9");
 			Elements rowsa = doc.getElementsByClass("rowa");
 			Elements rowsb = doc.getElementsByClass("rowb");
 			for (int i = 0; i < rowsb.size(); i++) {
@@ -176,7 +177,7 @@ public class ThreadsParser {
 			}
 		}
 		if (s.getSectionTitle().equalsIgnoreCase("Bugs")) {
-			Document doc = MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=27");
+			Document doc = MySoup.scrape("http://what.cd/forums.php?page=" + page + "&action=viewforum&forumid=27");
 			Elements rowsa = doc.getElementsByClass("rowa");
 			Elements rowsb = doc.getElementsByClass("rowb");
 			for (int i = 0; i < rowsb.size(); i++) {
@@ -207,7 +208,7 @@ public class ThreadsParser {
 			}
 		}
 		if (s.getSectionTitle().equalsIgnoreCase("The Lounge")) {
-			Document doc = MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=7");
+			Document doc = MySoup.scrape("http://what.cd/forums.php?page=" + page + "&action=viewforum&forumid=7");
 			Elements rowsa = doc.getElementsByClass("rowa");
 			Elements rowsb = doc.getElementsByClass("rowb");
 			for (int i = 0; i < rowsb.size(); i++) {
@@ -238,7 +239,7 @@ public class ThreadsParser {
 			}
 		}
 		if (s.getSectionTitle().equalsIgnoreCase("The Library")) {
-			Document doc = MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=26");
+			Document doc = MySoup.scrape("http://what.cd/forums.php?page=" + page + "&action=viewforum&forumid=26");
 			Elements rowsa = doc.getElementsByClass("rowa");
 			Elements rowsb = doc.getElementsByClass("rowb");
 			for (int i = 0; i < rowsb.size(); i++) {
@@ -269,7 +270,7 @@ public class ThreadsParser {
 			}
 		}
 		if (s.getSectionTitle().equalsIgnoreCase("Power Users")) {
-			Document doc = MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=10");
+			Document doc = MySoup.scrape("http://what.cd/forums.php?page=" + page + "&action=viewforum&forumid=10");
 			Elements rowsa = doc.getElementsByClass("rowa");
 			Elements rowsb = doc.getElementsByClass("rowb");
 			for (int i = 0; i < rowsb.size(); i++) {
@@ -300,7 +301,7 @@ public class ThreadsParser {
 			}
 		}
 		if (s.getSectionTitle().equalsIgnoreCase("Comics")) {
-			Document doc = MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=37");
+			Document doc = MySoup.scrape("http://what.cd/forums.php?page=" + page + "&action=viewforum&forumid=37");
 			Elements rowsa = doc.getElementsByClass("rowa");
 			Elements rowsb = doc.getElementsByClass("rowb");
 			for (int i = 0; i < rowsb.size(); i++) {
@@ -331,7 +332,7 @@ public class ThreadsParser {
 			}
 		}
 		if (s.getSectionTitle().equalsIgnoreCase("Technology")) {
-			Document doc = MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=20");
+			Document doc = MySoup.scrape("http://what.cd/forums.php?page=" + page + "&action=viewforum&forumid=20");
 			Elements rowsa = doc.getElementsByClass("rowa");
 			Elements rowsb = doc.getElementsByClass("rowb");
 			for (int i = 0; i < rowsb.size(); i++) {
@@ -362,7 +363,7 @@ public class ThreadsParser {
 			}
 		}
 		if (s.getSectionTitle().equalsIgnoreCase("Invites")) {
-			Document doc = MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=23");
+			Document doc = MySoup.scrape("http://what.cd/forums.php?page=" + page + "&action=viewforum&forumid=23");
 			Elements rowsa = doc.getElementsByClass("rowa");
 			Elements rowsb = doc.getElementsByClass("rowb");
 			for (int i = 0; i < rowsb.size(); i++) {
@@ -393,7 +394,7 @@ public class ThreadsParser {
 			}
 		}
 		if (s.getSectionTitle().equalsIgnoreCase("Music")) {
-			Document doc = MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=17");
+			Document doc = MySoup.scrape("http://what.cd/forums.php?page=" + page + "&action=viewforum&forumid=17");
 			Elements rowsa = doc.getElementsByClass("rowa");
 			Elements rowsb = doc.getElementsByClass("rowb");
 			for (int i = 0; i < rowsb.size(); i++) {
@@ -425,7 +426,7 @@ public class ThreadsParser {
 		}
 		// ////
 		if (s.getSectionTitle().equalsIgnoreCase("Vanity House")) {
-			Document doc = MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=25");
+			Document doc = MySoup.scrape("http://what.cd/forums.php?page=" + page + "&action=viewforum&forumid=25");
 			Elements rowsa = doc.getElementsByClass("rowa");
 			Elements rowsb = doc.getElementsByClass("rowb");
 			for (int i = 0; i < rowsb.size(); i++) {
@@ -456,7 +457,7 @@ public class ThreadsParser {
 			}
 		}
 		if (s.getSectionTitle().equalsIgnoreCase("The Studio")) {
-			Document doc = MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=40");
+			Document doc = MySoup.scrape("http://what.cd/forums.php?page=" + page + "&action=viewforum&forumid=40");
 			Elements rowsa = doc.getElementsByClass("rowa");
 			Elements rowsb = doc.getElementsByClass("rowb");
 			for (int i = 0; i < rowsb.size(); i++) {
@@ -487,7 +488,7 @@ public class ThreadsParser {
 			}
 		}
 		if (s.getSectionTitle().equalsIgnoreCase("Offered")) {
-			Document doc = MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=15");
+			Document doc = MySoup.scrape("http://what.cd/forums.php?page=" + page + "&action=viewforum&forumid=15");
 			Elements rowsa = doc.getElementsByClass("rowa");
 			Elements rowsb = doc.getElementsByClass("rowb");
 			for (int i = 0; i < rowsb.size(); i++) {
@@ -518,7 +519,7 @@ public class ThreadsParser {
 			}
 		}
 		if (s.getSectionTitle().equalsIgnoreCase("Vinyl")) {
-			Document doc = MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=36");
+			Document doc = MySoup.scrape("http://what.cd/forums.php?page=" + page + "&action=viewforum&forumid=36");
 			Elements rowsa = doc.getElementsByClass("rowa");
 			Elements rowsb = doc.getElementsByClass("rowb");
 			for (int i = 0; i < rowsb.size(); i++) {
@@ -549,7 +550,7 @@ public class ThreadsParser {
 			}
 		}
 		if (s.getSectionTitle().equalsIgnoreCase("Help")) {
-			Document doc = MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=8");
+			Document doc = MySoup.scrape("http://what.cd/forums.php?page=" + page + "&action=viewforum&forumid=8");
 			Elements rowsa = doc.getElementsByClass("rowa");
 			Elements rowsb = doc.getElementsByClass("rowb");
 			for (int i = 0; i < rowsb.size(); i++) {
@@ -580,7 +581,7 @@ public class ThreadsParser {
 			}
 		}
 		if (s.getSectionTitle().equalsIgnoreCase("Tutorials")) {
-			Document doc = MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=18");
+			Document doc = MySoup.scrape("http://what.cd/forums.php?page=" + page + "&action=viewforum&forumid=18");
 			Elements rowsa = doc.getElementsByClass("rowa");
 			Elements rowsb = doc.getElementsByClass("rowb");
 			for (int i = 0; i < rowsb.size(); i++) {
@@ -611,7 +612,7 @@ public class ThreadsParser {
 			}
 		}
 		if (s.getSectionTitle().equalsIgnoreCase("BitTorrent")) {
-			Document doc = MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=14");
+			Document doc = MySoup.scrape("http://what.cd/forums.php?page=" + page + "&action=viewforum&forumid=14");
 			Elements rowsa = doc.getElementsByClass("rowa");
 			Elements rowsb = doc.getElementsByClass("rowb");
 			for (int i = 0; i < rowsb.size(); i++) {
@@ -642,7 +643,7 @@ public class ThreadsParser {
 			}
 		}
 		if (s.getSectionTitle().equalsIgnoreCase("Resolved Bugs")) {
-			Document doc = MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=32");
+			Document doc = MySoup.scrape("http://what.cd/forums.php?page=" + page + "&action=viewforum&forumid=32");
 			Elements rowsa = doc.getElementsByClass("rowa");
 			Elements rowsb = doc.getElementsByClass("rowb");
 			for (int i = 0; i < rowsb.size(); i++) {
@@ -673,7 +674,7 @@ public class ThreadsParser {
 			}
 		}
 		if (s.getSectionTitle().equalsIgnoreCase("Trash")) {
-			Document doc = MySoup.scrape("http://what.cd/forums.php?action=viewforum&forumid=12");
+			Document doc = MySoup.scrape("http://what.cd/forums.php?page=" + page + "&action=viewforum&forumid=12");
 			Elements rowsa = doc.getElementsByClass("rowa");
 			Elements rowsb = doc.getElementsByClass("rowb");
 			for (int i = 0; i < rowsb.size(); i++) {

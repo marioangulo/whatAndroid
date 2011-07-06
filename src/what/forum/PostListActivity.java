@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import what.gui.Notification;
-import what.gui.TextViewBorder;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,7 +27,7 @@ public class PostListActivity extends Activity implements OnClickListener {
 	LinearLayout mainLayout;
 	FrameLayout topLayout;
 	TextView threadTitle;
-	ArrayList<TextViewBorder> postAuthor = new ArrayList<TextViewBorder>();
+	ArrayList<TextView> postAuthor = new ArrayList<TextView>();
 	ArrayList<TextView> postBody = new ArrayList<TextView>();
 	String[] user, id, body;
 	String sectionTitle;
@@ -104,7 +103,7 @@ public class PostListActivity extends Activity implements OnClickListener {
 		// arbitrary id that doesn't colide with anyothers
 		threadTitle.setId(7795);
 		for (int i = 0; i < numberOfPosts; i++) {
-			postAuthor.add(new TextViewBorder(this));
+			postAuthor.add(new TextView(this));
 			postAuthor.get(i).setText(user[i]);
 			postAuthor.get(i).setTextSize(17);
 			postAuthor.get(i).setOnClickListener(this);

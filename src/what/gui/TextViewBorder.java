@@ -35,7 +35,7 @@ public class TextViewBorder extends TextView {
 		Paint paint = new Paint();
 		paint.setStyle(Paint.Style.STROKE);
 		paint.setColor(Color.WHITE);
-		paint.setStrokeWidth(1);
+		paint.setStrokeWidth(3);
 		getLocalVisibleRect(rect);
 		canvas.drawRect(rect, paint);
 	}
