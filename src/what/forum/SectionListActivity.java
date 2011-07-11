@@ -97,7 +97,7 @@ public class SectionListActivity extends ListActivity implements OnClickListener
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.options, menu);
+		inflater.inflate(R.menu.sectionlistmenu, menu);
 		return true;
 	}
 
@@ -107,10 +107,8 @@ public class SectionListActivity extends ListActivity implements OnClickListener
 		case R.id.closeItem:
 			closeOptionsMenu();
 			break;
-		case R.id.refreshItem:
-			// refresh activity
-			startActivity(getIntent());
-			finish();
+		case R.id.subscriptionsItem:
+			// TODO open subscriptions
 			break;
 		default:
 			return super.onOptionsItemSelected(item);

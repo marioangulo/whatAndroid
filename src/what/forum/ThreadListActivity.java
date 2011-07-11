@@ -9,6 +9,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TableLayout;
@@ -40,7 +43,6 @@ public class ThreadListActivity extends ListActivity implements OnClickListener 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.threads);
-		// addButtons();
 
 		getBundle();
 		loadThreads();
@@ -182,6 +184,7 @@ public class ThreadListActivity extends ListActivity implements OnClickListener 
 		b.putString("threadTitle", title[j]);
 		b.putString("threadAuthor", author[j]);
 		b.putString("threadUrl", threadurl[j]);
+		b.putInt("threadPage", 1);
 		intent.putExtras(b);
 		Log.v("TAG", sectionTitle + "," + j + "," + title[j] + "," + author[j] + "," + threadurl[j]);
 		startActivityForResult(intent, 0);
@@ -245,5 +248,42 @@ public class ThreadListActivity extends ListActivity implements OnClickListener 
 		if (v.getId() == authorList.get(authorList.size() - 1).getId()) {
 			nextPage();
 		}
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.threadlistmenu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.closeItem:
+			closeOptionsMenu();
+			break;
+		case R.id.subscriptionsItem:
+			// TODO open subscriptions
+			break;
+		case R.id.refreshItem:
+			// refresh activity
+			startActivity(getIntent());
+			finish();
+			break;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+		return true;
+	}
+
+	@Override
+	public void openOptionsMenu() {
+		super.openOptionsMenu();
+	}
+
+	@Override
+	public void closeOptionsMenu() {
+		super.closeOptionsMenu();
 	}
 }

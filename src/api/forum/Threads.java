@@ -93,8 +93,8 @@ public class Threads {
 	 * 
 	 * @throws IOException
 	 */
-	public void addPosts() throws IOException {
-		for (Triple<String, String, String> p : PostParser.parsePosts(this)) {
+	public void addPosts(int page) throws IOException {
+		for (Triple<String, String, String> p : PostParser.parsePosts(this, page)) {
 			postList.add(new Post(new UserInForum(p.getA(), p.getB()), p.getC()));
 		}
 	}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:id="@+id/subscriptionsItem" android:title="Subscriptions"></item>
+    <item android:id="@+id/musicsearchItem" android:title="Music Search"></item>
+    <item android:id="@+id/refreshItem" android:title="Refresh"></item> 
+    <item android:id="@+id/nextItem" android:title="Next Page"></item>  
+    <item android:id="@+id/backItem" android:title="Back"></item>     
+    <item android:id="@+id/replyItem" android:title="Reply"></item>  
+    <item android:id="@+id/quitItem" android:title="Quit"></item>  
+</menu>

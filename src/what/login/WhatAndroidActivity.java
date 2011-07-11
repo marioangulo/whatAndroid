@@ -45,6 +45,7 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 		checkbox.setOnClickListener(this);
 		login = (Button) this.findViewById(R.id.login);
 		login.setOnClickListener(this);
+
 	}
 
 	/**
