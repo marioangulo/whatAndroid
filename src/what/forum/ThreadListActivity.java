@@ -19,6 +19,7 @@ import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 import api.forum.Manager;
+import api.soup.MySoup;
 
 /**
  * View of all the threads in a section
@@ -49,6 +50,7 @@ public class ThreadListActivity extends ListActivity implements OnClickListener 
 		populateTable();
 		addButtons();
 		idGenerator();
+		MySoup.httpClientScrape();
 
 	}
 
@@ -78,7 +80,8 @@ public class ThreadListActivity extends ListActivity implements OnClickListener 
 		author = Manager.getForum().getSectionByName(sectionTitle).getThreadsAuthorArray();
 		threadurl = Manager.getForum().getSectionByName(sectionTitle).getThreadsUrlArray();
 		authoruserid = Manager.getForum().getSectionByName(sectionTitle).getThreadsAuthorIDArray();
-		lastposteruserid = Manager.getForum().getSectionByName(sectionTitle).getThreadsLastPosterIDArray();
+		lastposteruserid =
+				Manager.getForum().getSectionByName(sectionTitle).getThreadsLastPosterIDArray();
 	}
 
 	/**
@@ -121,7 +124,8 @@ public class ThreadListActivity extends ListActivity implements OnClickListener 
 		rowList.get(counter).addView(lastPosterList.get(counter));
 		rowList.get(counter).addView(authorList.get(counter));
 
-		table.addView(rowList.get(counter), new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+		table.addView(rowList.get(counter), new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT));
 
 		counter++;
 	}
@@ -154,7 +158,8 @@ public class ThreadListActivity extends ListActivity implements OnClickListener 
 		rowList.get(rowList.size() - 1).addView(lastPosterList.get(lastPosterList.size() - 1));
 		rowList.get(rowList.size() - 1).addView(authorList.get(authorList.size() - 1));
 
-		table.addView(rowList.get(counter), new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+		table.addView(rowList.get(counter), new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT));
 
 		counter++;
 	}

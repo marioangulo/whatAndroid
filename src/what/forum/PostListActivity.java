@@ -118,9 +118,8 @@ public class PostListActivity extends Activity implements OnClickListener {
 			postAuthor.get(i).setOnClickListener(this);
 
 			postBody.add(new WebView(this));
+			postBody.get(i).getSettings().setJavaScriptEnabled(true);
 			postBody.get(i).setBackgroundColor(Color.GRAY);
-			// String coloredText = "<font color=''>" + body[i] + "</font>";
-			// postBody.get(i).loadData(coloredText, "", "UTF-8");
 
 			postBody.get(i).loadData(body[i], "", "utf-8");
 			postBody.get(i).setPadding(45, 0, 0, 0);

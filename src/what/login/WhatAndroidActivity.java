@@ -67,7 +67,8 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 			Intent intent = new Intent(this, what.forum.SectionListActivity.class);
 			startActivity(intent);
 		} else {
-			notification.displayError("Error", "Login failed, wrong username/password or a timeout, try again", this);
+			notification.displayError("Error",
+					"Login failed, wrong username/password or a timeout, try again", this);
 		}
 	}
 
