@@ -1,8 +1,10 @@
-package api.forum;
+package api.subscriptions;
 
 import java.io.IOException;
 import java.util.LinkedList;
 
+import api.forum.Post;
+import api.forum.UserInForum;
 import api.parser.PostParser;
 import api.util.Triple;
 
@@ -12,71 +14,18 @@ import api.util.Triple;
  * @author Tim
  * 
  */
-public class Threads {
+public class SubscribedThreads {
 	private String threadTitle;
-	private UserInForum threadAuthor;
-	private UserInForum threadLastPoster;
 	private String threadUrl;
 	private LinkedList<Post> postList = new LinkedList<Post>();
 
-	/**
-	 * Create a new thread
-	 * 
-	 * @param threadTitle
-	 *            title of thread
-	 * @param threadAuthor
-	 *            author
-	 * @param threadLastPoster
-	 *            last poster
-	 * @param threadUrl
-	 *            url of thread
-	 * @throws IOException
-	 */
-	public Threads(String threadTitle, UserInForum threadAuthor, UserInForum threadLastPoster, String threadUrl) throws IOException {
+	public SubscribedThreads(String threadTitle, String threadUrl) throws IOException {
 		this.threadTitle = threadTitle;
-		this.threadAuthor = threadAuthor;
-		this.threadLastPoster = threadLastPoster;
 		this.threadUrl = threadUrl;
 	}
 
 	public String getThreadTitle() {
 		return threadTitle;
-	}
-
-	/**
-	 * Get author of the thread
-	 * 
-	 * @return thread author
-	 */
-	public String getThreadAuthor() {
-		return threadAuthor.getUserName();
-	}
-
-	/**
-	 * Get user id of author
-	 * 
-	 * @return
-	 */
-	public String getThreadAuthorID() {
-		return threadAuthor.getUserID();
-	}
-
-	/**
-	 * Get last poster in the thread
-	 * 
-	 * @return last poster
-	 */
-	public String getThreadLastPoster() {
-		return threadLastPoster.getUserName();
-	}
-
-	/**
-	 * Get last poster user id
-	 * 
-	 * @return user id of last poster
-	 */
-	public String getThreadLastPosterID() {
-		return threadLastPoster.getUserID();
 	}
 
 	/**
@@ -151,20 +100,13 @@ public class Threads {
 	}
 
 	/**
-	 * Clears the posts in the thread
-	 */
-	public void clearPosts() {
-		postList.clear();
-	}
-
-	/**
 	 * String representation of a thread and everything inside it
 	 */
 	@Override
 	public String toString() {
-		String toReturn = threadTitle + ", " + threadAuthor + ", " + threadLastPoster + "\n" /*
-																							 * + postList . toString
-																							 */;
+		String toReturn = threadTitle + ", " + "\n" /*
+													 * + postList . toString
+													 */;
 		return toReturn;
 	}
 }

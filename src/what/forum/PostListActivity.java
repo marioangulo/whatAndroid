@@ -96,35 +96,23 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 		Log.v("TAG", sectionTitle + threadPosition);
 
 		try {
-			Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition)
-					.addPosts(threadPage);
+			Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition).addPosts(threadPage);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		numberOfPosts =
-				Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition)
-						.getPost().size();
-		user =
-				Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition)
-						.getPostUserArray();
-		id =
-				Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition)
-						.getPostUserIDArray();
-		body =
-				Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition)
-						.getPostBodyArray();
-		threadUrl =
-				Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition)
-						.getThreadUrl();
+		numberOfPosts = Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition).getPost().size();
+		user = Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition).getPostUserArray();
+		id = Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition).getPostUserIDArray();
+		body = Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition).getPostBodyArray();
+		threadUrl = Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition).getThreadUrl();
 	}
 
 	/**
 	 * Populate the view with posts
 	 */
 	public void populateView() {
-		threadTitle.setText(threadTitleString + "\t" + "  created by " + threadAuthor + ", page "
-				+ threadPage);
+		threadTitle.setText(threadTitleString + "\t" + "  created by " + threadAuthor + ", page " + threadPage);
 		threadTitle.setTextSize(22);
 		threadTitle.setOnClickListener(this);
 		// arbitrary id that doesn't colide with anyothers
@@ -154,6 +142,7 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 	/**
 	 * Adds a row of "buttons" to the end of the table
 	 */
+	@SuppressWarnings("unused")
 	private void addButtons() {
 		// TODO make this more better
 		previous = new TextView(this);
@@ -215,6 +204,7 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 		threadPage = threadPage + 1;
 		b.putInt("threadPage", threadPage);
 		intent.putExtras(b);
+		Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition).clearPosts();
 		startActivityForResult(intent, 0);
 	}
 
@@ -244,11 +234,9 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 	public boolean onTouch(View v, MotionEvent event) {
 
 		for (int i = 0; i < numberOfPosts; i++) {
-			if ((v.getId() == postBody.get(i).getId())
-					&& (event.getAction() == MotionEvent.ACTION_DOWN)) {
+			if ((v.getId() == postBody.get(i).getId()) && (event.getAction() == MotionEvent.ACTION_DOWN)) {
 				n.displayToast("Quoted", Toast.LENGTH_SHORT, this);
-				String s =
-						"[quote=" + user[i] + "]" + MySoup.toQuotableString(body[i]) + "[/quote]";
+				String s = "[quote=" + user[i] + "]" + MySoup.toQuotableString(body[i]) + "[/quote]";
 				quotedText.append(s + "\n");
 			}
 		}
