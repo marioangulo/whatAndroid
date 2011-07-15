@@ -52,7 +52,7 @@ public class ReplyActivity extends Activity implements OnClickListener {
 		mainLayout.addView(replyButton);
 		closeButton = new Button(this);
 		closeButton.setText("Close");
-		closeButton.setId(1);
+		closeButton.setId(0);
 		closeButton.setOnClickListener(this);
 		mainLayout.addView(closeButton);
 		this.setContentView(mainLayout);
