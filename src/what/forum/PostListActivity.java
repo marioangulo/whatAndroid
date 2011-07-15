@@ -13,8 +13,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -22,17 +24,19 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import api.forum.Manager;
+import api.soup.MySoup;
 
 /**
  * @author Tim The view of all posts in a section
  */
 
-public class PostListActivity extends Activity implements OnClickListener {
+public class PostListActivity extends Activity implements OnClickListener, OnTouchListener {
 	ScrollView scrollView;
 	LinearLayout linearLayout;
 	LinearLayout mainLayout;
 	FrameLayout topLayout;
 	TextView threadTitle;
+	TextView quote;
 	ArrayList<TextView> postAuthor = new ArrayList<TextView>();
 	ArrayList<WebView> postBody = new ArrayList<WebView>();
 	TextView previous, next;
@@ -40,10 +44,13 @@ public class PostListActivity extends Activity implements OnClickListener {
 	String sectionTitle;
 	String threadTitleString;
 	String threadAuthor;
+	String threadUrl;
+	StringBuffer quotedText = new StringBuffer();
 	int threadPosition;
 	int numberOfPosts;
 	int threadPage;
 	Intent intent;
+	Notification n = new Notification();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -89,23 +96,35 @@ public class PostListActivity extends Activity implements OnClickListener {
 		Log.v("TAG", sectionTitle + threadPosition);
 
 		try {
-			Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition).addPosts(threadPage);
+			Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition)
+					.addPosts(threadPage);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		numberOfPosts = Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition).getPost().size();
-		user = Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition).getPostUserArray();
-		id = Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition).getPostUserIDArray();
-		body = Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition).getPostBodyArray();
-
+		numberOfPosts =
+				Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition)
+						.getPost().size();
+		user =
+				Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition)
+						.getPostUserArray();
+		id =
+				Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition)
+						.getPostUserIDArray();
+		body =
+				Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition)
+						.getPostBodyArray();
+		threadUrl =
+				Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition)
+						.getThreadUrl();
 	}
 
 	/**
 	 * Populate the view with posts
 	 */
 	public void populateView() {
-		threadTitle.setText(threadTitleString + "\t" + "  created by " + threadAuthor + ", page " + threadPage);
+		threadTitle.setText(threadTitleString + "\t" + "  created by " + threadAuthor + ", page "
+				+ threadPage);
 		threadTitle.setTextSize(22);
 		threadTitle.setOnClickListener(this);
 		// arbitrary id that doesn't colide with anyothers
@@ -122,8 +141,10 @@ public class PostListActivity extends Activity implements OnClickListener {
 			postBody.get(i).setBackgroundColor(Color.GRAY);
 
 			postBody.get(i).loadData(body[i], "", "utf-8");
+
 			postBody.get(i).setPadding(45, 0, 0, 0);
-			postBody.get(i).setOnClickListener(this);
+			postBody.get(i).setClickable(true);
+			postBody.get(i).setOnTouchListener(this);
 
 			linearLayout.addView(postAuthor.get(i));
 			linearLayout.addView(postBody.get(i));
@@ -197,9 +218,18 @@ public class PostListActivity extends Activity implements OnClickListener {
 		startActivityForResult(intent, 0);
 	}
 
+	private void reply() {
+		intent = new Intent(this, what.forum.ReplyActivity.class);
+		Bundle b = new Bundle();
+		b.putString("threadUrl", threadUrl);
+		b.putString("quotedText", quotedText.toString());
+		Log.v("qoutedtext", quotedText.toString());
+		intent.putExtras(b);
+		startActivityForResult(intent, 0);
+	}
+
 	@Override
 	public void onClick(View v) {
-		Notification n = new Notification();
 		if (v.getId() == threadTitle.getId()) {
 			scrollView.fullScroll(ScrollView.FOCUS_UP);
 		}
@@ -207,13 +237,22 @@ public class PostListActivity extends Activity implements OnClickListener {
 			if (v.getId() == postAuthor.get(i).getId()) {
 				openUser(i);
 			}
-			if (v.getId() == postBody.get(i).getId()) {
+		}
+	}
+
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+
+		for (int i = 0; i < numberOfPosts; i++) {
+			if ((v.getId() == postBody.get(i).getId())
+					&& (event.getAction() == MotionEvent.ACTION_DOWN)) {
 				n.displayToast("Quoted", Toast.LENGTH_SHORT, this);
+				String s =
+						"[quote=" + user[i] + "]" + MySoup.toQuotableString(body[i]) + "[/quote]";
+				quotedText.append(s + "\n");
 			}
 		}
-		/*
-		 * if (v.getId() == previous.getId()) { finish(); } if (v.getId() == next.getId()) { nextPage(); }
-		 */
+		return false;
 	}
 
 	@Override
@@ -242,6 +281,9 @@ public class PostListActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.backItem:
 			finish();
+			break;
+		case R.id.replyItem:
+			reply();
 			break;
 		default:
 			return super.onOptionsItemSelected(item);

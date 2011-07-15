@@ -136,12 +136,44 @@ public class RegexTools {
 	 * @return the avatar url
 	 */
 	public String splitAvatar(String string) {
-		Pattern pattern = Pattern.compile(".*<img src=\"(.*)\" width=.*");
+		Pattern pattern = Pattern.compile(".*<img src=\"(.*)\" width=.*", Pattern.DOTALL);
 		Matcher matcher = pattern.matcher(string);
 		if (matcher.matches()) {
 			System.out.println(matcher.group(1));
 			return matcher.group(1);
 		}
+		return "FAILED";
+	}
+
+	public String splitThreadID(String url) {
+		Pattern pattern = Pattern.compile(".*&threadid=(.*)&.*");
+		Matcher matcher = pattern.matcher(url);
+		if (matcher.matches())
+			return matcher.group(1);
+		else {
+			pattern = Pattern.compile(".*&threadid=(.*).*");
+			matcher = pattern.matcher(url);
+			if (matcher.matches())
+				return matcher.group(1);
+		}
+		return null;
+	}
+
+	public String splitAuthKey(String url) {
+		Pattern pattern = Pattern.compile(".*auth=(.*)\">.*");
+		Matcher matcher = pattern.matcher(url);
+		if (matcher.matches())
+			return matcher.group(1);
+		return null;
+	}
+
+	// TODO fix
+	public String splitUserID(String url) {
+		Pattern pattern =
+				Pattern.compile(".*<li id=\"nav_userinfo\"><a href=\"user.php?id(.*)\".*");
+		Matcher matcher = pattern.matcher(url);
+		if (matcher.matches())
+			return matcher.group(1);
 		return null;
 	}
 }

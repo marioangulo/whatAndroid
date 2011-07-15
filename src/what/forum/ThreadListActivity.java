@@ -19,7 +19,6 @@ import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 import api.forum.Manager;
-import api.soup.MySoup;
 
 /**
  * View of all the threads in a section
@@ -50,7 +49,6 @@ public class ThreadListActivity extends ListActivity implements OnClickListener 
 		populateTable();
 		addButtons();
 		idGenerator();
-		MySoup.httpClientScrape();
 
 	}
 
