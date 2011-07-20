@@ -1,19 +1,20 @@
 package what.forum;
 
-import what.gui.ListAdapter;
+import java.util.ArrayList;
+
 import what.gui.R;
-import android.app.ListActivity;
+import what.gui.ReportSender;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import api.parser.SectionParser;
 
@@ -23,7 +24,7 @@ import api.parser.SectionParser;
  * @author Tim
  * 
  */
-public class SectionListActivity extends ListActivity implements OnClickListener {
+public class SectionListActivity extends Activity implements OnClickListener {
 	// TODO have api fully handle this
 	private static String[] site = SectionParser.parseSiteSections();
 	private static String[] community = SectionParser.parseCommunitySections();
@@ -32,29 +33,144 @@ public class SectionListActivity extends ListActivity implements OnClickListener
 	private static String[] trash = SectionParser.parseTrashSections();
 	private static String[] masterList = SectionParser.getMasterList();
 	TextView forumsView;
+	LinearLayout mainLayout, linearLayout;
+	ScrollView scrollView;
 	Intent intent;
+	FrameLayout topLayout;
+	ArrayList<TextView> sectionTitle = new ArrayList<TextView>();
+	ArrayList<TextView> siteSection = new ArrayList<TextView>();
+	ArrayList<TextView> communitySection = new ArrayList<TextView>();
+	ArrayList<TextView> musicSection = new ArrayList<TextView>();
+	ArrayList<TextView> helpSection = new ArrayList<TextView>();
+	ArrayList<TextView> trashSection = new ArrayList<TextView>();
 
 	@Override
-	public void onCreate(Bundle b) {
-		super.onCreate(b);
-		setContentView(R.layout.section);
-		forumsView = (TextView) findViewById(R.id.textView1);
-		forumsView.setOnClickListener(this);
-		adapter.addSection("Site", new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, site));
-		adapter.addSection("Community", new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, community));
-		adapter.addSection("Music", new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, music));
-		adapter.addSection("Help", new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, help));
-		adapter.addSection("Trash", new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, trash));
-		setListAdapter(adapter);
-
-		// addButtons();
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		ReportSender reportSender = new ReportSender(this);
+		createLayout();
+		populateView();
+		idGenerator();
 
 	}
 
-	@Override
-	protected void onListItemClick(ListView l, View v, int position, long id) {
-		openSection(position);
-		super.onListItemClick(l, v, position, id);
+	/**
+	 * Create the base layout
+	 */
+	private void createLayout() {
+		mainLayout = new LinearLayout(this);
+		mainLayout.setOrientation(LinearLayout.VERTICAL);
+
+		scrollView = new ScrollView(this);
+		linearLayout = new LinearLayout(this);
+		linearLayout.setOrientation(LinearLayout.VERTICAL);
+		scrollView.addView(linearLayout);
+
+		topLayout = new FrameLayout(this);
+		forumsView = new TextView(this);
+		forumsView.setText("Forums");
+		forumsView.setTextSize(22);
+		topLayout.addView(forumsView);
+
+		mainLayout.addView(topLayout);
+		mainLayout.addView(scrollView);
+		this.setContentView(mainLayout);
+	}
+
+	private void populateView() {
+		sectionTitle.add(new TextView(this));
+		sectionTitle.get(0).setText("Site");
+		sectionTitle.get(0).setTextSize(20);
+		linearLayout.addView(sectionTitle.get(0));
+
+		for (int i = 0; i < site.length; i++) {
+			siteSection.add(new TextView(this));
+			siteSection.get(i).setText(site[i]);
+			siteSection.get(i).setTextSize(16);
+			siteSection.get(i).setPadding(45, 0, 0, 0);
+			siteSection.get(i).setOnClickListener(this);
+			linearLayout.addView(siteSection.get(i));
+		}
+
+		sectionTitle.add(new TextView(this));
+		sectionTitle.get(1).setText("Community");
+		sectionTitle.get(1).setTextSize(20);
+		linearLayout.addView(sectionTitle.get(1));
+
+		for (int i = 0; i < community.length; i++) {
+			communitySection.add(new TextView(this));
+			communitySection.get(i).setText(community[i]);
+			communitySection.get(i).setTextSize(16);
+			communitySection.get(i).setPadding(45, 0, 0, 0);
+			communitySection.get(i).setOnClickListener(this);
+			linearLayout.addView(communitySection.get(i));
+		}
+
+		sectionTitle.add(new TextView(this));
+		sectionTitle.get(2).setText("Music");
+		sectionTitle.get(2).setTextSize(20);
+		linearLayout.addView(sectionTitle.get(2));
+
+		for (int i = 0; i < music.length; i++) {
+			musicSection.add(new TextView(this));
+			musicSection.get(i).setText(music[i]);
+			musicSection.get(i).setTextSize(16);
+			musicSection.get(i).setPadding(45, 0, 0, 0);
+			musicSection.get(i).setOnClickListener(this);
+			linearLayout.addView(musicSection.get(i));
+		}
+
+		sectionTitle.add(new TextView(this));
+		sectionTitle.get(3).setText("Help");
+		sectionTitle.get(3).setTextSize(20);
+		linearLayout.addView(sectionTitle.get(3));
+
+		for (int i = 0; i < help.length; i++) {
+			helpSection.add(new TextView(this));
+			helpSection.get(i).setText(help[i]);
+			helpSection.get(i).setTextSize(16);
+			helpSection.get(i).setPadding(45, 0, 0, 0);
+			helpSection.get(i).setOnClickListener(this);
+			linearLayout.addView(helpSection.get(i));
+		}
+
+		sectionTitle.add(new TextView(this));
+		sectionTitle.get(4).setText("Trash");
+		sectionTitle.get(4).setTextSize(20);
+		linearLayout.addView(sectionTitle.get(4));
+
+		for (int i = 0; i < trash.length; i++) {
+			trashSection.add(new TextView(this));
+			trashSection.get(i).setText(trash[i]);
+			trashSection.get(i).setTextSize(16);
+			trashSection.get(i).setPadding(45, 0, 0, 0);
+			trashSection.get(i).setOnClickListener(this);
+			linearLayout.addView(trashSection.get(i));
+		}
+	}
+
+	private void idGenerator() {
+		int counter = 0;
+		for (int i = 0; i < site.length; i++) {
+			siteSection.get(i).setId(i);
+			counter++;
+		}
+		for (int i = 0; i < community.length; i++) {
+			communitySection.get(i).setId(counter);
+			counter++;
+		}
+		for (int i = 0; i < music.length; i++) {
+			musicSection.get(i).setId(counter);
+			counter++;
+		}
+		for (int i = 0; i < help.length; i++) {
+			helpSection.get(i).setId(counter);
+			counter++;
+		}
+		for (int i = 0; i < trash.length; i++) {
+			trashSection.get(i).setId(counter);
+			counter++;
+		}
 	}
 
 	/**
@@ -64,26 +180,7 @@ public class SectionListActivity extends ListActivity implements OnClickListener
 	 *            position in list
 	 */
 	private void openSection(int j) {
-		// TODO make this more beutiful
-		String sectionTitle = null;
-		if (j < 7) {
-			sectionTitle = masterList[j - 1];
-		}
-		if ((j > 7) && (j < 14)) {
-			sectionTitle = masterList[j - 2];
-		}
-		if ((j > 14) && (j < 20)) {
-			sectionTitle = masterList[j - 3];
-		}
-		if ((j > 20) && (j < 24)) {
-			sectionTitle = masterList[j - 4];
-		}
-		if (j > 24) {
-			sectionTitle = masterList[j - 5];
-		}
-		for (int i = 0; i < masterList.length; i++) {
-			Log.v("TAG", masterList[i]);
-		}
+		String sectionTitle = masterList[j];
 		// start new intent and send sectiontitle in the bundle
 		intent = new Intent(this, what.forum.ThreadListActivity.class);
 		Bundle b = new Bundle();
@@ -126,23 +223,8 @@ public class SectionListActivity extends ListActivity implements OnClickListener
 		super.closeOptionsMenu();
 	}
 
-	ListAdapter adapter = new ListAdapter() {
-		@Override
-		protected View getHeaderView(String caption, int index, View convertView, ViewGroup parent) {
-			TextView result = (TextView) convertView;
-
-			if (convertView == null) {
-				result = (TextView) getLayoutInflater().inflate(R.layout.header, null);
-			}
-
-			result.setText(caption);
-			return (result);
-		}
-	};
-
 	@Override
 	public void onClick(View v) {
-		if (v.getId() == forumsView.getId()) {
-		}
+		openSection(v.getId());
 	}
 }

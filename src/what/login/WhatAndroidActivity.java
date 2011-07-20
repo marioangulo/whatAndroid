@@ -2,9 +2,9 @@ package what.login;
 
 import java.io.IOException;
 
-import what.gui.ActivityStack;
 import what.gui.Notification;
 import what.gui.R;
+import what.gui.ReportSender;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,7 +17,7 @@ import api.forum.Manager;
 import api.soup.MySoup;
 
 /**
- * Login screen
+ * Login screen z
  * 
  * @author Tim
  * 
@@ -26,6 +26,7 @@ import api.soup.MySoup;
 public class WhatAndroidActivity extends Activity implements OnClickListener {
 	TextView username;
 	TextView password;
+	TextView authkey;
 	Button login;
 	CheckBox checkbox;
 	Notification notification = new Notification();
@@ -39,8 +40,15 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
+		// send crash reports
+		ReportSender reportSender = new ReportSender(this);
+		// ErrorReporter errReporter = new ErrorReporter();
+		// errReporter.Init(this);
+		// errReporter.CheckErrorAndSendMail(this);
+
 		username = (TextView) this.findViewById(R.id.username);
 		password = (TextView) this.findViewById(R.id.password);
+		authkey = (TextView) this.findViewById(R.id.authkey);
 		checkbox = (CheckBox) this.findViewById(R.id.checkbox);
 		checkbox.setOnClickListener(this);
 		login = (Button) this.findViewById(R.id.login);
@@ -59,12 +67,18 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 		String loginURL = "http://what.cd/login.php";
 
 		MySoup.login(loginURL, usernameString, passwordString);
+		MySoup.setAuthKey(authkey.getText().toString());
 		if (MySoup.isLoggedIn()) {
-			ActivityStack.push(what.forum.SectionListActivity.class);
 			// TODO more suitable location
 			Manager.createForum("what.cd Forum");
-			Intent intent = new Intent(this, what.forum.SectionListActivity.class);
-			startActivity(intent);
+			try {
+				Intent intent = new Intent(this, what.forum.SectionListActivity.class);
+				startActivity(intent);
+			} catch (Exception e) {
+				notification.displayToast("Logged in, but not able to go to next screen, tell Gwindow", Notification.LENGTH_LONG, this);
+				e.printStackTrace();
+			}
+
 		} else {
 			notification.displayError("Error", "Login failed, wrong username/password or a timeout, try again", this);
 		}

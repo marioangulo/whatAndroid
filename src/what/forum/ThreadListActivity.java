@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import what.gui.R;
+import what.gui.ReportSender;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -43,7 +44,7 @@ public class ThreadListActivity extends ListActivity implements OnClickListener 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.threads);
-
+		ReportSender reportSender = new ReportSender(this);
 		getBundle();
 		loadThreads();
 		populateTable();
@@ -78,8 +79,7 @@ public class ThreadListActivity extends ListActivity implements OnClickListener 
 		author = Manager.getForum().getSectionByName(sectionTitle).getThreadsAuthorArray();
 		threadurl = Manager.getForum().getSectionByName(sectionTitle).getThreadsUrlArray();
 		authoruserid = Manager.getForum().getSectionByName(sectionTitle).getThreadsAuthorIDArray();
-		lastposteruserid =
-				Manager.getForum().getSectionByName(sectionTitle).getThreadsLastPosterIDArray();
+		lastposteruserid = Manager.getForum().getSectionByName(sectionTitle).getThreadsLastPosterIDArray();
 	}
 
 	/**
@@ -122,8 +122,7 @@ public class ThreadListActivity extends ListActivity implements OnClickListener 
 		rowList.get(counter).addView(lastPosterList.get(counter));
 		rowList.get(counter).addView(authorList.get(counter));
 
-		table.addView(rowList.get(counter), new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
-				LayoutParams.WRAP_CONTENT));
+		table.addView(rowList.get(counter), new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
 		counter++;
 	}
@@ -156,8 +155,7 @@ public class ThreadListActivity extends ListActivity implements OnClickListener 
 		rowList.get(rowList.size() - 1).addView(lastPosterList.get(lastPosterList.size() - 1));
 		rowList.get(rowList.size() - 1).addView(authorList.get(authorList.size() - 1));
 
-		table.addView(rowList.get(counter), new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
-				LayoutParams.WRAP_CONTENT));
+		table.addView(rowList.get(counter), new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
 		counter++;
 	}

@@ -31,17 +31,21 @@ public class MySoup {
 		try {
 			// login
 			Connection.Response res =
-					Jsoup.connect(url).data("username", username, "password", password)
-							.method(Method.POST).timeout(30000).execute();
+					Jsoup.connect(url).data("username", username, "password", password).method(Method.POST).timeout(30000).execute();
 			// set cookie
 			sessionId = res.cookie("session");
-			String s =
-					scrape("http://what.cd/index.php").getElementById("header")
-							.getElementById("userinfo").getElementById("userinfo_username")
-							.getElementById("nav_logout").getElementsByTag("a").get(0).toString();
-			authKey = regex.splitAuthKey(s);
+			/*
+			 * String s =
+			 * scrape("http://what.cd/index.php").getElementById("header").getElementById("userinfo").getElementById
+			 * ("userinfo_username") .getElementById("nav_logout").getElementsByTag("a").get(0).toString(); authKey =
+			 * regex.splitAuthKey(s);
+			 */
 		} catch (IOException e) {
 		}
+	}
+
+	public static void setAuthKey(String s) {
+		authKey = s;
 	}
 
 	/**
@@ -75,11 +79,8 @@ public class MySoup {
 		try {
 			@SuppressWarnings("unused")
 			Connection.Response res =
-					Jsoup.connect(url)
-							.cookie("session", sessionId)
-							.data("action", "reply", "auth", authKey, "thread", threadID, "body",
-									reply).method(Method.POST).followRedirects(false)
-							.timeout(10000).execute();
+					Jsoup.connect(url).cookie("session", sessionId).data("action", "reply", "auth", authKey, "thread", threadID, "body", reply)
+							.method(Method.POST).followRedirects(false).timeout(10000).execute();
 		} catch (IOException e) { // TODO Auto-generated catch block e.printStackTrace();
 		}
 	}

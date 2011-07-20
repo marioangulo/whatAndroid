@@ -12,6 +12,9 @@ import android.widget.Toast;
  * 
  */
 public class Notification {
+	public static int LENGTH_LONG = Toast.LENGTH_LONG;
+	public static int LENGTH_SHORT = Toast.LENGTH_SHORT;
+
 	/**
 	 * Display toast notification
 	 * 
@@ -25,6 +28,7 @@ public class Notification {
 	public void displayToast(String message, int duration, Context context) {
 		Toast toast = Toast.makeText(context, message, duration);
 		toast.show();
+
 	}
 
 	/**
@@ -38,18 +42,17 @@ public class Notification {
 	 *            context
 	 */
 	public void displayAlert(String title, String message, Context context) {
-		new AlertDialog.Builder(context).setTitle(title).setMessage(message)
-				.setPositiveButton("Open", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface arg0, int arg1) {
+		new AlertDialog.Builder(context).setTitle(title).setMessage(message).setPositiveButton("Open", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface arg0, int arg1) {
 
-					}
-				}).setNegativeButton("Close", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface arg0, int arg1) {
-						arg0.dismiss();
-					}
-				}).show();
+			}
+		}).setNegativeButton("Close", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface arg0, int arg1) {
+				arg0.dismiss();
+			}
+		}).show();
 	}
 
 	/**
@@ -60,12 +63,11 @@ public class Notification {
 	 * @param context
 	 */
 	public void displayError(String title, String message, Context context) {
-		new AlertDialog.Builder(context).setTitle(title).setMessage(message)
-				.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface arg0, int arg1) {
-						arg0.dismiss();
-					}
-				}).show();
+		new AlertDialog.Builder(context).setTitle(title).setMessage(message).setNegativeButton("Close", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface arg0, int arg1) {
+				arg0.dismiss();
+			}
+		}).show();
 	}
 }

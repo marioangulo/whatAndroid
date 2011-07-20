@@ -14,37 +14,31 @@
 		<activity android:name="what.forum.SectionListActivity" android:label="@string/app_name">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
 		
 		<activity android:name="what.forum.ThreadListActivity" android:label="@string/app_name">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
 		<activity android:name="what.forum.PostListActivity" android:label="@string/app_name" >
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
 		<activity android:name="what.user.UserProfileActivity" android:label="User Profile" 
 		android:theme="@android:style/Theme.Dialog">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
 		<activity android:name="what.forum.ReplyActivity" android:label="Reply" 
 		android:theme="@android:style/Theme.Dialog">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<uses-permission android:name="android.permission.INTERNET" />
 	</application>
 
 </manifest>

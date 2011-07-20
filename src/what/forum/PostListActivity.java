@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import what.gui.Notification;
 import what.gui.R;
+import what.gui.ReportSender;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -55,6 +56,7 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		ReportSender reportSender = new ReportSender(this);
 		createLayout();
 		loadPosts();
 		populateView();
