@@ -81,7 +81,7 @@ public class MySoup {
 			Connection.Response res =
 					Jsoup.connect(url).cookie("session", sessionId).data("action", "reply", "auth", authKey, "thread", threadID, "body", reply)
 							.method(Method.POST).followRedirects(false).timeout(10000).execute();
-		} catch (IOException e) { // TODO Auto-generated catch block e.printStackTrace();
+		} catch (IOException e) {
 		}
 	}
 

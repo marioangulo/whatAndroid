@@ -1,3 +1,14 @@
+//Arbitrary location for the todo list of major things
+//TODO 1) authkey fix
+//TODO 2) subscribed topics
+//TODO 3) monitor sections for new posts
+//TODO 4) GUI recode
+//TODO 5) A mainpage that displays dynamic feed of forum
+//TODO 6) Jump to last read post
+//TODO 7) music searching
+//TODO 8) downloading/sending to seedbox
+//TODO 9) IRC client
+
 package what.login;
 
 import java.io.IOException;
@@ -17,7 +28,7 @@ import api.forum.Manager;
 import api.soup.MySoup;
 
 /**
- * Login screen z
+ * Login screen
  * 
  * @author Tim
  * 
@@ -42,9 +53,6 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 
 		// send crash reports
 		ReportSender reportSender = new ReportSender(this);
-		// ErrorReporter errReporter = new ErrorReporter();
-		// errReporter.Init(this);
-		// errReporter.CheckErrorAndSendMail(this);
 
 		username = (TextView) this.findViewById(R.id.username);
 		password = (TextView) this.findViewById(R.id.password);
@@ -53,6 +61,7 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 		checkbox.setOnClickListener(this);
 		login = (Button) this.findViewById(R.id.login);
 		login.setOnClickListener(this);
+
 	}
 
 	/**
@@ -94,11 +103,11 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 		case R.id.login:
 			try {
 				login();
+				// Intent intent = new Intent(this, what.main.MainPageActivity.class);
+				// startActivity(intent);
+
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-			// TODO Auto-generated catch block
 			break;
 		}
 	}

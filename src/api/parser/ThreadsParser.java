@@ -286,39 +286,40 @@ public class ThreadsParser {
 
 			}
 		}
-		if (s.getSectionTitle().equalsIgnoreCase("Power Users")) {
-			Document doc = MySoup.scrape("http://what.cd/forums.php?page=" + page + "&action=viewforum&forumid=10");
-			Elements rowsa = doc.getElementsByClass("rowa");
-			Elements rowsb = doc.getElementsByClass("rowb");
-			for (int i = 0; i < rowsb.size(); i++) {
-				// get author
-				String authora = ((rowsa.get(i).getElementsByTag("td").get(3)).text());
-				String authorb = ((rowsb.get(i).getElementsByTag("td").get(3)).text());
-
-				String authorIDa[] = regex.splitPoster((rowsa.get(i).getElementsByTag("td").get(3)).toString());
-				String authorIDb[] = regex.splitPoster((rowsb.get(i).getElementsByTag("td").get(3)).toString());
-
-				// gets last poster
-				String lastPostera = ((rowsa.get(i).getElementsByClass("last_poster").get(0).getElementsByTag("a")).text());
-				String lastPosterb = (rowsb.get(i).getElementsByClass("last_poster").get(0).getElementsByTag("a").text());
-
-				String lastPosterIDa[] = regex.splitPoster(rowsa.get(i).getElementsByClass("last_poster").get(0).getElementsByTag("a").toString());
-				String lastPosterIDb[] = regex.splitPoster(rowsb.get(i).getElementsByClass("last_poster").get(0).getElementsByTag("a").toString());
-
-				// get thread title
-				String titlea = (rowsa.get(i).getElementsByTag("a").get(0).text());
-				String titleb = (rowsb.get(i).getElementsByTag("a").get(0).text());
-
-				String urla = regex.splitThreadUrl((rowsa.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
-				String urlb = regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
-
-				threadList.add(new Sextuple<String, String, String, String, String, String>(titlea, authora, authorIDa[1], lastPostera,
-						lastPosterIDa[1], urla));
-				threadList.add(new Sextuple<String, String, String, String, String, String>(titleb, authorb, authorIDb[1], lastPosterb,
-						lastPosterIDb[1], urlb));
-
-			}
-		}
+		/*
+		 * if (s.getSectionTitle().equalsIgnoreCase("Power Users")) { Document doc =
+		 * MySoup.scrape("http://what.cd/forums.php?page=" + page + "&action=viewforum&forumid=10"); Elements rowsa =
+		 * doc.getElementsByClass("rowa"); Elements rowsb = doc.getElementsByClass("rowb"); for (int i = 0; i <
+		 * rowsb.size(); i++) { // get author String authora = ((rowsa.get(i).getElementsByTag("td").get(3)).text());
+		 * String authorb = ((rowsb.get(i).getElementsByTag("td").get(3)).text());
+		 * 
+		 * String authorIDa[] = regex.splitPoster((rowsa.get(i).getElementsByTag("td").get(3)).toString()); String
+		 * authorIDb[] = regex.splitPoster((rowsb.get(i).getElementsByTag("td").get(3)).toString());
+		 * 
+		 * // gets last poster String lastPostera =
+		 * ((rowsa.get(i).getElementsByClass("last_poster").get(0).getElementsByTag("a")).text()); String lastPosterb =
+		 * (rowsb.get(i).getElementsByClass("last_poster").get(0).getElementsByTag("a").text());
+		 * 
+		 * String lastPosterIDa[] =
+		 * regex.splitPoster(rowsa.get(i).getElementsByClass("last_poster").get(0).getElementsByTag("a").toString());
+		 * String lastPosterIDb[] =
+		 * regex.splitPoster(rowsb.get(i).getElementsByClass("last_poster").get(0).getElementsByTag("a").toString());
+		 * 
+		 * // get thread title String titlea = (rowsa.get(i).getElementsByTag("a").get(0).text()); String titleb =
+		 * (rowsb.get(i).getElementsByTag("a").get(0).text());
+		 * 
+		 * String urla =
+		 * regex.splitThreadUrl((rowsa.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")
+		 * ).get(0).toString()); String urlb =
+		 * regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0)
+		 * .getElementsByTag("a")).get(0).toString());
+		 * 
+		 * threadList.add(new Sextuple<String, String, String, String, String, String>(titlea, authora, authorIDa[1],
+		 * lastPostera, lastPosterIDa[1], urla)); threadList.add(new Sextuple<String, String, String, String, String,
+		 * String>(titleb, authorb, authorIDb[1], lastPosterb, lastPosterIDb[1], urlb));
+		 * 
+		 * } }
+		 */
 		if (s.getSectionTitle().equalsIgnoreCase("Comics")) {
 			Document doc = MySoup.scrape("http://what.cd/forums.php?page=" + page + "&action=viewforum&forumid=37");
 			Elements rowsa = doc.getElementsByClass("rowa");

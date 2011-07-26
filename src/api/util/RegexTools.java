@@ -30,6 +30,24 @@ public class RegexTools {
 	}
 
 	/**
+	 * Split the last read url of a thread in a section
+	 * 
+	 * @param string
+	 * @return url of thread
+	 */
+	public String splitLastReadThreadUrl(String string) {
+		Pattern pattern = Pattern.compile(".*<a href=\"(.*)\".*");
+		Matcher matcher = pattern.matcher(string);
+		if (matcher.matches()) {
+			String s = matcher.group(1);
+			s = s.replace("amp;", "");
+			s = "http://what.cd/" + s;
+			return s;
+		}
+		return null;
+	}
+
+	/**
 	 * Split the user in a section
 	 * 
 	 * @param string
@@ -169,8 +187,7 @@ public class RegexTools {
 
 	// TODO fix
 	public String splitUserID(String url) {
-		Pattern pattern =
-				Pattern.compile(".*<li id=\"nav_userinfo\"><a href=\"user.php?id(.*)\".*");
+		Pattern pattern = Pattern.compile(".*<li id=\"nav_userinfo\"><a href=\"user.php?id(.*)\".*");
 		Matcher matcher = pattern.matcher(url);
 		if (matcher.matches())
 			return matcher.group(1);

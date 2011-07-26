@@ -17,11 +17,12 @@ import api.util.Triple;
 public class SubscribedThreads {
 	private String threadTitle;
 	private String threadUrl;
+	private String threadLastRead;
 	private LinkedList<Post> postList = new LinkedList<Post>();
 
-	public SubscribedThreads(String threadTitle, String threadUrl) throws IOException {
+	public SubscribedThreads(String threadTitle, String threadUrl, String threadLastRead) throws IOException {
 		this.threadTitle = threadTitle;
-		this.threadUrl = threadUrl;
+		this.threadLastRead = threadLastRead;
 	}
 
 	public String getThreadTitle() {
@@ -35,6 +36,15 @@ public class SubscribedThreads {
 	 */
 	public String getThreadUrl() {
 		return threadUrl;
+	}
+
+	/**
+	 * Get the last read url of a the thread
+	 * 
+	 * @return
+	 */
+	public String getThreadLastRead() {
+		return threadLastRead;
 	}
 
 	/**

@@ -225,6 +225,7 @@ public class SectionListActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
+		// this.setContentView(topLayout);
 		openSection(v.getId());
 	}
 }

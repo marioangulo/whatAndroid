@@ -7,28 +7,23 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import api.soup.MySoup;
-import api.util.Tuple;
+import api.util.Triple;
 
 public class SubscriptionsParser {
 	static api.util.RegexTools regex = new api.util.RegexTools();
 
-	public static LinkedList<Tuple<String, String>> parseSubscriptions() throws IOException {
-		LinkedList<Tuple<String, String>> threadList = new LinkedList<Tuple<String, String>>();
+	public static LinkedList<Triple<String, String, String>> parseSubscriptions() throws IOException {
+		LinkedList<Triple<String, String, String>> threadList = new LinkedList<Triple<String, String, String>>();
 		Document doc = MySoup.scrape("http://what.cd/userhistory.php?action=subscriptions");
+		// Document doc = Jsoup.parse(new File("assets/subscriptions.html"), "utf-8");
+		Elements a = doc.getElementsByClass("thin").get(0).getElementsByTag("table");
 
-		Elements rowsa = doc.getElementsByClass("rowa");
-		Elements rowsb = doc.getElementsByClass("rowb");
-		for (int i = 0; i < rowsb.size(); i++) {
-			// get thread title
-			String titlea = (rowsa.get(i).getElementsByTag("a").get(0).text());
-			String titleb = (rowsb.get(i).getElementsByTag("a").get(0).text());
-
-			String urla = regex.splitThreadUrl((rowsa.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
-			String urlb = regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
-
-			threadList.add(new Tuple<String, String>(titlea, urla));
-			threadList.add(new Tuple<String, String>(titleb, urlb));
-
+		String title, url, lastread;
+		for (int i = 0; i < a.size(); i++) {
+			title = (a.get(i).getElementsByTag("span").get(0).getElementsByTag("a").get(1).text());
+			url = (regex.splitThreadUrl(a.get(i).getElementsByTag("span").get(0).getElementsByTag("a").get(1).toString()));
+			lastread = regex.splitLastReadThreadUrl(a.get(i).getElementsByTag("span").get(2).getElementsByTag("a").toString());
+			threadList.add(new Triple<String, String, String>(title, url, lastread));
 		}
 		return threadList;
 	}

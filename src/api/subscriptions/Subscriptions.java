@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 import api.parser.SubscriptionsParser;
-import api.util.Tuple;
+import api.util.Triple;
 
 /**
  * A section holds a list of threads
@@ -12,8 +12,12 @@ import api.util.Tuple;
  * @author Tim
  */
 public class Subscriptions {
-	private String sectionTitle = "Subscriptions";
+	private String sectionTitle;
 	private LinkedList<SubscribedThreads> threadsList = new LinkedList<SubscribedThreads>();
+
+	public Subscriptions(String sectionTitle) {
+		this.sectionTitle = sectionTitle;
+	}
 
 	/**
 	 * Populate the section with threads using the thread parser
@@ -23,8 +27,8 @@ public class Subscriptions {
 	 * @throws IOException
 	 */
 	public void addThreads(int page) throws IOException {
-		for (Tuple<String, String> t : SubscriptionsParser.parseSubscriptions()) {
-			threadsList.add(new SubscribedThreads(t.getA(), t.getB()));
+		for (Triple<String, String, String> t : SubscriptionsParser.parseSubscriptions()) {
+			threadsList.add(new SubscribedThreads(t.getA(), t.getB(), t.getA()));
 		}
 	}
 
@@ -40,6 +44,14 @@ public class Subscriptions {
 		String[] s = new String[threadsList.size()];
 		for (int i = 0; i < s.length; i++) {
 			s[i] = threadsList.get(i).getThreadUrl();
+		}
+		return s;
+	}
+
+	public String[] getThreadsLastReadUrlArray() {
+		String[] s = new String[threadsList.size()];
+		for (int i = 0; i < s.length; i++) {
+			s[i] = threadsList.get(i).getThreadLastRead();
 		}
 		return s;
 	}
