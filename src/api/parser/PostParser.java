@@ -12,11 +12,19 @@ import api.subscriptions.SubscribedThreads;
 import api.util.RegexTools;
 import api.util.Triple;
 
+/**
+ * Parses posts
+ * 
+ * @author Tim
+ * 
+ */
+
 public class PostParser {
 	static RegexTools regex = new RegexTools();
 
 	/**
-	 * Parse posts in a thread
+	 * Parse posts in a thread in the forum
+	 * 
 	 * 
 	 * @param page
 	 * 
@@ -38,6 +46,13 @@ public class PostParser {
 		return postList;
 	}
 
+	/**
+	 * Parse posts in a subscribed thread
+	 * 
+	 * @param t
+	 * @param page
+	 * @return
+	 */
 	public static LinkedList<Triple<String, String, String>> parsePosts(SubscribedThreads t, int page) {
 		String url = t.getThreadUrl();
 		url = url.concat("&page=" + page);

@@ -12,8 +12,10 @@ import api.util.RegexTools;
 import api.util.Sextuple;
 
 /**
- * @author Tim Parses threads depending on section Returns a list threads, each thread contains <title, author, author
- *         id, last poster, last poster id, thread url>
+ * Parses threads depending on section Returns a list threads, each thread contains <title, author, author id, last
+ * poster, last poster id, thread url>
+ * 
+ * @author Tim
  */
 public class ThreadsParser {
 	static RegexTools regex = new RegexTools();

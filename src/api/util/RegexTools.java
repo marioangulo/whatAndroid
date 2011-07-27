@@ -7,6 +7,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * All the methods needed to assist in splitting strings from html
+ * 
  * @author Tim
  * 
  */

@@ -10,6 +10,12 @@ import org.jsoup.select.Elements;
 import api.soup.MySoup;
 import api.util.RegexTools;
 
+/**
+ * Parses the user profile
+ * 
+ * @author Tim
+ * 
+ */
 public class UserProfileParser {
 	private static RegexTools regex = new RegexTools();
 	private static Document doc;

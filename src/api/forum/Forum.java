@@ -6,7 +6,8 @@ import java.util.LinkedList;
 import api.parser.SectionParser;
 
 /**
- * A forum holds a list of sections
+ * A forum holds a list of Sections; each Section holds a list of Threads; each Thread holds a list of Posts.
+ * 
  * 
  * @author Tim
  * 
@@ -80,17 +81,4 @@ public class Forum {
 	public String getForumTitle() {
 		return forumTitle;
 	}
-
-	/**
-	 * String representation of a forum and everything in it
-	 */
-	@Override
-	public String toString() {
-		String toReturn = sectionList.toString();
-		toReturn.concat(",");
-		toReturn = toReturn.replace("[", "");
-		toReturn = toReturn.replace("]", "");
-		return forumTitle + "\n" + sectionList.toString();
-	}
-
 }

@@ -9,7 +9,7 @@ import api.parser.PostParser;
 import api.util.Triple;
 
 /**
- * A Thread in the forum
+ * A Subscribed Thread
  * 
  * @author Tim
  * 
@@ -17,14 +17,29 @@ import api.util.Triple;
 public class SubscribedThreads {
 	private String threadTitle;
 	private String threadUrl;
-	private String threadLastRead;
+	private String threadLastReadUrl;
 	private LinkedList<Post> postList = new LinkedList<Post>();
 
-	public SubscribedThreads(String threadTitle, String threadUrl, String threadLastRead) throws IOException {
+	/**
+	 * Create a new subscribed thread
+	 * 
+	 * @param threadTitle
+	 *            the title
+	 * @param threadUrl
+	 *            the url
+	 * @param threadLastReadUrl
+	 *            the last read url
+	 */
+	public SubscribedThreads(String threadTitle, String threadUrl, String threadLastReadUrl) {
 		this.threadTitle = threadTitle;
-		this.threadLastRead = threadLastRead;
+		this.threadLastReadUrl = threadLastReadUrl;
 	}
 
+	/**
+	 * Gets the title of the thread
+	 * 
+	 * @return the thread title
+	 */
 	public String getThreadTitle() {
 		return threadTitle;
 	}
@@ -43,8 +58,8 @@ public class SubscribedThreads {
 	 * 
 	 * @return
 	 */
-	public String getThreadLastRead() {
-		return threadLastRead;
+	public String getThreadLastReadUrl() {
+		return threadLastReadUrl;
 	}
 
 	/**
@@ -58,6 +73,11 @@ public class SubscribedThreads {
 		}
 	}
 
+	/**
+	 * Array of users in a thread
+	 * 
+	 * @return
+	 */
 	public String[] getPostUserArray() {
 		String[] s = new String[postList.size()];
 		for (int i = 0; i < s.length; i++) {
@@ -66,6 +86,11 @@ public class SubscribedThreads {
 		return s;
 	}
 
+	/**
+	 * An array of user ids in a thread
+	 * 
+	 * @return
+	 */
 	public String[] getPostUserIDArray() {
 		String[] s = new String[postList.size()];
 		for (int i = 0; i < s.length; i++) {
@@ -74,6 +99,11 @@ public class SubscribedThreads {
 		return s;
 	}
 
+	/**
+	 * An array of post bodys in a thread
+	 * 
+	 * @return
+	 */
 	public String[] getPostBodyArray() {
 		String[] s = new String[postList.size()];
 		for (int i = 0; i < s.length; i++) {
@@ -109,14 +139,4 @@ public class SubscribedThreads {
 		return postList;
 	}
 
-	/**
-	 * String representation of a thread and everything inside it
-	 */
-	@Override
-	public String toString() {
-		String toReturn = threadTitle + ", " + "\n" /*
-													 * + postList . toString
-													 */;
-		return toReturn;
-	}
 }

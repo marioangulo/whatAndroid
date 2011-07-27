@@ -7,7 +7,7 @@ import api.parser.PostParser;
 import api.util.Triple;
 
 /**
- * A Thread in the forum
+ * A Thread in the section
  * 
  * @author Tim
  * 
@@ -39,6 +39,11 @@ public class Threads {
 		this.threadUrl = threadUrl;
 	}
 
+	/**
+	 * Get the title of the thread
+	 * 
+	 * @return the thread title
+	 */
 	public String getThreadTitle() {
 		return threadTitle;
 	}
@@ -99,6 +104,11 @@ public class Threads {
 		}
 	}
 
+	/**
+	 * An array of users in a thread
+	 * 
+	 * @return
+	 */
 	public String[] getPostUserArray() {
 		String[] s = new String[postList.size()];
 		for (int i = 0; i < s.length; i++) {
@@ -107,6 +117,11 @@ public class Threads {
 		return s;
 	}
 
+	/**
+	 * An array of user ids in a thread
+	 * 
+	 * @return
+	 */
 	public String[] getPostUserIDArray() {
 		String[] s = new String[postList.size()];
 		for (int i = 0; i < s.length; i++) {
@@ -115,6 +130,11 @@ public class Threads {
 		return s;
 	}
 
+	/**
+	 * An array of post bodys in the thread
+	 * 
+	 * @return
+	 */
 	public String[] getPostBodyArray() {
 		String[] s = new String[postList.size()];
 		for (int i = 0; i < s.length; i++) {
@@ -155,16 +175,5 @@ public class Threads {
 	 */
 	public void clearPosts() {
 		postList.clear();
-	}
-
-	/**
-	 * String representation of a thread and everything inside it
-	 */
-	@Override
-	public String toString() {
-		String toReturn = threadTitle + ", " + threadAuthor + ", " + threadLastPoster + "\n" /*
-																							 * + postList . toString
-																							 */;
-		return toReturn;
 	}
 }

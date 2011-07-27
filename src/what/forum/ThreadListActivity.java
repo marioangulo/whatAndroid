@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import what.gui.R;
-import what.gui.ReportSender;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -44,7 +43,6 @@ public class ThreadListActivity extends ListActivity implements OnClickListener 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.threads);
-		ReportSender reportSender = new ReportSender(this);
 		getBundle();
 		loadThreads();
 		populateTable();
@@ -231,7 +229,7 @@ public class ThreadListActivity extends ListActivity implements OnClickListener 
 	@Override
 	public void onClick(View v) {
 
-		for (int i = 0; i < rowList.size() - 1; i++) {
+		for (int i = 0; i < (rowList.size() - 1); i++) {
 			if (v.getId() == titleList.get(i).getId()) {
 				openThread(i);
 			}

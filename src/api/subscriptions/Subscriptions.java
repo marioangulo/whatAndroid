@@ -7,7 +7,7 @@ import api.parser.SubscriptionsParser;
 import api.util.Triple;
 
 /**
- * A section holds a list of threads
+ * A Subscriptions section that hold Subscribed Threads
  * 
  * @author Tim
  */
@@ -15,6 +15,12 @@ public class Subscriptions {
 	private String sectionTitle;
 	private LinkedList<SubscribedThreads> threadsList = new LinkedList<SubscribedThreads>();
 
+	/**
+	 * Create a new Subscriptions section
+	 * 
+	 * @param sectionTitle
+	 *            title of section
+	 */
 	public Subscriptions(String sectionTitle) {
 		this.sectionTitle = sectionTitle;
 	}
@@ -26,12 +32,17 @@ public class Subscriptions {
 	 *            the page of the section to get threads from
 	 * @throws IOException
 	 */
-	public void addThreads(int page) throws IOException {
+	public void addThreads() throws IOException {
 		for (Triple<String, String, String> t : SubscriptionsParser.parseSubscriptions()) {
 			threadsList.add(new SubscribedThreads(t.getA(), t.getB(), t.getA()));
 		}
 	}
 
+	/**
+	 * Array of thread titles in Subscriptions
+	 * 
+	 * @return
+	 */
 	public String[] getThreadsTitleArray() {
 		String[] s = new String[threadsList.size()];
 		for (int i = 0; i < s.length; i++) {
@@ -40,6 +51,11 @@ public class Subscriptions {
 		return s;
 	}
 
+	/**
+	 * Array of thread urls in Subscriptions
+	 * 
+	 * @return
+	 */
 	public String[] getThreadsUrlArray() {
 		String[] s = new String[threadsList.size()];
 		for (int i = 0; i < s.length; i++) {
@@ -48,10 +64,15 @@ public class Subscriptions {
 		return s;
 	}
 
+	/**
+	 * An array of thread last read urls in a section
+	 * 
+	 * @return
+	 */
 	public String[] getThreadsLastReadUrlArray() {
 		String[] s = new String[threadsList.size()];
 		for (int i = 0; i < s.length; i++) {
-			s[i] = threadsList.get(i).getThreadLastRead();
+			s[i] = threadsList.get(i).getThreadLastReadUrl();
 		}
 		return s;
 	}
@@ -80,16 +101,4 @@ public class Subscriptions {
 	public String getSectionTitle() {
 		return sectionTitle;
 	}
-
-	/**
-	 * String representation of a section and everything in it
-	 */
-	@Override
-	public String toString() {
-		String toReturn = sectionTitle + "\n" + getThreads().toString();
-		toReturn = toReturn.replace("[", "");
-		toReturn = toReturn.replace("]", "");
-		return toReturn;
-	}
-
 }

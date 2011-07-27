@@ -39,6 +39,11 @@ public class Section {
 		}
 	}
 
+	/**
+	 * An array of all the titles of threads in a section
+	 * 
+	 * @return
+	 */
 	public String[] getThreadsTitleArray() {
 		String[] s = new String[threadsList.size()];
 		for (int i = 0; i < s.length; i++) {
@@ -47,6 +52,11 @@ public class Section {
 		return s;
 	}
 
+	/**
+	 * An array of the all the last posters of threads in a section
+	 * 
+	 * @return
+	 */
 	public String[] getThreadsLastPosterArray() {
 		String[] s = new String[threadsList.size()];
 		for (int i = 0; i < s.length; i++) {
@@ -55,6 +65,11 @@ public class Section {
 		return s;
 	}
 
+	/**
+	 * An array of the all the authors of threads in a section
+	 * 
+	 * @return
+	 */
 	public String[] getThreadsAuthorArray() {
 		String[] s = new String[threadsList.size()];
 		for (int i = 0; i < s.length; i++) {
@@ -63,6 +78,11 @@ public class Section {
 		return s;
 	}
 
+	/**
+	 * An array of all the thread urls in a section
+	 * 
+	 * @return
+	 */
 	public String[] getThreadsUrlArray() {
 		String[] s = new String[threadsList.size()];
 		for (int i = 0; i < s.length; i++) {
@@ -71,6 +91,11 @@ public class Section {
 		return s;
 	}
 
+	/**
+	 * An array of the last poster ids in threads in a section
+	 * 
+	 * @return
+	 */
 	public String[] getThreadsLastPosterIDArray() {
 		String[] s = new String[threadsList.size()];
 		for (int i = 0; i < s.length; i++) {
@@ -79,6 +104,11 @@ public class Section {
 		return s;
 	}
 
+	/**
+	 * An array of the author ids in threads in a section
+	 * 
+	 * @return
+	 */
 	public String[] getThreadsAuthorIDArray() {
 		String[] s = new String[threadsList.size()];
 		for (int i = 0; i < s.length; i++) {
@@ -111,16 +141,4 @@ public class Section {
 	public String getSectionTitle() {
 		return sectionTitle;
 	}
-
-	/**
-	 * String representation of a section and everything in it
-	 */
-	@Override
-	public String toString() {
-		String toReturn = sectionTitle + "\n" + getThreads().toString();
-		toReturn = toReturn.replace("[", "");
-		toReturn = toReturn.replace("]", "");
-		return toReturn;
-	}
-
 }

@@ -6,7 +6,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import what.gui.ReportSender;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -35,13 +34,11 @@ public class UserProfileActivity extends Activity implements OnClickListener {
 	Button moreButton;
 	Button closeButton;
 	String userName, userID;
-	// TODO seperate api and gui
 	UserProfile userProfile;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ReportSender reportSender = new ReportSender(this);
 		createLayout();
 		loadProfile();
 	}
@@ -51,7 +48,7 @@ public class UserProfileActivity extends Activity implements OnClickListener {
 		mainLayout = new LinearLayout(this);
 
 		avatarView = new ImageView(this);
-		avatarView.setAdjustViewBounds(true); // set the ImageView bounds to match the Drawable's dimensions
+		avatarView.setAdjustViewBounds(true);
 		avatarView.setLayoutParams(new Gallery.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 		avatarView.setAdjustViewBounds(true);
 		avatarView.setMaxHeight(400);

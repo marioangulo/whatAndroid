@@ -3,7 +3,6 @@ package what.forum;
 import java.util.ArrayList;
 
 import what.gui.R;
-import what.gui.ReportSender;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -47,7 +46,6 @@ public class SectionListActivity extends Activity implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ReportSender reportSender = new ReportSender(this);
 		createLayout();
 		populateView();
 		idGenerator();

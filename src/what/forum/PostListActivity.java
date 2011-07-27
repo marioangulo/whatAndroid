@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import what.gui.Notification;
 import what.gui.R;
-import what.gui.ReportSender;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -28,7 +27,9 @@ import api.forum.Manager;
 import api.soup.MySoup;
 
 /**
- * @author Tim The view of all posts in a section
+ * The view of all posts in a section
+ * 
+ * @author Tim
  */
 
 public class PostListActivity extends Activity implements OnClickListener, OnTouchListener {
@@ -56,7 +57,6 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ReportSender reportSender = new ReportSender(this);
 		createLayout();
 		loadPosts();
 		populateView();

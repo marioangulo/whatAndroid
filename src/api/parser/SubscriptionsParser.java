@@ -9,13 +9,24 @@ import org.jsoup.select.Elements;
 import api.soup.MySoup;
 import api.util.Triple;
 
+/**
+ * Parses the subscriptions
+ * 
+ * @author Tim
+ * 
+ */
 public class SubscriptionsParser {
 	static api.util.RegexTools regex = new api.util.RegexTools();
 
+	/**
+	 * Parse thread in Subscriptions
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
 	public static LinkedList<Triple<String, String, String>> parseSubscriptions() throws IOException {
 		LinkedList<Triple<String, String, String>> threadList = new LinkedList<Triple<String, String, String>>();
 		Document doc = MySoup.scrape("http://what.cd/userhistory.php?action=subscriptions");
-		// Document doc = Jsoup.parse(new File("assets/subscriptions.html"), "utf-8");
 		Elements a = doc.getElementsByClass("thin").get(0).getElementsByTag("table");
 
 		String title, url, lastread;

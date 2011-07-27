@@ -11,7 +11,7 @@ import org.jsoup.nodes.Document;
 import api.util.RegexTools;
 
 /**
- * JSoup methods to login and get pages
+ * JSoup methods to interact with site
  * 
  * @author Tim
  * 
@@ -91,6 +91,14 @@ public class MySoup {
 		return doc;
 	}
 
+	/**
+	 * Reply to a thread
+	 * 
+	 * @param url
+	 *            url of the thread replying to
+	 * @param reply
+	 *            body of the reply
+	 */
 	public static void postReply(String url, String reply) {
 		String threadID = regex.splitThreadID(url);
 		try {
@@ -102,6 +110,13 @@ public class MySoup {
 		}
 	}
 
+	/**
+	 * Get a plain text string of html for qouting purposes
+	 * 
+	 * @param html
+	 *            html to convert to plaintext
+	 * @return qoutable text
+	 */
 	public static String toQuotableString(String html) {
 		return Jsoup.parse(html).text();
 	}

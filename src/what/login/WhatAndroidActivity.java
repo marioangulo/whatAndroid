@@ -1,5 +1,4 @@
 //Arbitrary location for the todo list of major things
-//TODO 1) authkey fix
 //TODO 2) subscribed topics
 //TODO 3) monitor sections for new posts
 //TODO 4) GUI recode
@@ -7,7 +6,8 @@
 //TODO 6) Jump to last read post
 //TODO 7) music searching
 //TODO 8) downloading/sending to seedbox
-//TODO 9) IRC client
+//TODO 9) User Settings
+//TODO 10) IRC client
 
 package what.login;
 
@@ -15,7 +15,6 @@ import java.io.IOException;
 
 import what.gui.Notification;
 import what.gui.R;
-import what.gui.ReportSender;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -48,9 +47,6 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-
-		// send crash reports
-		ReportSender reportSender = new ReportSender(this);
 
 		username = (TextView) this.findViewById(R.id.username);
 		password = (TextView) this.findViewById(R.id.password);

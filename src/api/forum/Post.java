@@ -1,7 +1,7 @@
 package api.forum;
 
 /**
- * A post contains all the posts inside a thread
+ * A Post in the thread
  * 
  * @author Tim
  * 
@@ -10,6 +10,14 @@ public class Post {
 	private String postBody;
 	private UserInForum postAuthor;
 
+	/**
+	 * Create a new post
+	 * 
+	 * @param postAuthor
+	 *            the author of the post
+	 * @param postBody
+	 *            the body of the post
+	 */
 	public Post(UserInForum postAuthor, String postBody) {
 		this.postAuthor = postAuthor;
 		this.postBody = postBody;
@@ -40,14 +48,5 @@ public class Post {
 	 */
 	public String getPostBody() {
 		return postBody;
-	}
-
-	/**
-	 * Return string representation of a post
-	 */
-	@Override
-	public String toString() {
-		String toReturn = postAuthor + ": " + postBody;
-		return toReturn;
 	}
 }

@@ -5,6 +5,8 @@ import java.io.IOException;
 import api.subscriptions.Subscriptions;
 
 /**
+ * Gives static access to the forum and subscriptions
+ * 
  * @author Tim
  * 
  */
@@ -31,13 +33,6 @@ public class Manager {
 		return subscriptions;
 	}
 
-	// TODO impleememnt this
-	/*
-	 * public static void threadListener(ArrayList<String> list) throws IOException { for (int i = 0; i < list.size();
-	 * i++) { forum.getSectionByName(list.get(i)).addThreads(1);
-	 * 
-	 * } }
-	 */
 	public static String getManagers() {
 		String toReturn = "Managing: ";
 		if (managingForum) {

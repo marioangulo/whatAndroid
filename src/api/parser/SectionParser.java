@@ -2,6 +2,12 @@ package api.parser;
 
 import java.io.IOException;
 
+/**
+ * Parses the section
+ * 
+ * @author Tim
+ * 
+ */
 public class SectionParser {
 
 	/**

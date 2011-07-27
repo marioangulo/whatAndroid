@@ -5,6 +5,12 @@ import java.util.LinkedList;
 
 import api.parser.UserProfileParser;
 
+/**
+ * The stats of a user's profile
+ * 
+ * @author Tim
+ * 
+ */
 public class Stats {
 	String joined;
 	String lastSeen;
@@ -33,6 +39,15 @@ public class Stats {
 	LinkedList<String> basicStats = new LinkedList<String>();
 	LinkedList<String> extraStats = new LinkedList<String>();
 
+	/**
+	 * Create new stats for a user proifle
+	 * 
+	 * @param userName
+	 *            the user's name
+	 * @param userID
+	 *            the user's id
+	 * @throws IOException
+	 */
 	public Stats(String userName, String userID) throws IOException {
 		this.userName = userName;
 		this.userID = userID;
