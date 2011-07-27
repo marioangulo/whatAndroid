@@ -1,6 +1,6 @@
 package what.forum;
 
-import what.gui.ReportSender;
+import what.gui.Notification;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,7 +28,6 @@ public class ReplyActivity extends Activity implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ReportSender reportSender = new ReportSender(this);
 		getBundle();
 		createLayout();
 	}
@@ -74,6 +73,8 @@ public class ReplyActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		if (v.getId() == replyButton.getId()) {
 			MySoup.postReply(threadUrl, textInput.getText().toString());
+			Notification n = new Notification();
+			n.displayToast("Replied", Notification.LENGTH_SHORT, this);
 			finish();
 		}
 		if (v.getId() == closeButton.getId()) {

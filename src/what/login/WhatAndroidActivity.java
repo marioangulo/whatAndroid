@@ -37,11 +37,9 @@ import api.soup.MySoup;
 public class WhatAndroidActivity extends Activity implements OnClickListener {
 	TextView username;
 	TextView password;
-	TextView authkey;
 	Button login;
 	CheckBox checkbox;
 	Notification notification = new Notification();
-	private static final String TAG = "WhatAndroidActivity";
 
 	/**
 	 * Called when the activity is first created.
@@ -56,7 +54,6 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 
 		username = (TextView) this.findViewById(R.id.username);
 		password = (TextView) this.findViewById(R.id.password);
-		authkey = (TextView) this.findViewById(R.id.authkey);
 		checkbox = (CheckBox) this.findViewById(R.id.checkbox);
 		checkbox.setOnClickListener(this);
 		login = (Button) this.findViewById(R.id.login);
@@ -76,18 +73,10 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 		String loginURL = "http://what.cd/login.php";
 
 		MySoup.login(loginURL, usernameString, passwordString);
-		MySoup.setAuthKey(authkey.getText().toString());
 		if (MySoup.isLoggedIn()) {
-			// TODO more suitable location
-			Manager.createForum("what.cd Forum");
-			try {
-				Intent intent = new Intent(this, what.forum.SectionListActivity.class);
-				startActivity(intent);
-			} catch (Exception e) {
-				notification.displayToast("Logged in, but not able to go to next screen, tell Gwindow", Notification.LENGTH_LONG, this);
-				e.printStackTrace();
-			}
-
+			Manager.createForum("what.cd forum");
+			Intent intent = new Intent(this, what.forum.SectionListActivity.class);
+			startActivity(intent);
 		} else {
 			notification.displayError("Error", "Login failed, wrong username/password or a timeout, try again", this);
 		}

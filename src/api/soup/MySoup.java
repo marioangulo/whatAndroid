@@ -1,5 +1,6 @@
 package api.soup;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.jsoup.Connection;
@@ -34,18 +35,19 @@ public class MySoup {
 					Jsoup.connect(url).data("username", username, "password", password).method(Method.POST).timeout(30000).execute();
 			// set cookie
 			sessionId = res.cookie("session");
-			/*
-			 * String s =
-			 * scrape("http://what.cd/index.php").getElementById("header").getElementById("userinfo").getElementById
-			 * ("userinfo_username") .getElementById("nav_logout").getElementsByTag("a").get(0).toString(); authKey =
-			 * regex.splitAuthKey(s);
-			 */
+
+			// get the authkey
+			String s =
+					scrape("http://what.cd/index.php").getElementById("header").getElementById("userinfo").getElementById("userinfo_username")
+							.getElementById("nav_logout").getElementsByTag("a").get(0).toString();
+			authKey = regex.splitAuthKey(s);
+
 		} catch (IOException e) {
 		}
 	}
 
-	public static void setAuthKey(String s) {
-		authKey = s;
+	public static String getAuthKey() {
+		return authKey;
 	}
 
 	/**
@@ -69,6 +71,21 @@ public class MySoup {
 		Document doc = null;
 		try {
 			doc = Jsoup.connect(page).cookie("session", sessionId).timeout(30000).get();
+		} catch (IOException e) {
+		}
+		return doc;
+	}
+
+	/**
+	 * Method for testing on local copies of pages
+	 * 
+	 * @param file
+	 * @return
+	 */
+	public static Document scrape(File file) {
+		Document doc = null;
+		try {
+			doc = Jsoup.parse(file, "utf-8");
 		} catch (IOException e) {
 		}
 		return doc;
