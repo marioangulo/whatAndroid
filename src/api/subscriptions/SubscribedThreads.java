@@ -139,4 +139,12 @@ public class SubscribedThreads {
 		return postList;
 	}
 
+	public void unsubscribe() {
+		// TODO Auto-generated method stub
+	}
+
+	public void markAsRead() {
+		// TODO Auto-generated method stub
+	}
+
 }

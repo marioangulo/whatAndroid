@@ -94,6 +94,54 @@ public class Subscriptions {
 	}
 
 	/**
+	 * Refresh the the subscriptions
+	 */
+	private void refresh() {
+		clearThreadsList();
+		try {
+			addThreads();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Checks if there are unread subscribed threads
+	 * 
+	 * @return true if unread threads
+	 */
+	public boolean isNewSubscriptions() {
+		refresh();
+		if (threadsList.isEmpty())
+			return false;
+		return true;
+	}
+
+	/**
+	 * Get the number of on unread subscribed threads
+	 * 
+	 * @return number of unread
+	 */
+	public int getNumberOfUnreadSubscribedThreads() {
+		return threadsList.size();
+	}
+
+	/**
+	 * Unsubscribe from all threads
+	 */
+	public void unsubscribeAll() {
+		for (SubscribedThreads s : threadsList) {
+			s.unsubscribe();
+		}
+	}
+
+	public void markAllAsRead() {
+		for (SubscribedThreads s : threadsList) {
+			s.markAsRead();
+		}
+	}
+
+	/**
 	 * Get title of section
 	 * 
 	 * @return section title

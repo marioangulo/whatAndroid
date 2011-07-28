@@ -1,6 +1,5 @@
 //Arbitrary location for the todo list of major things
-//TODO 2) subscribed topics
-//TODO 3) monitor sections for new posts
+//TODO 3) serializible subscriptions/new threads
 //TODO 4) GUI recode
 //TODO 5) A mainpage that displays dynamic feed of forum
 //TODO 6) Jump to last read post
@@ -32,7 +31,6 @@ import api.soup.MySoup;
  * @author Tim
  * 
  */
-@SuppressWarnings("unused")
 public class WhatAndroidActivity extends Activity implements OnClickListener {
 	TextView username;
 	TextView password;
@@ -90,7 +88,6 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 				login();
 				// Intent intent = new Intent(this, what.main.MainPageActivity.class);
 				// startActivity(intent);
-
 			} catch (IOException e) {
 			}
 			break;
