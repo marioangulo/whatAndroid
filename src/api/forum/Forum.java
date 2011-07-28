@@ -7,8 +7,7 @@ import api.parser.SectionParser;
 
 /**
  * A forum holds a list of Sections; each Section holds a list of Threads; each Thread holds a list of Posts.
- * 
- * 
+ *  
  * @author Tim
  * 
  */
