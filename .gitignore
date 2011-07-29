@@ -1,3 +1,6 @@
 bin/
 .classpath
 .project
+out/
+.idea/
+WhatAndroid.iml

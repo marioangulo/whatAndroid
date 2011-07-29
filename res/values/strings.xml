@@ -15,4 +15,5 @@
     <string name="menu">Menu</string>
     <string name="lounge">The Lounge</string>
     <string name="authkeystring">authkey</string>
+    <string name="loggingin">Logging in...</string>
 </resources>
