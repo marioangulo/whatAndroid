@@ -203,7 +203,8 @@ public class SectionListActivity extends Activity implements OnClickListener {
 			closeOptionsMenu();
 			break;
 		case R.id.subscriptionsItem:
-			// TODO open subscriptions
+			intent = new Intent(this, what.main.MainPageActivity.class);
+			startActivity(intent);
 			break;
 		default:
 			return super.onOptionsItemSelected(item);

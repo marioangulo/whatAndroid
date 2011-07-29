@@ -10,6 +10,10 @@
 
 package what.login;
 
+import java.io.IOException;
+
+import what.gui.Notification;
+import what.gui.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -23,10 +27,6 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import api.forum.Manager;
 import api.soup.MySoup;
-import what.gui.Notification;
-import what.gui.R;
-
-import java.io.IOException;
 
 /**
  * Login screen
@@ -64,52 +64,56 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 	 * @throws IOException
 	 */
 	private void login() throws IOException {
-        ProgressDialog dialog = new ProgressDialog(this);
+		ProgressDialog dialog = new ProgressDialog(this);
 
+		Thread loadingThread = new Thread() {
+			ProgressDialog dialog = new ProgressDialog(WhatAndroidActivity.this);
+			String usernameString = username.getText().toString();
+			String passwordString = password.getText().toString();
+			String loginURL = "http://what.cd/login.php";
 
-        Thread loadingThread = new Thread() {
-            ProgressDialog dialog = new ProgressDialog(WhatAndroidActivity.this);
-            String usernameString = username.getText().toString();
-		    String passwordString = password.getText().toString();
-		    String loginURL = "http://what.cd/login.php";
+			@Override
+			public void run() {
+				// Display the progress dialog
+				loginHandler.sendEmptyMessage(1);
 
-            @Override
-            public void run() {
-                // Display the progress dialog
-                loginHandler.sendEmptyMessage(1);
+				// Do the log in
+				MySoup.login(loginURL, usernameString, passwordString);
+				if (MySoup.isLoggedIn()) {
+					try {
+						Manager.createForum("what.cd forum");
+						Manager.createSubscriptions("subscriptions");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					Intent intent = new Intent(WhatAndroidActivity.this, what.forum.SectionListActivity.class);
 
-                // Do the log in
-                MySoup.login(loginURL, usernameString, passwordString);
-                if (MySoup.isLoggedIn()) {
-                    try {
-                        Manager.createForum("what.cd forum");
-                    } catch (IOException e) { e.printStackTrace(); }
-                    Intent intent = new Intent(WhatAndroidActivity.this, what.forum.SectionListActivity.class);
-                    startActivity(intent);
-                } else {
-                    notification.displayError("Error", "Login failed, wrong username/password or a timeout, try again", WhatAndroidActivity.this);
-                }
+					startActivity(intent);
+				} else {
+					notification.displayError("Error", "Login failed, wrong username/password or a timeout, try again", WhatAndroidActivity.this);
+				}
 
-                // Dismiss the dialog
-                loginHandler.sendEmptyMessage(2);
-            }
+				// Dismiss the dialog
+				loginHandler.sendEmptyMessage(2);
+			}
 
-            private Handler loginHandler = new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    if (msg.what == 1) {
-                        dialog.setIndeterminate(true);
-                        dialog.setMessage(getString(R.string.loggingin));
-                        dialog.show();
-                    } else if (msg.what == 2) {
-                        dialog.dismiss();
-                    }
-                }
-            };
-        };
-        loadingThread.start();
+			private Handler loginHandler = new Handler() {
+				@Override
+				public void handleMessage(Message msg) {
+					if (msg.what == 1) {
+						dialog.setIndeterminate(true);
+						dialog.setMessage(getString(R.string.loggingin));
+						dialog.show();
+					} else if (msg.what == 2) {
+						dialog.dismiss();
+					}
+				}
+			};
+		};
+		loadingThread.start();
 	}
 
+	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.checkbox:
@@ -119,8 +123,6 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 		case R.id.login:
 			try {
 				login();
-				// Intent intent = new Intent(this, what.main.MainPageActivity.class);
-				// startActivity(intent);
 			} catch (IOException e) {
 			}
 			break;

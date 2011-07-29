@@ -263,7 +263,8 @@ public class ThreadListActivity extends ListActivity implements OnClickListener 
 			closeOptionsMenu();
 			break;
 		case R.id.subscriptionsItem:
-			// TODO open subscriptions
+			intent = new Intent(this, what.main.MainPageActivity.class);
+			startActivity(intent);
 			break;
 		case R.id.refreshItem:
 			// refresh activity
