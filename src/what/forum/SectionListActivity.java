@@ -25,12 +25,12 @@ import api.parser.SectionParser;
  */
 public class SectionListActivity extends Activity implements OnClickListener {
 	// TODO have api fully handle this
-	private static String[] site = SectionParser.parseSiteSections();
-	private static String[] community = SectionParser.parseCommunitySections();
-	private static String[] music = SectionParser.parseMusicSections();
-	private static String[] help = SectionParser.parseHelpSections();
-	private static String[] trash = SectionParser.parseTrashSections();
-	private static String[] masterList = SectionParser.getMasterList();
+	private static String[] site = SectionParser.listToArray(SectionParser.parseSiteSections());
+	private static String[] community = SectionParser.listToArray(SectionParser.parseCommunitySections());
+	private static String[] music = SectionParser.listToArray(SectionParser.parseMusicSections());
+	private static String[] help = SectionParser.listToArray(SectionParser.parseHelpSections());
+	private static String[] trash = SectionParser.listToArray(SectionParser.parseTrashSections());
+	private static String[] masterList = SectionParser.listToArray(SectionParser.parseMasterList());
 	TextView forumsView;
 	LinearLayout mainLayout, linearLayout;
 	ScrollView scrollView;
@@ -172,7 +172,7 @@ public class SectionListActivity extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * Opens a section corresponding to it's position in the list
+	 * Opens a section corresponding to its position in the list
 	 * 
 	 * @param j
 	 *            position in list

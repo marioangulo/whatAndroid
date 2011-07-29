@@ -15,6 +15,7 @@ import api.util.Sextuple;
  */
 public class Section {
 	private String sectionTitle;
+	private String sectionUrl;
 	private LinkedList<Threads> threadsList = new LinkedList<Threads>();
 	private ArrayList<Threads> masterThreadsList = new ArrayList<Threads>();
 	private boolean listening;
@@ -27,8 +28,9 @@ public class Section {
 	 *            title of section
 	 * @throws IOException
 	 */
-	public Section(String sectionTitle) throws IOException {
+	public Section(String sectionTitle, String sectionUrl) throws IOException {
 		this.sectionTitle = sectionTitle;
+		this.sectionUrl = sectionUrl;
 	}
 
 	/**
@@ -167,6 +169,15 @@ public class Section {
 	 */
 	public String getSectionTitle() {
 		return sectionTitle;
+	}
+
+	/**
+	 * Get the url of the section
+	 * 
+	 * @return section url
+	 */
+	public String getSectionUrl() {
+		return sectionUrl;
 	}
 
 	/**

@@ -32,6 +32,38 @@ public class RegexTools {
 	}
 
 	/**
+	 * Split the url of a section
+	 * 
+	 * @param string
+	 * @return url of section
+	 */
+	public String splitSectionUrl(String string) {
+		Pattern pattern = Pattern.compile(".*<a href=\"(.*)\" title.*");
+		Matcher matcher = pattern.matcher(string);
+		if (matcher.matches()) {
+			String s = matcher.group(1);
+			s = s.replace("amp;", "");
+			s = "http://what.cd/" + s;
+			return s;
+		}
+		return null;
+	}
+
+	/**
+	 * Split the title of a section
+	 * 
+	 * @param string
+	 * @return tile of section
+	 */
+	public String splitSectionTitle(String string) {
+		Pattern pattern = Pattern.compile(".*>(.*)</a>.*");
+		Matcher matcher = pattern.matcher(string);
+		if (matcher.matches())
+			return matcher.group(1);
+		return null;
+	}
+
+	/**
 	 * Split the last read url of a thread in a section
 	 * 
 	 * @param string
@@ -56,8 +88,6 @@ public class RegexTools {
 	 * @return user name
 	 */
 	public String splitUser(String string) {
-		// TODO include user id
-
 		Pattern pattern = Pattern.compile(".*>(.*)</a>.*");
 		Matcher matcher = pattern.matcher(string);
 		if (matcher.matches())

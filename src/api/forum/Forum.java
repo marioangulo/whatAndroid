@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 import api.parser.SectionParser;
+import api.util.Tuple;
 
 /**
  * A forum holds a list of Sections; each Section holds a list of Threads; each Thread holds a list of Posts.
- *  
+ * 
  * @author Tim
  * 
  */
@@ -34,8 +35,8 @@ public class Forum {
 	 */
 	private void addSections() throws IOException {
 		// gets string array from parser and adds it to the sectionList
-		for (String s : SectionParser.getMasterList()) {
-			sectionList.add(new Section(s));
+		for (Tuple<String, String> s : SectionParser.parseMasterList()) {
+			sectionList.add((new Section(s.getA(), s.getB())));
 		}
 	}
 
