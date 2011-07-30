@@ -8,15 +8,26 @@
 //TODO 9) User Settings
 //TODO 10) IRC client
 
+// Gui to-dos
+//TODO GUI 1) Make sure all loading processes are threaded
+//TODO GUI 2) Change post quote to tap and hold
+//TODO GUI 3) Add reply box at bottom of posts activity
+//TODO GUI 4) Finish converting all layouts to XML
+//TODO GUI 5) Finish revamping each activity's GUI
+//TODO GUI 6) Add landing page with "what's new"
+//TODO GUI 7) Create widget GUI
+//TODO GUI 8) Convert all Activities to fragments
+//TODO GUI 9) Create layouts for tablets
+//TODO GUI 10) Move most functions from menus onto screen for better UX
+//TODO GUI 11) Have post activity save info so no need to reload on orientation switch
+//TODO GUI 12) Have post activity reload itself on page change instead of loading new activity
+
 package what.login;
 
-import java.io.IOException;
-
-import what.gui.Notification;
-import what.gui.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -27,6 +38,10 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import api.forum.Manager;
 import api.soup.MySoup;
+import what.gui.Notification;
+import what.gui.R;
+
+import java.io.IOException;
 
 /**
  * Login screen
@@ -41,6 +56,9 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 	CheckBox checkbox;
 	Notification notification = new Notification();
 
+    SharedPreferences settings;
+	SharedPreferences.Editor settingsEditor;
+
 	/**
 	 * Called when the activity is first created.
 	 * */
@@ -49,6 +67,7 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
 
+        // Set UI component references
 		username = (TextView) this.findViewById(R.id.username);
 		password = (TextView) this.findViewById(R.id.password);
 		checkbox = (CheckBox) this.findViewById(R.id.checkbox);
@@ -56,6 +75,14 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 		login = (Button) this.findViewById(R.id.login);
 		login.setOnClickListener(this);
 
+        // Setup saved settings
+        settings = getSharedPreferences("settings", MODE_PRIVATE);
+        settingsEditor = settings.edit();
+        String savedUsername = settings.getString("username", "");
+        if (!savedUsername.equals("")) {
+            username.setText(savedUsername);
+            checkbox.setChecked(true);
+        }
 	}
 
 	/**
@@ -64,6 +91,14 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 	 * @throws IOException
 	 */
 	private void login() throws IOException {
+        // Save username
+        if (checkbox.isChecked()) {
+            settingsEditor.putString("username", username.getText().toString());
+            settingsEditor.commit();
+        } else {
+            settingsEditor.putString("username", "");
+        }
+
 		ProgressDialog dialog = new ProgressDialog(this);
 
 		Thread loadingThread = new Thread() {
@@ -86,15 +121,12 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-					Intent intent = new Intent(WhatAndroidActivity.this, what.forum.SectionListActivity.class);
-
-					startActivity(intent);
+                    // Start the next activity
+				    loginHandler.sendEmptyMessage(2);
 				} else {
-					notification.displayError("Error", "Login failed, wrong username/password or a timeout, try again", WhatAndroidActivity.this);
+                    // Display the error message
+					loginHandler.sendEmptyMessage(3);
 				}
-
-				// Dismiss the dialog
-				loginHandler.sendEmptyMessage(2);
 			}
 
 			private Handler loginHandler = new Handler() {
@@ -106,14 +138,19 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 						dialog.show();
 					} else if (msg.what == 2) {
 						dialog.dismiss();
-					}
+                        Intent intent = new Intent(WhatAndroidActivity.this, what.forum.SectionListActivity.class);
+                        startActivity(intent);
+					} else if (msg.what == 3) {
+                        dialog.dismiss();
+                        notification.displayError("Error", "Login failed, wrong username/password or a timeout, try again", WhatAndroidActivity.this);
+                    }
 				}
 			};
 		};
 		loadingThread.start();
 	}
 
-	@Override
+    @Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.checkbox:

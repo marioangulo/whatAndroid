@@ -1,30 +1,26 @@
 package what.forum;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
-import what.gui.Notification;
-import what.gui.R;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
+import android.view.*;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.animation.AlphaAnimation;
 import android.webkit.WebView;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import api.forum.Manager;
 import api.soup.MySoup;
+import what.gui.Notification;
+import what.gui.R;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * The view of all posts in a section
@@ -36,8 +32,10 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 	ScrollView scrollView;
 	LinearLayout linearLayout;
 	LinearLayout mainLayout;
-	FrameLayout topLayout;
-	TextView threadTitle;
+	LinearLayout topLayout;
+	TextView threadTitleView;
+    TextView threadPageView;
+    TextView threadAuthorView;
 	TextView quote;
 	ArrayList<TextView> postAuthor = new ArrayList<TextView>();
 	ArrayList<WebView> postBody = new ArrayList<WebView>();
@@ -54,35 +52,50 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 	Intent intent;
 	Notification n = new Notification();
 
+    ProgressDialog progress;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		createLayout();
-		loadPosts();
-		populateView();
-		idGenerator();
-		// addButtons();
+
+        // Display progress dialog while loading
+        progress = new ProgressDialog(this);
+        progress.setIndeterminate(true);
+        progress.setMessage(getString(R.string.loadposts));
+        progress.show();
+
+        Thread loadingThread = new Thread() {
+            @Override
+            public void run() {
+                loadPosts();
+                loadingHandler.sendEmptyMessage(0);
+            }
+
+            Handler loadingHandler = new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    populateView();
+		            idGenerator();
+                    progress.dismiss();
+                }
+            };
+        };
+        loadingThread.start();
 	}
 
 	/**
 	 * Create the base layout
 	 */
 	public void createLayout() {
-		mainLayout = new LinearLayout(this);
-		mainLayout.setOrientation(LinearLayout.VERTICAL);
-
-		scrollView = new ScrollView(this);
-		linearLayout = new LinearLayout(this);
-		linearLayout.setOrientation(LinearLayout.VERTICAL);
-		scrollView.addView(linearLayout);
-
-		topLayout = new FrameLayout(this);
-		threadTitle = new TextView(this);
-		topLayout.addView(threadTitle);
-
-		mainLayout.addView(topLayout);
-		mainLayout.addView(scrollView);
-		this.setContentView(mainLayout);
+        this.setContentView(R.layout.posts);
+        mainLayout = (LinearLayout) findViewById(R.id.mainLayout);
+        topLayout = (LinearLayout) findViewById(R.id.topLayout);
+        scrollView = (ScrollView) findViewById(R.id.postScrollView);
+        linearLayout = (LinearLayout) findViewById(R.id.postLayout);
+        threadTitleView = (TextView) findViewById(R.id.threadTitle);
+        threadPageView = (TextView) findViewById(R.id.threadPage);
+        threadAuthorView = (TextView) findViewById(R.id.threadAuthor);
 	}
 
 	/**
@@ -114,13 +127,26 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 	 * Populate the view with posts
 	 */
 	public void populateView() {
-		threadTitle.setText(threadTitleString + "\t" + "  created by " + threadAuthor + ", page " + threadPage);
-		threadTitle.setTextSize(22);
-		threadTitle.setOnClickListener(this);
-		// arbitrary id that doesn't colide with anyothers
-		threadTitle.setId(7795);
-		for (int i = 0; i < numberOfPosts; i++) {
+        if(threadPage == 1)
+        {
+            // Disable the previous button on the first page
+            Button prevButton = (Button) findViewById(R.id.prevButton);
+            AlphaAnimation alphaDown = new AlphaAnimation(1.0f, 0.3f);
+            alphaDown.setDuration(0);
+            alphaDown.setFillAfter(true);
+            prevButton.startAnimation(alphaDown);
+            prevButton.setEnabled(false);
+            prevButton.setVisibility(View.VISIBLE);
+        }
 
+		//threadTitle.setText(threadTitleString + "\t" + "  created by " + threadAuthor + ", page " + threadPage);
+        // Set title text views
+        threadTitleView.setText(threadTitleString);
+        threadPageView.setText(String.valueOf(threadPage));
+        threadAuthorView.setText(threadAuthor);
+
+        // Create the post views
+		for (int i = 0; i < numberOfPosts; i++) {
 			postAuthor.add(new TextView(this));
 			postAuthor.get(i).setText(user[i]);
 			postAuthor.get(i).setTextSize(17);
@@ -142,30 +168,6 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 	}
 
 	/**
-	 * Adds a row of "buttons" to the end of the table
-	 */
-	@SuppressWarnings("unused")
-	private void addButtons() {
-		// TODO make this more better
-		previous = new TextView(this);
-		previous.setText("Previous");
-		previous.setTextSize(20);
-		previous.setTextColor(Color.RED);
-		previous.setId(1000);
-		previous.setOnClickListener(this);
-
-		next = new TextView(this);
-		next.setText("next");
-		next.setTextSize(20);
-		next.setTextColor(Color.RED);
-		next.setId(1000);
-		next.setOnClickListener(this);
-
-		linearLayout.addView(previous);
-		linearLayout.addView(next);
-	}
-
-	/**
 	 * Generate ids for all elements
 	 */
 	private void idGenerator() {
@@ -179,7 +181,6 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 	 * Opens the user profile in a popup
 	 * 
 	 * @param j
-	 * @param k
 	 *            identifies between which userlist to choose from
 	 * 
 	 */
@@ -193,21 +194,33 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 
 	}
 
-	/**
-	 * Go to the next page
-	 */
-	private void nextPage() {
+    public void prevPage(View v) {
 		intent = new Intent(this, what.forum.PostListActivity.class);
 		Bundle b = new Bundle();
 		b.putString("sectionTitle", sectionTitle);
 		b.putInt("threadPosition", threadPosition);
 		b.putString("threadTitle", threadTitleString);
 		b.putString("threadAuthor", threadAuthor);
-		threadPage = threadPage + 1;
-		b.putInt("threadPage", threadPage);
+		b.putInt("threadPage", (threadPage - 1));
 		intent.putExtras(b);
 		Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition).clearPosts();
-		startActivityForResult(intent, 0);
+		startActivity(intent);
+	}
+
+	/**
+	 * Go to the next page
+	 */
+	public void nextPage(View v) {
+		intent = new Intent(this, what.forum.PostListActivity.class);
+		Bundle b = new Bundle();
+		b.putString("sectionTitle", sectionTitle);
+		b.putInt("threadPosition", threadPosition);
+		b.putString("threadTitle", threadTitleString);
+		b.putString("threadAuthor", threadAuthor);
+		b.putInt("threadPage", (threadPage + 1));
+		intent.putExtras(b);
+		Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition).clearPosts();
+		startActivity(intent);
 	}
 
 	private void reply() {
@@ -220,11 +233,12 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 		startActivityForResult(intent, 0);
 	}
 
+    public void scrollUp(View v) {
+        scrollView.fullScroll(ScrollView.FOCUS_UP);
+    }
+
 	@Override
 	public void onClick(View v) {
-		if (v.getId() == threadTitle.getId()) {
-			scrollView.fullScroll(ScrollView.FOCUS_UP);
-		}
 		for (int i = 0; i < numberOfPosts; i++) {
 			if (v.getId() == postAuthor.get(i).getId()) {
 				openUser(i);
@@ -268,7 +282,7 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 			finish();
 			break;
 		case R.id.nextItem:
-			nextPage();
+			nextPage(null);
 			break;
 		case R.id.backItem:
 			finish();

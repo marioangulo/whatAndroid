@@ -5,3 +5,4 @@ out/
 .idea/
 WhatAndroid.iml
 *.log
+res/.DS_Store

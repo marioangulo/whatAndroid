@@ -1,13 +1,12 @@
 package what.forum;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
-import what.gui.R;
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +18,10 @@ import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 import api.forum.Manager;
+import what.gui.R;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * View of all the threads in a section
@@ -39,16 +42,38 @@ public class ThreadListActivity extends ListActivity implements OnClickListener 
 	String sectionTitle;
 	private Intent intent;
 
+    ProgressDialog progress;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.threads);
 		getBundle();
-		loadThreads();
-		populateTable();
-		addButtons();
-		idGenerator();
 
+        // Display progress dialog while loading
+        progress = new ProgressDialog(this);
+        progress.setIndeterminate(true);
+        progress.setMessage(getString(R.string.loadthreads));
+        progress.show();
+
+        Thread loadingThread = new Thread() {
+            @Override
+            public void run() {
+                loadThreads();
+                loadingHandler.sendEmptyMessage(0);
+            }
+
+            Handler loadingHandler = new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    populateTable();
+                    addButtons();
+                    idGenerator();
+                    progress.dismiss();
+                }
+            };
+        };
+        loadingThread.start();
 	}
 
 	/**

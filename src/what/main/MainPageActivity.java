@@ -1,9 +1,5 @@
 package what.main;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
-import what.gui.ReportSender;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +10,10 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import api.forum.Manager;
+import what.gui.ReportSender;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainPageActivity extends Activity implements OnClickListener {
 	LinearLayout mainLayout, linearLayoutTop, linearLayoutBottom;
@@ -109,7 +109,7 @@ public class MainPageActivity extends Activity implements OnClickListener {
 
 	}
 
-	@Override
+    @Override
 	public void onClick(View v) {
 		for (int i = 0; i < numberOfUnreadSubscribedThreads; i++) {
 			if (v.getId() == threadListTop.get(i).getId()) {

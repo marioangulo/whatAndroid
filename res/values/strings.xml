@@ -16,4 +16,6 @@
     <string name="lounge">The Lounge</string>
     <string name="authkeystring">authkey</string>
     <string name="loggingin">Logging in...</string>
+    <string name="loadthreads">Loading threads...</string>
+    <string name="loadposts">Loading posts...</string>
 </resources>

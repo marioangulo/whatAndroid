@@ -1,8 +1,5 @@
 package what.forum;
 
-import java.util.ArrayList;
-
-import what.gui.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import api.parser.SectionParser;
+import what.gui.R;
+
+import java.util.ArrayList;
 
 /**
  * View of all the Sections
@@ -173,7 +173,7 @@ public class SectionListActivity extends Activity implements OnClickListener {
 
 	/**
 	 * Opens a section corresponding to its position in the list
-	 * 
+	 *
 	 * @param j
 	 *            position in list
 	 */
