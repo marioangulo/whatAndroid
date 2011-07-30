@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
  * @author Tim
  * 
  */
+// <a href="forums.php?action=viewthread&amp;threadid=71&amp;page=95#post3358125"></a>
 public class RegexTools {
 	/**
 	 * Split the url of a thread in a section

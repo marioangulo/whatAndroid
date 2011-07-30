@@ -1,15 +1,14 @@
 package api.parser;
 
-import java.io.IOException;
-import java.util.LinkedList;
-
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
-
 import api.forum.Section;
 import api.soup.MySoup;
 import api.util.RegexTools;
 import api.util.Sextuple;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
+import java.util.LinkedList;
 
 /**
  * Parses threads depending on section Returns a list threads, each thread contains <title, author, author id, last
@@ -47,8 +46,16 @@ public class ThreadsParser {
 			String titlea = (rowsa.get(i).getElementsByTag("a").get(0).text());
 			String titleb = (rowsb.get(i).getElementsByTag("a").get(0).text());
 
+			// get thread url
 			String urla = regex.splitThreadUrl((rowsa.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
 			String urlb = regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+
+			// try to get last read url
+			try {
+				urla = regex.splitLastReadThreadUrl(rowsa.get(i).getElementsByClass("last_read").get(0).getElementsByTag("a").get(0).toString());
+				urlb = regex.splitLastReadThreadUrl(rowsb.get(i).getElementsByClass("last_read").get(0).getElementsByTag("a").get(0).toString());
+			} catch (Exception e) {
+			}
 
 			threadList.add(new Sextuple<String, String, String, String, String, String>(titlea, authora, authorIDa[1], lastPostera, lastPosterIDa[1],
 					urla));

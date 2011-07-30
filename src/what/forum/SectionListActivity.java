@@ -2,6 +2,7 @@ package what.forum;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -58,6 +59,7 @@ public class SectionListActivity extends Activity implements OnClickListener {
 	private void createLayout() {
 		mainLayout = new LinearLayout(this);
 		mainLayout.setOrientation(LinearLayout.VERTICAL);
+		mainLayout.setBackgroundColor(Color.DKGRAY);
 
 		scrollView = new ScrollView(this);
 		linearLayout = new LinearLayout(this);
