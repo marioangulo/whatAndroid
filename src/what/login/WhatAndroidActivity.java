@@ -1,4 +1,5 @@
 //Arbitrary location for the todo list of major things
+//TODO 2) pages for threads and last read
 //TODO 3) serializible subscriptions/new threads
 //TODO 4) GUI recode
 //TODO 5) A mainpage that displays dynamic feed of forum

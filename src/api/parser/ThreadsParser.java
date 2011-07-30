@@ -47,8 +47,16 @@ public class ThreadsParser {
 			String titlea = (rowsa.get(i).getElementsByTag("a").get(0).text());
 			String titleb = (rowsb.get(i).getElementsByTag("a").get(0).text());
 
+			// get thread url
 			String urla = regex.splitThreadUrl((rowsa.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
 			String urlb = regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
+
+			// try to get last read url
+			try {
+				urla = regex.splitLastReadThreadUrl(rowsa.get(i).getElementsByClass("last_read").get(0).getElementsByTag("a").get(0).toString());
+				urlb = regex.splitLastReadThreadUrl(rowsb.get(i).getElementsByClass("last_read").get(0).getElementsByTag("a").get(0).toString());
+			} catch (Exception e) {
+			}
 
 			threadList.add(new Sextuple<String, String, String, String, String, String>(titlea, authora, authorIDa[1], lastPostera, lastPosterIDa[1],
 					urla));

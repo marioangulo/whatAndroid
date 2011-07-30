@@ -70,6 +70,7 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 	public void createLayout() {
 		mainLayout = new LinearLayout(this);
 		mainLayout.setOrientation(LinearLayout.VERTICAL);
+		mainLayout.setBackgroundColor(Color.DKGRAY);
 
 		scrollView = new ScrollView(this);
 		linearLayout = new LinearLayout(this);
