@@ -97,10 +97,27 @@ android:orientation="vertical">
             android:id="@+id/postLayout"
             android:layout_height="fill_parent"
             android:layout_width="fill_parent"
-            android:orientation="vertical"/>
-
+            android:orientation="vertical">
+            </LinearLayout>
         </LinearLayout>
-
     </ScrollView>
+    <RelativeLayout 
+  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content" android:orientation="horizontal"
+    android:layout_width="fill_parent">
 
+    <Button
+
+        android:text="Reply" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true" android:id="@+id/replyButton">
+    </Button>
+
+    <EditText android:text="" 
+        android:layout_height="wrap_content" 
+        android:layout_toLeftOf="@id/replyButton"
+        android:layout_width="fill_parent" android:id="@+id/replyTextField">
+    </EditText>
+</RelativeLayout>
 </LinearLayout>

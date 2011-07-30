@@ -1,5 +1,11 @@
 package what.forum;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
+import what.gui.Notification;
+import what.gui.R;
+import what.gui.ReportSender;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -8,19 +14,24 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.*;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.animation.AlphaAnimation;
 import android.webkit.WebView;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.Toast;
 import api.forum.Manager;
 import api.soup.MySoup;
-import what.gui.Notification;
-import what.gui.R;
-
-import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * The view of all posts in a section
@@ -34,8 +45,10 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 	LinearLayout mainLayout;
 	LinearLayout topLayout;
 	TextView threadTitleView;
-    TextView threadPageView;
-    TextView threadAuthorView;
+	TextView threadPageView;
+	TextView threadAuthorView;
+	EditText replyTextField;
+	Button replyButton;
 	TextView quote;
 	ArrayList<TextView> postAuthor = new ArrayList<TextView>();
 	ArrayList<WebView> postBody = new ArrayList<WebView>();
@@ -52,50 +65,61 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 	Intent intent;
 	Notification n = new Notification();
 
-    ProgressDialog progress;
+	ProgressDialog progress;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		createLayout();
+		@SuppressWarnings("unused")
+		ReportSender sender = new ReportSender(this);
+		// Display progress dialog while loading
+		progress = new ProgressDialog(this);
+		progress.setIndeterminate(true);
+		progress.setMessage(getString(R.string.loadposts));
+		progress.show();
 
-        // Display progress dialog while loading
-        progress = new ProgressDialog(this);
-        progress.setIndeterminate(true);
-        progress.setMessage(getString(R.string.loadposts));
-        progress.show();
+		Thread loadingThread = new Thread() {
+			@Override
+			public void run() {
+				loadPosts();
+				loadingHandler.sendEmptyMessage(0);
+			}
 
-        Thread loadingThread = new Thread() {
-            @Override
-            public void run() {
-                loadPosts();
-                loadingHandler.sendEmptyMessage(0);
-            }
-
-            Handler loadingHandler = new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    populateView();
-		            idGenerator();
-                    progress.dismiss();
-                }
-            };
-        };
-        loadingThread.start();
+			Handler loadingHandler = new Handler() {
+				@Override
+				public void handleMessage(Message msg) {
+					populateView();
+					idGenerator();
+					progress.dismiss();
+				}
+			};
+		};
+		loadingThread.start();
 	}
 
 	/**
 	 * Create the base layout
 	 */
 	public void createLayout() {
-        this.setContentView(R.layout.posts);
-        mainLayout = (LinearLayout) findViewById(R.id.mainLayout);
-        topLayout = (LinearLayout) findViewById(R.id.topLayout);
-        scrollView = (ScrollView) findViewById(R.id.postScrollView);
-        linearLayout = (LinearLayout) findViewById(R.id.postLayout);
-        threadTitleView = (TextView) findViewById(R.id.threadTitle);
-        threadPageView = (TextView) findViewById(R.id.threadPage);
-        threadAuthorView = (TextView) findViewById(R.id.threadAuthor);
+		this.setContentView(R.layout.posts);
+		mainLayout = (LinearLayout) findViewById(R.id.mainLayout);
+		topLayout = (LinearLayout) findViewById(R.id.topLayout);
+		scrollView = (ScrollView) findViewById(R.id.postScrollView);
+		linearLayout = (LinearLayout) findViewById(R.id.postLayout);
+		threadTitleView = (TextView) findViewById(R.id.threadTitle);
+		threadPageView = (TextView) findViewById(R.id.threadPage);
+		threadAuthorView = (TextView) findViewById(R.id.threadAuthor);
+
+		replyTextField = (EditText) findViewById(R.id.replyTextField);
+		replyTextField.setSingleLine(false);
+		replyTextField.setGravity(Gravity.TOP);
+		replyTextField.setGravity(Gravity.LEFT);
+
+		replyButton = (Button) findViewById(R.id.replyButton);
+		replyTextField.setOnTouchListener(this);
+		replyButton.setOnClickListener(this);
+
 	}
 
 	/**
@@ -127,25 +151,24 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 	 * Populate the view with posts
 	 */
 	public void populateView() {
-        if(threadPage == 1)
-        {
-            // Disable the previous button on the first page
-            Button prevButton = (Button) findViewById(R.id.prevButton);
-            AlphaAnimation alphaDown = new AlphaAnimation(1.0f, 0.3f);
-            alphaDown.setDuration(0);
-            alphaDown.setFillAfter(true);
-            prevButton.startAnimation(alphaDown);
-            prevButton.setEnabled(false);
-            prevButton.setVisibility(View.VISIBLE);
-        }
+		if (threadPage == 1) {
+			// Disable the previous button on the first page
+			Button prevButton = (Button) findViewById(R.id.prevButton);
+			AlphaAnimation alphaDown = new AlphaAnimation(1.0f, 0.3f);
+			alphaDown.setDuration(0);
+			alphaDown.setFillAfter(true);
+			prevButton.startAnimation(alphaDown);
+			prevButton.setEnabled(false);
+			prevButton.setVisibility(View.VISIBLE);
+		}
 
-		//threadTitle.setText(threadTitleString + "\t" + "  created by " + threadAuthor + ", page " + threadPage);
-        // Set title text views
-        threadTitleView.setText(threadTitleString);
-        threadPageView.setText(String.valueOf(threadPage));
-        threadAuthorView.setText(threadAuthor);
+		// threadTitle.setText(threadTitleString + "\t" + "  created by " + threadAuthor + ", page " + threadPage);
+		// Set title text views
+		threadTitleView.setText(threadTitleString);
+		threadPageView.setText(String.valueOf(threadPage));
+		threadAuthorView.setText(threadAuthor);
 
-        // Create the post views
+		// Create the post views
 		for (int i = 0; i < numberOfPosts; i++) {
 			postAuthor.add(new TextView(this));
 			postAuthor.get(i).setText(user[i]);
@@ -194,7 +217,7 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 
 	}
 
-    public void prevPage(View v) {
+	public void prevPage(View v) {
 		intent = new Intent(this, what.forum.PostListActivity.class);
 		Bundle b = new Bundle();
 		b.putString("sectionTitle", sectionTitle);
@@ -221,21 +244,39 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 		intent.putExtras(b);
 		Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition).clearPosts();
 		startActivity(intent);
+
+		startActivity(getIntent());
+		finish();
 	}
 
+	/**
+	 * Reply to a thread
+	 */
 	private void reply() {
-		intent = new Intent(this, what.forum.ReplyActivity.class);
-		Bundle b = new Bundle();
-		b.putString("threadUrl", threadUrl);
-		b.putString("quotedText", quotedText.toString());
-		Log.v("qoutedtext", quotedText.toString());
-		intent.putExtras(b);
-		startActivityForResult(intent, 0);
+		MySoup.postReply(threadUrl, replyTextField.getText().toString());
+		n.displayToast("Replied", Notification.LENGTH_SHORT, this);
+
+		// refresh page
+		startActivity(getIntent());
+		finish();
 	}
 
-    public void scrollUp(View v) {
-        scrollView.fullScroll(ScrollView.FOCUS_UP);
-    }
+	/**
+	 * Quote post and set textfield with quoted text
+	 * 
+	 * @param i
+	 *            post to quote
+	 */
+	private void quote(int i) {
+		n.displayToast("Quoted", Toast.LENGTH_SHORT, this);
+		String s = "[quote=" + user[i] + "]" + MySoup.toQuotableString(body[i]) + "[/quote]";
+		quotedText.append(s + "\n");
+		replyTextField.setText(quotedText.toString());
+	}
+
+	public void scrollUp(View v) {
+		scrollView.fullScroll(ScrollView.FOCUS_UP);
+	}
 
 	@Override
 	public void onClick(View v) {
@@ -244,6 +285,9 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 				openUser(i);
 			}
 		}
+		if (v.getId() == replyButton.getId()) {
+			reply();
+		}
 	}
 
 	@Override
@@ -251,11 +295,14 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 
 		for (int i = 0; i < numberOfPosts; i++) {
 			if ((v.getId() == postBody.get(i).getId()) && (event.getAction() == MotionEvent.ACTION_DOWN)) {
-				n.displayToast("Quoted", Toast.LENGTH_SHORT, this);
-				String s = "[quote=" + user[i] + "]" + MySoup.toQuotableString(body[i]) + "[/quote]";
-				quotedText.append(s + "\n");
+				quote(i);
 			}
 		}
+
+		if (v.getId() == replyTextField.getId()) {
+			// TODO expand text field
+		}
+
 		return false;
 	}
 
@@ -286,9 +333,6 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 			break;
 		case R.id.backItem:
 			finish();
-			break;
-		case R.id.replyItem:
-			reply();
 			break;
 		default:
 			return super.onOptionsItemSelected(item);

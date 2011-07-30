@@ -1,5 +1,10 @@
 package what.forum;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
+import what.gui.R;
+import what.gui.ReportSender;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -18,10 +23,6 @@ import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 import api.forum.Manager;
-import what.gui.R;
-
-import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * View of all the threads in a section
@@ -42,38 +43,40 @@ public class ThreadListActivity extends ListActivity implements OnClickListener 
 	String sectionTitle;
 	private Intent intent;
 
-    ProgressDialog progress;
+	ProgressDialog progress;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		@SuppressWarnings("unused")
+		ReportSender sender = new ReportSender(this);
 		setContentView(R.layout.threads);
 		getBundle();
 
-        // Display progress dialog while loading
-        progress = new ProgressDialog(this);
-        progress.setIndeterminate(true);
-        progress.setMessage(getString(R.string.loadthreads));
-        progress.show();
+		// Display progress dialog while loading
+		progress = new ProgressDialog(this);
+		progress.setIndeterminate(true);
+		progress.setMessage(getString(R.string.loadthreads));
+		progress.show();
 
-        Thread loadingThread = new Thread() {
-            @Override
-            public void run() {
-                loadThreads();
-                loadingHandler.sendEmptyMessage(0);
-            }
+		Thread loadingThread = new Thread() {
+			@Override
+			public void run() {
+				loadThreads();
+				loadingHandler.sendEmptyMessage(0);
+			}
 
-            Handler loadingHandler = new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    populateTable();
-                    addButtons();
-                    idGenerator();
-                    progress.dismiss();
-                }
-            };
-        };
-        loadingThread.start();
+			Handler loadingHandler = new Handler() {
+				@Override
+				public void handleMessage(Message msg) {
+					populateTable();
+					addButtons();
+					idGenerator();
+					progress.dismiss();
+				}
+			};
+		};
+		loadingThread.start();
 	}
 
 	/**

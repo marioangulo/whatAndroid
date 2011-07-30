@@ -25,6 +25,11 @@
 
 package what.login;
 
+import java.io.IOException;
+
+import what.gui.Notification;
+import what.gui.R;
+import what.gui.ReportSender;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -39,10 +44,6 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import api.forum.Manager;
 import api.soup.MySoup;
-import what.gui.Notification;
-import what.gui.R;
-
-import java.io.IOException;
 
 /**
  * Login screen
@@ -57,7 +58,7 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 	CheckBox checkbox;
 	Notification notification = new Notification();
 
-    SharedPreferences settings;
+	SharedPreferences settings;
 	SharedPreferences.Editor settingsEditor;
 
 	/**
@@ -66,9 +67,11 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		@SuppressWarnings("unused")
+		ReportSender sender = new ReportSender(this);
 		setContentView(R.layout.login);
 
-        // Set UI component references
+		// Set UI component references
 		username = (TextView) this.findViewById(R.id.username);
 		password = (TextView) this.findViewById(R.id.password);
 		checkbox = (CheckBox) this.findViewById(R.id.checkbox);
@@ -76,14 +79,14 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 		login = (Button) this.findViewById(R.id.login);
 		login.setOnClickListener(this);
 
-        // Setup saved settings
-        settings = getSharedPreferences("settings", MODE_PRIVATE);
-        settingsEditor = settings.edit();
-        String savedUsername = settings.getString("username", "");
-        if (!savedUsername.equals("")) {
-            username.setText(savedUsername);
-            checkbox.setChecked(true);
-        }
+		// Setup saved settings
+		settings = getSharedPreferences("settings", MODE_PRIVATE);
+		settingsEditor = settings.edit();
+		String savedUsername = settings.getString("username", "");
+		if (!savedUsername.equals("")) {
+			username.setText(savedUsername);
+			checkbox.setChecked(true);
+		}
 	}
 
 	/**
@@ -92,14 +95,15 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 	 * @throws IOException
 	 */
 	private void login() throws IOException {
-        // Save username
-        if (checkbox.isChecked()) {
-            settingsEditor.putString("username", username.getText().toString());
-            settingsEditor.commit();
-        } else {
-            settingsEditor.putString("username", "");
-        }
+		// Save username
+		if (checkbox.isChecked()) {
+			settingsEditor.putString("username", username.getText().toString());
+			settingsEditor.commit();
+		} else {
+			settingsEditor.putString("username", "");
+		}
 
+		@SuppressWarnings("unused")
 		ProgressDialog dialog = new ProgressDialog(this);
 
 		Thread loadingThread = new Thread() {
@@ -122,10 +126,10 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-                    // Start the next activity
-				    loginHandler.sendEmptyMessage(2);
+					// Start the next activity
+					loginHandler.sendEmptyMessage(2);
 				} else {
-                    // Display the error message
+					// Display the error message
 					loginHandler.sendEmptyMessage(3);
 				}
 			}
@@ -139,19 +143,19 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 						dialog.show();
 					} else if (msg.what == 2) {
 						dialog.dismiss();
-                        Intent intent = new Intent(WhatAndroidActivity.this, what.forum.SectionListActivity.class);
-                        startActivity(intent);
+						Intent intent = new Intent(WhatAndroidActivity.this, what.forum.SectionListActivity.class);
+						startActivity(intent);
 					} else if (msg.what == 3) {
-                        dialog.dismiss();
-                        notification.displayError("Error", "Login failed, wrong username/password or a timeout, try again", WhatAndroidActivity.this);
-                    }
+						dialog.dismiss();
+						notification.displayError("Error", "Login failed, wrong username/password or a timeout, try again", WhatAndroidActivity.this);
+					}
 				}
 			};
 		};
 		loadingThread.start();
 	}
 
-    @Override
+	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.checkbox:

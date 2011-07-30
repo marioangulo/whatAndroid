@@ -21,7 +21,7 @@
 				<action android:name="android.intent.action.MAIN" />
 			</intent-filter>
 		</activity>
-		<activity android:name="what.forum.PostListActivity" android:theme="@android:style/Theme.NoTitleBar" >
+		<activity android:name="what.forum.PostListActivity" android:theme="@android:style/Theme.NoTitleBar">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 			</intent-filter>
@@ -32,12 +32,7 @@
 				<action android:name="android.intent.action.MAIN" />
 			</intent-filter>
 		</activity>
-		<activity android:name="what.forum.ReplyActivity" android:label="Reply" 
-		android:theme="@android:style/Theme.Dialog">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-			</intent-filter>
-		</activity>
+		
 		<activity android:name="what.main.MainPageActivity" android:theme="@android:style/Theme.NoTitleBar" >
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />

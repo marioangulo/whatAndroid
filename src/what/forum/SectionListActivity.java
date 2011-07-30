@@ -1,5 +1,9 @@
 package what.forum;
 
+import java.util.ArrayList;
+
+import what.gui.R;
+import what.gui.ReportSender;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,9 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import api.parser.SectionParser;
-import what.gui.R;
-
-import java.util.ArrayList;
 
 /**
  * View of all the Sections
@@ -47,6 +48,8 @@ public class SectionListActivity extends Activity implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		@SuppressWarnings("unused")
+		ReportSender sender = new ReportSender(this);
 		createLayout();
 		populateView();
 		idGenerator();
@@ -175,7 +178,7 @@ public class SectionListActivity extends Activity implements OnClickListener {
 
 	/**
 	 * Opens a section corresponding to its position in the list
-	 *
+	 * 
 	 * @param j
 	 *            position in list
 	 */

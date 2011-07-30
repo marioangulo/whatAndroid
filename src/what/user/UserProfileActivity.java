@@ -1,20 +1,25 @@
 package what.user;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import what.gui.ReportSender;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.Gallery;
 import android.widget.Gallery.LayoutParams;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import api.profile.UserProfile;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 /**
  * A popup dialog of a user's profile
@@ -35,6 +40,8 @@ public class UserProfileActivity extends Activity implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		@SuppressWarnings("unused")
+		ReportSender sender = new ReportSender(this);
 		createLayout();
 		loadProfile();
 	}
@@ -120,7 +127,7 @@ public class UserProfileActivity extends Activity implements OnClickListener {
 		}
 	}
 
-    @Override
+	@Override
 	public void onClick(View v) {
 		if (v.getId() == moreButton.getId()) {
 			loadExtraStats();
