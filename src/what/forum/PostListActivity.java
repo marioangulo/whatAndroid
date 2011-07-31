@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.view.animation.AlphaAnimation;
 import android.webkit.WebView;
@@ -39,7 +40,7 @@ import api.soup.MySoup;
  * @author Tim
  */
 
-public class PostListActivity extends Activity implements OnClickListener, OnTouchListener {
+public class PostListActivity extends Activity implements OnClickListener, OnTouchListener, OnLongClickListener {
 	ScrollView scrollView;
 	LinearLayout linearLayout;
 	LinearLayout mainLayout;
@@ -183,7 +184,7 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 
 			postBody.get(i).setPadding(45, 0, 0, 0);
 			postBody.get(i).setClickable(true);
-			postBody.get(i).setOnTouchListener(this);
+			postBody.get(i).setOnLongClickListener(this);
 
 			linearLayout.addView(postAuthor.get(i));
 			linearLayout.addView(postBody.get(i));
@@ -292,17 +293,11 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
-
 		for (int i = 0; i < numberOfPosts; i++) {
 			if ((v.getId() == postBody.get(i).getId()) && (event.getAction() == MotionEvent.ACTION_DOWN)) {
 				quote(i);
 			}
 		}
-
-		if (v.getId() == replyTextField.getId()) {
-			// TODO expand text field
-		}
-
 		return false;
 	}
 
@@ -348,5 +343,15 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 	@Override
 	public void closeOptionsMenu() {
 		super.closeOptionsMenu();
+	}
+
+	@Override
+	public boolean onLongClick(View v) {
+		for (int i = 0; i < numberOfPosts; i++) {
+			if ((v.getId() == postBody.get(i).getId())) {
+				quote(i);
+			}
+		}
+		return false;
 	}
 }

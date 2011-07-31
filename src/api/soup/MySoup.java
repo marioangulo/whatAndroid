@@ -105,7 +105,7 @@ public class MySoup {
 			@SuppressWarnings("unused")
 			Connection.Response res =
 					Jsoup.connect(url).cookie("session", sessionId).data("action", "reply", "auth", authKey, "thread", threadID, "body", reply)
-							.method(Method.POST).followRedirects(false).timeout(10000).execute();
+							.method(Method.POST).followRedirects(false).timeout(30000).execute();
 		} catch (IOException e) {
 		}
 	}
