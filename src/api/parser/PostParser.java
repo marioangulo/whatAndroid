@@ -8,7 +8,6 @@ import org.jsoup.select.Elements;
 
 import api.forum.Threads;
 import api.soup.MySoup;
-import api.subscriptions.SubscribedThreads;
 import api.util.RegexTools;
 import api.util.Triple;
 
@@ -53,7 +52,7 @@ public class PostParser {
 	 * @param page
 	 * @return
 	 */
-	public static LinkedList<Triple<String, String, String>> parsePosts(SubscribedThreads t, int page) {
+	public static LinkedList<Triple<String, String, String>> parsePosts(AbstractThread t, int page) {
 		String url = t.getThreadUrl();
 		url = url.concat("&page=" + page);
 		LinkedList<Triple<String, String, String>> postList = new LinkedList<Triple<String, String, String>>();
