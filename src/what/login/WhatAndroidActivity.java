@@ -10,6 +10,7 @@
 //TODO 10) IRC client
 
 // Gui to-dos
+//TODO GUI 0) jump to last read arrow
 //TODO GUI 1) Make sure all loading processes are threaded
 //TODO GUI 2) Change post quote to tap and hold
 //TODO GUI 3) Add reply box at bottom of posts activity
