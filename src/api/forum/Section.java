@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 import api.parser.ThreadsParser;
-import api.util.Sextuple;
+import api.util.Septuple;
 
 /**
  * A section holds a list of threads
@@ -16,8 +16,8 @@ import api.util.Sextuple;
 public class Section {
 	private String sectionTitle;
 	private String sectionUrl;
-	private LinkedList<Threads> threadsList = new LinkedList<Threads>();
-	private ArrayList<Threads> masterThreadsList = new ArrayList<Threads>();
+	private LinkedList<ThreadInForum> threadsList = new LinkedList<ThreadInForum>();
+	private ArrayList<ThreadInForum> masterThreadsList = new ArrayList<ThreadInForum>();
 	private boolean listening;
 	private boolean newThreads;
 
@@ -41,8 +41,9 @@ public class Section {
 	 * @throws IOException
 	 */
 	public void addThreads(int page) throws IOException {
-		for (Sextuple<String, String, String, String, String, String> t : ThreadsParser.parseThreads(this, page)) {
-			threadsList.add(new Threads(t.getA(), new UserInForum(t.getB(), t.getC()), new UserInForum(t.getD(), t.getE()), t.getF()));
+		for (Septuple<String, String, String, String, String, String, String> t : ThreadsParser.parseThreads(this, page)) {
+			threadsList
+					.add(new ThreadInForum(t.getA(), t.getF(), t.getG(), new UserInForum(t.getB(), t.getC()), new UserInForum(t.getD(), t.getE())));
 		}
 		if (!isListening()) {
 			appendToMasterList();
@@ -151,7 +152,7 @@ public class Section {
 	 * 
 	 * @return
 	 */
-	public LinkedList<Threads> getThreads() {
+	public LinkedList<ThreadInForum> getThreads() {
 		return threadsList;
 	}
 
@@ -213,11 +214,11 @@ public class Section {
 	 * @return LinkedList of new threads
 	 * @throws IOException
 	 */
-	public LinkedList<Threads> getNewThreads() throws IOException {
+	public LinkedList<ThreadInForum> getNewThreads() throws IOException {
 		if (isListening()) {
 			clearThreadsList();
 			addThreads(1);
-			LinkedList<Threads> list = new LinkedList<Threads>(subtract(masterThreadsList, threadsList));
+			LinkedList<ThreadInForum> list = new LinkedList<ThreadInForum>(subtract(masterThreadsList, threadsList));
 			if (!list.isEmpty()) {
 				newThreads = true;
 				appendToMasterList();
@@ -237,7 +238,7 @@ public class Section {
 	 * @return
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private Collection<Threads> subtract(Collection coll1, Collection coll2) {
+	private Collection<ThreadInForum> subtract(Collection coll1, Collection coll2) {
 		Collection result = new ArrayList(coll2);
 		result.removeAll(coll1);
 		return result;

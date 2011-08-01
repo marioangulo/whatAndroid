@@ -13,7 +13,7 @@ import api.util.Triple;
  */
 public class Subscriptions {
 	private String sectionTitle;
-	private LinkedList<SubscribedThreads> threadsList = new LinkedList<SubscribedThreads>();
+	private LinkedList<SubscribedThread> threadsList = new LinkedList<SubscribedThread>();
 
 	/**
 	 * Create a new Subscriptions section
@@ -34,7 +34,7 @@ public class Subscriptions {
 	 */
 	public void addThreads() throws IOException {
 		for (Triple<String, String, String> t : SubscriptionsParser.parseSubscriptions()) {
-			threadsList.add(new SubscribedThreads(t.getA(), t.getB(), t.getA()));
+			threadsList.add(new SubscribedThread(t.getA(), t.getB(), t.getA()));
 		}
 	}
 
@@ -82,7 +82,7 @@ public class Subscriptions {
 	 * 
 	 * @return
 	 */
-	public LinkedList<SubscribedThreads> getThreads() {
+	public LinkedList<SubscribedThread> getThreads() {
 		return threadsList;
 	}
 
@@ -122,7 +122,7 @@ public class Subscriptions {
 	 * 
 	 * @return number of unread
 	 */
-	public int getNumberOfUnreadSubscribedThreads() {
+	public int getNumberOfUnreadSubscribedThread() {
 		return threadsList.size();
 	}
 
@@ -130,13 +130,13 @@ public class Subscriptions {
 	 * Unsubscribe from all threads
 	 */
 	public void unsubscribeAll() {
-		for (SubscribedThreads s : threadsList) {
+		for (SubscribedThread s : threadsList) {
 			s.unsubscribe();
 		}
 	}
 
 	public void markAllAsRead() {
-		for (SubscribedThreads s : threadsList) {
+		for (SubscribedThread s : threadsList) {
 			s.markAsRead();
 		}
 	}

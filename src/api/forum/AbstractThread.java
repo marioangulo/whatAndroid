@@ -7,90 +7,27 @@ import api.parser.PostParser;
 import api.util.Triple;
 
 /**
- * A Thread in the section
+ * An abstract thread class to be used by forum threads and subscribed threads
  * 
  * @author Tim
  * 
  */
-public class Threads {
+public abstract class AbstractThread {
 	private String threadTitle;
-	private UserInForum threadAuthor;
-	private UserInForum threadLastPoster;
 	private String threadUrl;
+	private String threadLastReadUrl;
+	private int threadPage;
+	private boolean isRead = false;
 	private LinkedList<Post> postList = new LinkedList<Post>();
 
-	/**
-	 * Create a new thread
-	 * 
-	 * @param threadTitle
-	 *            title of thread
-	 * @param threadAuthor
-	 *            author
-	 * @param threadLastPoster
-	 *            last poster
-	 * @param threadUrl
-	 *            url of thread
-	 * @throws IOException
-	 */
-	public Threads(String threadTitle, UserInForum threadAuthor, UserInForum threadLastPoster, String threadUrl) throws IOException {
+	public AbstractThread(String threadTitle, String threadUrl, String threadLastReadUrl) throws IOException {
 		this.threadTitle = threadTitle;
-		this.threadAuthor = threadAuthor;
-		this.threadLastPoster = threadLastPoster;
 		this.threadUrl = threadUrl;
-	}
+		this.threadLastReadUrl = threadLastReadUrl;
 
-	/**
-	 * Get the title of the thread
-	 * 
-	 * @return the thread title
-	 */
-	public String getThreadTitle() {
-		return threadTitle;
-	}
-
-	/**
-	 * Get author of the thread
-	 * 
-	 * @return thread author
-	 */
-	public String getThreadAuthor() {
-		return threadAuthor.getUserName();
-	}
-
-	/**
-	 * Get user id of author
-	 * 
-	 * @return
-	 */
-	public String getThreadAuthorID() {
-		return threadAuthor.getUserID();
-	}
-
-	/**
-	 * Get last poster in the thread
-	 * 
-	 * @return last poster
-	 */
-	public String getThreadLastPoster() {
-		return threadLastPoster.getUserName();
-	}
-
-	/**
-	 * Get last poster user id
-	 * 
-	 * @return user id of last poster
-	 */
-	public String getThreadLastPosterID() {
-		return threadLastPoster.getUserID();
-	}
-
-	/**
-	 * Get the url of a thread
-	 * 
-	 * @return thread url
-	 */
-	public String getThreadUrl() {
-		return threadUrl;
+		if (threadLastReadUrl != null) {
+			isRead = true;
+		}
 	}
 
 	/**
@@ -176,4 +113,66 @@ public class Threads {
 	public void clearPosts() {
 		postList.clear();
 	}
+
+	/**
+	 * Refresh the posts in the thread for a specific page
+	 * 
+	 * @throws IOException
+	 */
+	public void refresh(int threadPage) throws IOException {
+		postList.clear();
+		addPosts(threadPage);
+	}
+
+	/**
+	 * @return the threadTitle
+	 */
+	public String getThreadTitle() {
+		return threadTitle;
+	}
+
+	/**
+	 * @return the threadUrl
+	 */
+	public String getThreadUrl() {
+		return threadUrl;
+	}
+
+	/**
+	 * @return the threadLastReadUrl
+	 */
+	public String getThreadLastReadUrl() {
+		return threadLastReadUrl;
+	}
+
+	/**
+	 * @return the threadPage
+	 */
+	public int getThreadPage() {
+		return threadPage;
+	}
+
+	/**
+	 * @param threadPage
+	 *            the threadPage to set
+	 */
+	public void setThreadPage(int threadPage) {
+		this.threadPage = threadPage;
+	}
+
+	/**
+	 * @return the isRead
+	 */
+	public boolean isRead() {
+		return isRead;
+	}
+
+	/**
+	 * @param isRead
+	 *            the isRead to set
+	 */
+	public void setRead(boolean isRead) {
+		this.isRead = isRead;
+	}
+
 }

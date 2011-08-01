@@ -1,14 +1,15 @@
 package api.parser;
 
-import api.forum.Section;
-import api.soup.MySoup;
-import api.util.RegexTools;
-import api.util.Sextuple;
+import java.io.IOException;
+import java.util.LinkedList;
+
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
-import java.util.LinkedList;
+import api.forum.Section;
+import api.soup.MySoup;
+import api.util.RegexTools;
+import api.util.Septuple;
 
 /**
  * Parses threads depending on section Returns a list threads, each thread contains <title, author, author id, last
@@ -19,9 +20,9 @@ import java.util.LinkedList;
 public class ThreadsParser {
 	static RegexTools regex = new RegexTools();
 
-	public static LinkedList<Sextuple<String, String, String, String, String, String>> parseThreads(Section s, int page) throws IOException {
-		LinkedList<Sextuple<String, String, String, String, String, String>> threadList =
-				new LinkedList<Sextuple<String, String, String, String, String, String>>();
+	public static LinkedList<Septuple<String, String, String, String, String, String, String>> parseThreads(Section s, int page) throws IOException {
+		LinkedList<Septuple<String, String, String, String, String, String, String>> threadList =
+				new LinkedList<Septuple<String, String, String, String, String, String, String>>();
 		String sectionId = regex.split(s.getSectionUrl(), "viewforum&forumid=", "");
 		Document doc = MySoup.scrape("http://what.cd/forums.php?page=" + page + "&action=viewforum&forumid=" + sectionId);
 
@@ -51,16 +52,20 @@ public class ThreadsParser {
 			String urlb = regex.splitThreadUrl((rowsb.get(i).getElementsByClass("last_topic").get(0).getElementsByTag("a")).get(0).toString());
 
 			// try to get last read url
+			String lastReada = null;
+			String lastReadb = null;
 			try {
-				urla = regex.splitLastReadThreadUrl(rowsa.get(i).getElementsByClass("last_read").get(0).getElementsByTag("a").get(0).toString());
-				urlb = regex.splitLastReadThreadUrl(rowsb.get(i).getElementsByClass("last_read").get(0).getElementsByTag("a").get(0).toString());
+				lastReada = regex.splitLastReadThreadUrl(rowsa.get(i).getElementsByClass("last_read").get(0).getElementsByTag("a").get(0).toString());
+				lastReadb = regex.splitLastReadThreadUrl(rowsb.get(i).getElementsByClass("last_read").get(0).getElementsByTag("a").get(0).toString());
 			} catch (Exception e) {
+				lastReada = null;
+				lastReadb = null;
 			}
 
-			threadList.add(new Sextuple<String, String, String, String, String, String>(titlea, authora, authorIDa[1], lastPostera, lastPosterIDa[1],
-					urla));
-			threadList.add(new Sextuple<String, String, String, String, String, String>(titleb, authorb, authorIDb[1], lastPosterb, lastPosterIDb[1],
-					urlb));
+			threadList.add(new Septuple<String, String, String, String, String, String, String>(titlea, authora, authorIDa[1], lastPostera,
+					lastPosterIDa[1], urla, lastReada));
+			threadList.add(new Septuple<String, String, String, String, String, String, String>(titleb, authorb, authorIDb[1], lastPosterb,
+					lastPosterIDb[1], urlb, lastReadb));
 		}
 		return threadList;
 	}

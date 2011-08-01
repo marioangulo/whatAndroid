@@ -79,7 +79,7 @@ public class MainPageActivity extends Activity implements OnClickListener {
 		}
 		title = Manager.getSubscriptions().getThreadsLastReadUrlArray();
 		lastreadthreadurl = Manager.getSubscriptions().getThreadsLastReadUrlArray();
-		numberOfUnreadSubscribedThreads = Manager.getSubscriptions().getNumberOfUnreadSubscribedThreads();
+		numberOfUnreadSubscribedThreads = Manager.getSubscriptions().getNumberOfUnreadSubscribedThread();
 	}
 
 	private void populateTopView() {

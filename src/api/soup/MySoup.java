@@ -70,7 +70,7 @@ public class MySoup {
 	public static Document scrape(String page) {
 		Document doc = null;
 		try {
-			doc = Jsoup.connect(page).cookie("session", sessionId).timeout(30000).get();
+			doc = Jsoup.connect(page).cookie("session", sessionId).timeout(60000).get();
 		} catch (IOException e) {
 		}
 		return doc;
@@ -105,7 +105,7 @@ public class MySoup {
 			@SuppressWarnings("unused")
 			Connection.Response res =
 					Jsoup.connect(url).cookie("session", sessionId).data("action", "reply", "auth", authKey, "thread", threadID, "body", reply)
-							.method(Method.POST).followRedirects(false).timeout(30000).execute();
+							.method(Method.POST).followRedirects(false).timeout(60000).execute();
 		} catch (IOException e) {
 		}
 	}
