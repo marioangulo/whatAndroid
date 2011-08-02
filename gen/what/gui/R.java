@@ -45,6 +45,7 @@ public final class R {
         public static final int threadPage=0x7f06000c;
         public static final int threadTitle=0x7f060009;
         public static final int topLayout=0x7f060008;
+        public static final int updateItem=0x7f06001e;
         public static final int username=0x7f060003;
         public static final int welcomeText=0x7f060002;
     }

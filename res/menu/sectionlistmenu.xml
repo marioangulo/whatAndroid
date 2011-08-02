@@ -4,5 +4,6 @@
     <item android:id="@+id/subscriptionsItem" android:title="Subscriptions"></item>
     <item android:id="@+id/musicsearchItem" android:title="Music Search"></item>
     <item android:id="@+id/closeItem" android:title="Close"></item>
+    <item android:id="@+id/updateItem" android:title="Update"></item>
     
 </menu>

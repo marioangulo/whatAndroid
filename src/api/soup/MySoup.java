@@ -76,6 +76,15 @@ public class MySoup {
 		return doc;
 	}
 
+	public static Document getUpdateLink(String page) {
+		Document doc = null;
+		try {
+			doc = Jsoup.connect(page).get();
+		} catch (IOException e) {
+		}
+		return doc;
+	}
+
 	/**
 	 * Method for testing on local copies of pages
 	 * 

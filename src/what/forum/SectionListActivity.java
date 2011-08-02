@@ -211,6 +211,10 @@ public class SectionListActivity extends Activity implements OnClickListener {
 			intent = new Intent(this, what.main.MainPageActivity.class);
 			startActivity(intent);
 			break;
+		case R.id.updateItem:
+			intent = new Intent(this, what.update.UpdateActivity.class);
+			startActivity(intent);
+			break;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
