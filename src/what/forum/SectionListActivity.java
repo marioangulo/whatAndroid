@@ -1,5 +1,9 @@
 package what.forum;
 
+import java.util.ArrayList;
+
+import what.gui.R;
+import what.gui.ReportSender;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,10 +15,6 @@ import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import api.parser.SectionParser;
-import what.gui.R;
-import what.gui.ReportSender;
-
-import java.util.ArrayList;
 
 /**
  * View of all the Sections
@@ -53,105 +53,110 @@ public class SectionListActivity extends Activity implements OnClickListener {
 	 * Create the base layout
 	 */
 	private void createLayout() {
-        setContentView(R.layout.sections);
-        scrollLayout = (LinearLayout) findViewById(R.id.scrollLayout);
+		setContentView(R.layout.sections);
+		scrollLayout = (LinearLayout) findViewById(R.id.scrollLayout);
 	}
 
 	private void populateView() {
-        // Site Section
-        //
-        // Title
-		sectionTitle.add((TextView)getLayoutInflater().inflate(R.layout.forum_section_title, null));
+		// Site Section
+		//
+		// Title
+		sectionTitle.add((TextView) getLayoutInflater().inflate(R.layout.forum_section_title, null));
 		sectionTitle.get(0).setText("Site");
 		scrollLayout.addView(sectionTitle.get(0));
-        // Forums
+		// Forums
 		for (int i = 0; i < site.length; i++) {
-            if (i % 2 == 0)
-			    siteSection.add((TextView)getLayoutInflater().inflate(R.layout.forum_name_even, null));
-            else
-                siteSection.add((TextView)getLayoutInflater().inflate(R.layout.forum_name_odd, null));
+			if ((i % 2) == 0) {
+				siteSection.add((TextView) getLayoutInflater().inflate(R.layout.forum_name_even, null));
+			} else {
+				siteSection.add((TextView) getLayoutInflater().inflate(R.layout.forum_name_odd, null));
+			}
 			siteSection.get(i).setText(site[i]);
 			siteSection.get(i).setOnClickListener(this);
 			scrollLayout.addView(siteSection.get(i));
 		}
-        // Spacer
-        scrollLayout.addView((TextView)getLayoutInflater().inflate(R.layout.forum_section_spacer, null));
+		// Spacer
+		scrollLayout.addView(getLayoutInflater().inflate(R.layout.forum_section_spacer, null));
 
-        // Community Section
-        //
-        // Title
-		sectionTitle.add((TextView)getLayoutInflater().inflate(R.layout.forum_section_title, null));
+		// Community Section
+		//
+		// Title
+		sectionTitle.add((TextView) getLayoutInflater().inflate(R.layout.forum_section_title, null));
 		sectionTitle.get(1).setText("Community");
 		scrollLayout.addView(sectionTitle.get(1));
-        // Forums
+		// Forums
 		for (int i = 0; i < community.length; i++) {
-			if (i % 2 == 0)
-			    communitySection.add((TextView)getLayoutInflater().inflate(R.layout.forum_name_even, null));
-            else
-                communitySection.add((TextView)getLayoutInflater().inflate(R.layout.forum_name_odd, null));
+			if ((i % 2) == 0) {
+				communitySection.add((TextView) getLayoutInflater().inflate(R.layout.forum_name_even, null));
+			} else {
+				communitySection.add((TextView) getLayoutInflater().inflate(R.layout.forum_name_odd, null));
+			}
 			communitySection.get(i).setText(community[i]);
 			communitySection.get(i).setOnClickListener(this);
 			scrollLayout.addView(communitySection.get(i));
 		}
-        // Spacer
-        scrollLayout.addView((TextView)getLayoutInflater().inflate(R.layout.forum_section_spacer, null));
+		// Spacer
+		scrollLayout.addView(getLayoutInflater().inflate(R.layout.forum_section_spacer, null));
 
-        // Music Section
-        //
-        // Title
-		sectionTitle.add((TextView)getLayoutInflater().inflate(R.layout.forum_section_title, null));
+		// Music Section
+		//
+		// Title
+		sectionTitle.add((TextView) getLayoutInflater().inflate(R.layout.forum_section_title, null));
 		sectionTitle.get(2).setText("Music");
 		scrollLayout.addView(sectionTitle.get(2));
-        // Forums
+		// Forums
 		for (int i = 0; i < music.length; i++) {
-			if (i % 2 == 0)
-			    musicSection.add((TextView)getLayoutInflater().inflate(R.layout.forum_name_even, null));
-            else
-                musicSection.add((TextView)getLayoutInflater().inflate(R.layout.forum_name_odd, null));
+			if ((i % 2) == 0) {
+				musicSection.add((TextView) getLayoutInflater().inflate(R.layout.forum_name_even, null));
+			} else {
+				musicSection.add((TextView) getLayoutInflater().inflate(R.layout.forum_name_odd, null));
+			}
 			musicSection.get(i).setText(music[i]);
 			musicSection.get(i).setOnClickListener(this);
 			scrollLayout.addView(musicSection.get(i));
 		}
-        // Spacer
-        scrollLayout.addView((TextView)getLayoutInflater().inflate(R.layout.forum_section_spacer, null));
+		// Spacer
+		scrollLayout.addView(getLayoutInflater().inflate(R.layout.forum_section_spacer, null));
 
-        // Help Section
-        //
-        // Title
-		sectionTitle.add((TextView)getLayoutInflater().inflate(R.layout.forum_section_title, null));
+		// Help Section
+		//
+		// Title
+		sectionTitle.add((TextView) getLayoutInflater().inflate(R.layout.forum_section_title, null));
 		sectionTitle.get(3).setText("Help");
 		scrollLayout.addView(sectionTitle.get(3));
-        // Forums
+		// Forums
 		for (int i = 0; i < help.length; i++) {
-			if (i % 2 == 0)
-			    helpSection.add((TextView)getLayoutInflater().inflate(R.layout.forum_name_even, null));
-            else
-                helpSection.add((TextView)getLayoutInflater().inflate(R.layout.forum_name_odd, null));
+			if ((i % 2) == 0) {
+				helpSection.add((TextView) getLayoutInflater().inflate(R.layout.forum_name_even, null));
+			} else {
+				helpSection.add((TextView) getLayoutInflater().inflate(R.layout.forum_name_odd, null));
+			}
 			helpSection.get(i).setText(help[i]);
 			helpSection.get(i).setOnClickListener(this);
 			scrollLayout.addView(helpSection.get(i));
 		}
-        // Spacer
-        scrollLayout.addView((TextView)getLayoutInflater().inflate(R.layout.forum_section_spacer, null));
+		// Spacer
+		scrollLayout.addView(getLayoutInflater().inflate(R.layout.forum_section_spacer, null));
 
-        // Trash Section
-        //
-        // Title
-		sectionTitle.add((TextView)getLayoutInflater().inflate(R.layout.forum_section_title, null));
+		// Trash Section
+		//
+		// Title
+		sectionTitle.add((TextView) getLayoutInflater().inflate(R.layout.forum_section_title, null));
 		sectionTitle.get(4).setText("Trash");
 		scrollLayout.addView(sectionTitle.get(4));
-        // Forums
+		// Forums
 		for (int i = 0; i < trash.length; i++) {
-            if (i % 2 == 0)
-			    trashSection.add((TextView)getLayoutInflater().inflate(R.layout.forum_name_even, null));
-            else
-                trashSection.add((TextView)getLayoutInflater().inflate(R.layout.forum_name_odd, null));
+			if ((i % 2) == 0) {
+				trashSection.add((TextView) getLayoutInflater().inflate(R.layout.forum_name_even, null));
+			} else {
+				trashSection.add((TextView) getLayoutInflater().inflate(R.layout.forum_name_odd, null));
+			}
 			trashSection.get(i).setText(trash[i]);
 			trashSection.get(i).setOnClickListener(this);
 			scrollLayout.addView(trashSection.get(i));
 		}
-        // Spacer
-        scrollLayout.addView((TextView)getLayoutInflater().inflate(R.layout.forum_section_spacer, null));
+		// Spacer
+		scrollLayout.addView(getLayoutInflater().inflate(R.layout.forum_section_spacer, null));
 	}
 
 	private void idGenerator() {
@@ -213,10 +218,6 @@ public class SectionListActivity extends Activity implements OnClickListener {
 			intent = new Intent(this, what.main.MainPageActivity.class);
 			startActivity(intent);
 			break;
-		case R.id.updateItem:
-			intent = new Intent(this, what.update.Update.class);
-			startActivity(intent);
-			break;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -238,4 +239,5 @@ public class SectionListActivity extends Activity implements OnClickListener {
 		// this.setContentView(topLayout);
 		openSection(v.getId());
 	}
+
 }

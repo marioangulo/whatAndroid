@@ -56,7 +56,6 @@ public final class R {
         public static final int threadTitle=0x7f080009;
         public static final int titleText=0x7f080014;
         public static final int topLayout=0x7f080008;
-        public static final int updateItem=0x7f080020;
         public static final int username=0x7f080003;
         public static final int welcomeText=0x7f080002;
     }
