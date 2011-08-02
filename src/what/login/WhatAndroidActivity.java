@@ -33,6 +33,7 @@ import java.io.IOException;
 import what.gui.Notification;
 import what.gui.R;
 import what.gui.ReportSender;
+import what.update.Update;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -55,6 +56,7 @@ import api.soup.MySoup;
  * 
  */
 public class WhatAndroidActivity extends Activity implements OnClickListener {
+	private String VERSION = "0.4";
 	TextView username;
 	TextView password;
 	Button login;
@@ -70,10 +72,15 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.login);
 		@SuppressWarnings("unused")
 		ReportSender sender = new ReportSender(this);
-		setContentView(R.layout.login);
-
+		try {
+			@SuppressWarnings("unused")
+			Update update = new Update(VERSION);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		// Set UI component references
 		username = (TextView) this.findViewById(R.id.username);
 		password = (TextView) this.findViewById(R.id.password);

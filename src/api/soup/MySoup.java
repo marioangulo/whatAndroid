@@ -76,13 +76,22 @@ public class MySoup {
 		return doc;
 	}
 
-	public static Document getUpdateLink(String page) {
+	public static String getUpdateLink(String page) {
 		Document doc = null;
 		try {
 			doc = Jsoup.connect(page).get();
 		} catch (IOException e) {
 		}
-		return doc;
+		return doc.getElementsByTag("a").toString();
+	}
+
+	public static String getUpdateVersion(String page) {
+		Document doc = null;
+		try {
+			doc = Jsoup.connect(page).get();
+		} catch (IOException e) {
+		}
+		return doc.getElementsByTag("b").toString();
 	}
 
 	/**
