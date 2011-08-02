@@ -20,6 +20,20 @@ public class MySoup {
 	private static String sessionId;
 	private static String authKey;
 	private static RegexTools regex = new RegexTools();
+	private static boolean SSL = false;
+
+	public static void enableSSL() {
+		SSL = true;
+	}
+
+	public static boolean isSSLEnabled() {
+		return SSL;
+	}
+
+	private static String linkToSSL(String link) {
+		link = link.replace("http://", "https://ssl.");
+		return link;
+	}
 
 	/**
 	 * Login to a site
@@ -29,16 +43,21 @@ public class MySoup {
 	 * @param password
 	 */
 	public static void login(String url, String username, String password) {
+		String index = "http://what.cd/index.php";
+		if (isSSLEnabled()) {
+			url = linkToSSL(url);
+			index = linkToSSL(index);
+		}
 		try {
 			// login
 			Connection.Response res =
-					Jsoup.connect(url).data("username", username, "password", password).method(Method.POST).timeout(30000).execute();
+					Jsoup.connect(url).data("username", username, "password", password).method(Method.POST).timeout(60000).execute();
 			// set cookie
 			sessionId = res.cookie("session");
 
 			// get the authkey
 			String s =
-					scrape("http://what.cd/index.php").getElementById("header").getElementById("userinfo").getElementById("userinfo_username")
+					scrape(index).getElementById("header").getElementById("userinfo").getElementById("userinfo_username")
 							.getElementById("nav_logout").getElementsByTag("a").get(0).toString();
 			authKey = regex.splitAuthKey(s);
 
@@ -67,10 +86,13 @@ public class MySoup {
 	 * @param page
 	 * @return Document
 	 */
-	public static Document scrape(String page) {
+	public static Document scrape(String url) {
+		if (isSSLEnabled()) {
+			url = linkToSSL(url);
+		}
 		Document doc = null;
 		try {
-			doc = Jsoup.connect(page).cookie("session", sessionId).timeout(60000).get();
+			doc = Jsoup.connect(url).cookie("session", sessionId).timeout(60000).get();
 		} catch (IOException e) {
 		}
 		return doc;
@@ -79,7 +101,7 @@ public class MySoup {
 	public static String getUpdateLink(String page) {
 		Document doc = null;
 		try {
-			doc = Jsoup.connect(page).get();
+			doc = Jsoup.connect(page).timeout(60000).get();
 		} catch (IOException e) {
 		}
 		return doc.getElementsByTag("b").text();
@@ -88,7 +110,7 @@ public class MySoup {
 	public static String getUpdateVersion(String page) {
 		Document doc = null;
 		try {
-			doc = Jsoup.connect(page).get();
+			doc = Jsoup.connect(page).timeout(60000).get();
 		} catch (IOException e) {
 		}
 		return doc.getElementsByTag("h1").text();
@@ -118,6 +140,9 @@ public class MySoup {
 	 *            body of the reply
 	 */
 	public static void postReply(String url, String reply) {
+		if (isSSLEnabled()) {
+			url = linkToSSL(url);
+		}
 		String threadID = regex.splitThreadID(url);
 		try {
 			@SuppressWarnings("unused")

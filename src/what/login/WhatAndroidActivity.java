@@ -104,7 +104,9 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 	 * Check if update exists by comparing versions
 	 */
 	private void checkForUpdate() {
-		if (!MySoup.getUpdateVersion(SITE).equalsIgnoreCase(VERSION)) {
+		double updateversion = Double.parseDouble(MySoup.getUpdateVersion(SITE));
+		double currentversion = Double.parseDouble(VERSION);
+		if (updateversion > currentversion) {
 			displayAlert("", "Update available, would you like to install it?", this);
 		}
 	}
