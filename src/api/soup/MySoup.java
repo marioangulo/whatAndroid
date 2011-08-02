@@ -82,7 +82,7 @@ public class MySoup {
 			doc = Jsoup.connect(page).get();
 		} catch (IOException e) {
 		}
-		return doc.getElementsByTag("i").toString();
+		return doc.getElementsByTag("b").text();
 	}
 
 	public static String getUpdateVersion(String page) {
@@ -91,7 +91,7 @@ public class MySoup {
 			doc = Jsoup.connect(page).get();
 		} catch (IOException e) {
 		}
-		return doc.getElementsByTag("b").toString();
+		return doc.getElementsByTag("h1").text();
 	}
 
 	/**

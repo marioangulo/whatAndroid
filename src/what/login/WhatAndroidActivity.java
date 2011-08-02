@@ -33,11 +33,14 @@ import java.io.IOException;
 import what.gui.Notification;
 import what.gui.R;
 import what.gui.ReportSender;
-import what.update.Update;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -57,6 +60,7 @@ import api.soup.MySoup;
  */
 public class WhatAndroidActivity extends Activity implements OnClickListener {
 	private String VERSION = "0.4";
+	private String SITE = "http://timmikeladze.github.com/whatAndroid/index.html";
 	TextView username;
 	TextView password;
 	Button login;
@@ -75,12 +79,8 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.login);
 		@SuppressWarnings("unused")
 		ReportSender sender = new ReportSender(this);
-		try {
-			@SuppressWarnings("unused")
-			Update update = new Update(VERSION);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		checkForUpdate();
+
 		// Set UI component references
 		username = (TextView) this.findViewById(R.id.username);
 		password = (TextView) this.findViewById(R.id.password);
@@ -97,6 +97,41 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 			username.setText(savedUsername);
 			checkbox.setChecked(true);
 		}
+
+	}
+
+	/**
+	 * Check if update exists by comparing versions
+	 */
+	private void checkForUpdate() {
+		if (!MySoup.getUpdateVersion(SITE).equalsIgnoreCase(VERSION)) {
+			displayAlert("", "Update available, would you like to install it?", this);
+		}
+	}
+
+	/**
+	 * Open the download link to the update
+	 */
+	private void openUpdate() {
+		String url = MySoup.getUpdateLink(SITE);
+		Intent i = new Intent(Intent.ACTION_VIEW);
+		i.setData(Uri.parse(url));
+		startActivity(i);
+		finish();
+	}
+
+	public void displayAlert(String title, String message, Context context) {
+		new AlertDialog.Builder(context).setTitle(title).setMessage(message).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface arg0, int arg1) {
+				openUpdate();
+			}
+		}).setNegativeButton("No", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface arg0, int arg1) {
+				arg0.dismiss();
+			}
+		}).show();
 	}
 
 	/**
