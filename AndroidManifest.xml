@@ -32,7 +32,7 @@
 				<action android:name="android.intent.action.MAIN" />
 			</intent-filter>
 		</activity>
-		<activity android:name="what.update.UpdateActivity" android:label="Update" 
+		<activity android:name="what.update.Update" android:label="Update"
 		android:theme="@android:style/Theme.Dialog">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />

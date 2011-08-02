@@ -1,23 +1,20 @@
 package what.forum;
 
-import java.util.ArrayList;
-
-import what.gui.R;
-import what.gui.ReportSender;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import api.parser.SectionParser;
+import what.gui.R;
+import what.gui.ReportSender;
+
+import java.util.ArrayList;
 
 /**
  * View of all the Sections
@@ -33,11 +30,8 @@ public class SectionListActivity extends Activity implements OnClickListener {
 	private static String[] help = SectionParser.listToArray(SectionParser.parseHelpSections());
 	private static String[] trash = SectionParser.listToArray(SectionParser.parseTrashSections());
 	private static String[] masterList = SectionParser.listToArray(SectionParser.parseMasterList());
-	TextView forumsView;
-	LinearLayout mainLayout, linearLayout;
-	ScrollView scrollView;
+	LinearLayout scrollLayout;
 	Intent intent;
-	FrameLayout topLayout;
 	ArrayList<TextView> sectionTitle = new ArrayList<TextView>();
 	ArrayList<TextView> siteSection = new ArrayList<TextView>();
 	ArrayList<TextView> communitySection = new ArrayList<TextView>();
@@ -53,103 +47,111 @@ public class SectionListActivity extends Activity implements OnClickListener {
 		createLayout();
 		populateView();
 		idGenerator();
-
 	}
 
 	/**
 	 * Create the base layout
 	 */
 	private void createLayout() {
-		mainLayout = new LinearLayout(this);
-		mainLayout.setOrientation(LinearLayout.VERTICAL);
-		mainLayout.setBackgroundColor(Color.DKGRAY);
-
-		scrollView = new ScrollView(this);
-		linearLayout = new LinearLayout(this);
-		linearLayout.setOrientation(LinearLayout.VERTICAL);
-		scrollView.addView(linearLayout);
-
-		topLayout = new FrameLayout(this);
-		forumsView = new TextView(this);
-		forumsView.setText("Forums");
-		forumsView.setTextSize(22);
-		topLayout.addView(forumsView);
-
-		mainLayout.addView(topLayout);
-		mainLayout.addView(scrollView);
-		this.setContentView(mainLayout);
+        setContentView(R.layout.sections);
+        scrollLayout = (LinearLayout) findViewById(R.id.scrollLayout);
 	}
 
 	private void populateView() {
-		sectionTitle.add(new TextView(this));
+        // Site Section
+        //
+        // Title
+		sectionTitle.add((TextView)getLayoutInflater().inflate(R.layout.forum_section_title, null));
 		sectionTitle.get(0).setText("Site");
-		sectionTitle.get(0).setTextSize(20);
-		linearLayout.addView(sectionTitle.get(0));
-
+		scrollLayout.addView(sectionTitle.get(0));
+        // Forums
 		for (int i = 0; i < site.length; i++) {
-			siteSection.add(new TextView(this));
+            if (i % 2 == 0)
+			    siteSection.add((TextView)getLayoutInflater().inflate(R.layout.forum_name_even, null));
+            else
+                siteSection.add((TextView)getLayoutInflater().inflate(R.layout.forum_name_odd, null));
 			siteSection.get(i).setText(site[i]);
-			siteSection.get(i).setTextSize(16);
-			siteSection.get(i).setPadding(45, 0, 0, 0);
 			siteSection.get(i).setOnClickListener(this);
-			linearLayout.addView(siteSection.get(i));
+			scrollLayout.addView(siteSection.get(i));
 		}
+        // Spacer
+        scrollLayout.addView((TextView)getLayoutInflater().inflate(R.layout.forum_section_spacer, null));
 
-		sectionTitle.add(new TextView(this));
+        // Community Section
+        //
+        // Title
+		sectionTitle.add((TextView)getLayoutInflater().inflate(R.layout.forum_section_title, null));
 		sectionTitle.get(1).setText("Community");
-		sectionTitle.get(1).setTextSize(20);
-		linearLayout.addView(sectionTitle.get(1));
-
+		scrollLayout.addView(sectionTitle.get(1));
+        // Forums
 		for (int i = 0; i < community.length; i++) {
-			communitySection.add(new TextView(this));
+			if (i % 2 == 0)
+			    communitySection.add((TextView)getLayoutInflater().inflate(R.layout.forum_name_even, null));
+            else
+                communitySection.add((TextView)getLayoutInflater().inflate(R.layout.forum_name_odd, null));
 			communitySection.get(i).setText(community[i]);
-			communitySection.get(i).setTextSize(16);
-			communitySection.get(i).setPadding(45, 0, 0, 0);
 			communitySection.get(i).setOnClickListener(this);
-			linearLayout.addView(communitySection.get(i));
+			scrollLayout.addView(communitySection.get(i));
 		}
+        // Spacer
+        scrollLayout.addView((TextView)getLayoutInflater().inflate(R.layout.forum_section_spacer, null));
 
-		sectionTitle.add(new TextView(this));
+        // Music Section
+        //
+        // Title
+		sectionTitle.add((TextView)getLayoutInflater().inflate(R.layout.forum_section_title, null));
 		sectionTitle.get(2).setText("Music");
-		sectionTitle.get(2).setTextSize(20);
-		linearLayout.addView(sectionTitle.get(2));
-
+		scrollLayout.addView(sectionTitle.get(2));
+        // Forums
 		for (int i = 0; i < music.length; i++) {
-			musicSection.add(new TextView(this));
+			if (i % 2 == 0)
+			    musicSection.add((TextView)getLayoutInflater().inflate(R.layout.forum_name_even, null));
+            else
+                musicSection.add((TextView)getLayoutInflater().inflate(R.layout.forum_name_odd, null));
 			musicSection.get(i).setText(music[i]);
-			musicSection.get(i).setTextSize(16);
-			musicSection.get(i).setPadding(45, 0, 0, 0);
 			musicSection.get(i).setOnClickListener(this);
-			linearLayout.addView(musicSection.get(i));
+			scrollLayout.addView(musicSection.get(i));
 		}
+        // Spacer
+        scrollLayout.addView((TextView)getLayoutInflater().inflate(R.layout.forum_section_spacer, null));
 
-		sectionTitle.add(new TextView(this));
+        // Help Section
+        //
+        // Title
+		sectionTitle.add((TextView)getLayoutInflater().inflate(R.layout.forum_section_title, null));
 		sectionTitle.get(3).setText("Help");
-		sectionTitle.get(3).setTextSize(20);
-		linearLayout.addView(sectionTitle.get(3));
-
+		scrollLayout.addView(sectionTitle.get(3));
+        // Forums
 		for (int i = 0; i < help.length; i++) {
-			helpSection.add(new TextView(this));
+			if (i % 2 == 0)
+			    helpSection.add((TextView)getLayoutInflater().inflate(R.layout.forum_name_even, null));
+            else
+                helpSection.add((TextView)getLayoutInflater().inflate(R.layout.forum_name_odd, null));
 			helpSection.get(i).setText(help[i]);
-			helpSection.get(i).setTextSize(16);
-			helpSection.get(i).setPadding(45, 0, 0, 0);
 			helpSection.get(i).setOnClickListener(this);
-			linearLayout.addView(helpSection.get(i));
+			scrollLayout.addView(helpSection.get(i));
 		}
+        // Spacer
+        scrollLayout.addView((TextView)getLayoutInflater().inflate(R.layout.forum_section_spacer, null));
 
-		sectionTitle.add(new TextView(this));
+        // Trash Section
+        //
+        // Title
+		sectionTitle.add((TextView)getLayoutInflater().inflate(R.layout.forum_section_title, null));
 		sectionTitle.get(4).setText("Trash");
-		sectionTitle.get(4).setTextSize(20);
-		linearLayout.addView(sectionTitle.get(4));
-
+		scrollLayout.addView(sectionTitle.get(4));
+        // Forums
 		for (int i = 0; i < trash.length; i++) {
-			trashSection.add(new TextView(this));
+            if (i % 2 == 0)
+			    trashSection.add((TextView)getLayoutInflater().inflate(R.layout.forum_name_even, null));
+            else
+                trashSection.add((TextView)getLayoutInflater().inflate(R.layout.forum_name_odd, null));
 			trashSection.get(i).setText(trash[i]);
-			trashSection.get(i).setTextSize(16);
-			trashSection.get(i).setPadding(45, 0, 0, 0);
 			trashSection.get(i).setOnClickListener(this);
-			linearLayout.addView(trashSection.get(i));
+			scrollLayout.addView(trashSection.get(i));
 		}
+        // Spacer
+        scrollLayout.addView((TextView)getLayoutInflater().inflate(R.layout.forum_section_spacer, null));
 	}
 
 	private void idGenerator() {
@@ -212,7 +214,7 @@ public class SectionListActivity extends Activity implements OnClickListener {
 			startActivity(intent);
 			break;
 		case R.id.updateItem:
-			intent = new Intent(this, what.update.UpdateActivity.class);
+			intent = new Intent(this, what.update.Update.class);
 			startActivity(intent);
 			break;
 		default:
