@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,6 +24,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
+import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -71,6 +73,8 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		// hide keyboard when activity is started
+		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		createLayout();
 		@SuppressWarnings("unused")
 		ReportSender sender = new ReportSender(this);
@@ -328,6 +332,11 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 			break;
 		case R.id.backItem:
 			finish();
+			break;
+		case R.id.reportItem:
+			Intent i = new Intent(Intent.ACTION_VIEW);
+			i.setData(Uri.parse("http://v0lu.me/mantis/bug_report_page.php"));
+			startActivity(i);
 			break;
 		default:
 			return super.onOptionsItemSelected(item);

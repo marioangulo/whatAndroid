@@ -9,6 +9,7 @@ import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -298,6 +299,10 @@ public class ThreadListActivity extends ListActivity implements OnClickListener 
 			// refresh activity
 			startActivity(getIntent());
 			finish();
+		case R.id.reportItem:
+			Intent i = new Intent(Intent.ACTION_VIEW);
+			i.setData(Uri.parse("http://v0lu.me/mantis/bug_report_page.php"));
+			startActivity(i);
 			break;
 		default:
 			return super.onOptionsItemSelected(item);

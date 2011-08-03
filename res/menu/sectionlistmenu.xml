@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
   xmlns:android="http://schemas.android.com/apk/res/android">
+   <item android:title="Report Bug" android:id="@+id/reportItem"></item>  
     <item android:id="@+id/subscriptionsItem" android:title="Subscriptions"></item>
     <item android:id="@+id/musicsearchItem" android:title="Music Search"></item>
     <item android:id="@+id/closeItem" android:title="Close"></item>

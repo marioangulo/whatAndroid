@@ -6,6 +6,7 @@ import what.gui.R;
 import what.gui.ReportSender;
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -217,6 +218,11 @@ public class SectionListActivity extends Activity implements OnClickListener {
 		case R.id.subscriptionsItem:
 			intent = new Intent(this, what.main.MainPageActivity.class);
 			startActivity(intent);
+			break;
+		case R.id.reportItem:
+			Intent i = new Intent(Intent.ACTION_VIEW);
+			i.setData(Uri.parse("http://v0lu.me/mantis/bug_report_page.php"));
+			startActivity(i);
 			break;
 		default:
 			return super.onOptionsItemSelected(item);

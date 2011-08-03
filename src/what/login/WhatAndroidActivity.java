@@ -59,7 +59,7 @@ import api.soup.MySoup;
  * 
  */
 public class WhatAndroidActivity extends Activity implements OnClickListener {
-	private String VERSION = "0.5";
+	private String VERSION = "0.6";
 	private String SITE = "http://timmikeladze.github.com/whatAndroid/index.html";
 	TextView username;
 	TextView password;
