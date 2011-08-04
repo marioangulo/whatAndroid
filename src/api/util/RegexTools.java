@@ -14,6 +14,103 @@ import java.util.regex.Pattern;
  */
 // <a href="forums.php?action=viewthread&amp;threadid=71&amp;page=95#post3358125"></a>
 public class RegexTools {
+
+	public String splitAlbumUrl(String string) {
+		Pattern pattern = Pattern.compile(".*<a href=\"(.*)\" title.*");
+		Matcher matcher = pattern.matcher(string);
+		if (matcher.matches()) {
+			String s = matcher.group(1);
+			s = s.replace("amp;", "");
+			s = "http://what.cd/" + s;
+			return s;
+		}
+		return null;
+	}
+
+	public String splitAlbumId(String string) {
+		Pattern pattern = Pattern.compile(".*id=(.*)\" title.*");
+		Matcher matcher = pattern.matcher(string);
+		if (matcher.matches()) {
+			String s = matcher.group(1);
+			return s;
+		}
+		return null;
+	}
+
+	public String splitArtistId(String string) {
+		Pattern pattern = Pattern.compile(".*id=(.*)\">.*");
+		Matcher matcher = pattern.matcher(string);
+		if (matcher.matches()) {
+			String s = matcher.group(1);
+			return s;
+		}
+		return null;
+	}
+
+	public String splitArtistUrl(String string) {
+		Pattern pattern = Pattern.compile(".*<a href=\"(.*)\">.*");
+		Matcher matcher = pattern.matcher(string);
+		if (matcher.matches()) {
+			String s = matcher.group(1);
+			s = s.replace("amp;", "");
+			s = "http://what.cd/" + s;
+			return s;
+		}
+		return null;
+	}
+
+	/**
+	 * Split the id of the format
+	 * 
+	 * @param string
+	 * @return format id
+	 */
+	public String splitFormatId(String string) {
+		Pattern pattern = Pattern.compile(".*torrentid=(.*)\">.*");
+		Matcher matcher = pattern.matcher(string);
+		if (matcher.matches()) {
+			String s = matcher.group(1);
+			return s;
+		}
+		return null;
+	}
+
+	/**
+	 * Split the url of the format
+	 * 
+	 * @param string
+	 * @return format id
+	 */
+	public String splitFormatUrl(String string) {
+		Pattern pattern = Pattern.compile(".*<a href=\"(.*)\">.*");
+		Matcher matcher = pattern.matcher(string);
+		if (matcher.matches()) {
+			String s = matcher.group(1);
+			s = s.replace("amp;", "");
+			s = "http://what.cd/" + s;
+			return s;
+		}
+		return null;
+	}
+
+	/**
+	 * Split the download link of the format
+	 * 
+	 * @param string
+	 * @return format id
+	 */
+	public String splitFormatDownloadLink(String string) {
+		Pattern pattern = Pattern.compile(".*<a href=\"(.*)\" title.*");
+		Matcher matcher = pattern.matcher(string);
+		if (matcher.matches()) {
+			String s = matcher.group(1);
+			s = s.replace("amp;", "");
+			s = "http://what.cd/" + s;
+			return s;
+		}
+		return null;
+	}
+
 	/**
 	 * Split the url of a thread in a section
 	 * 

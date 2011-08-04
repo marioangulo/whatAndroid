@@ -22,4 +22,35 @@ public class SearchResult {
 		this.album = album;
 		this.formatList = formatList;
 	}
+
+	/**
+	 * @return the artist
+	 */
+	public Artist getArtist() {
+		return artist;
+	}
+
+	/**
+	 * @return the album
+	 */
+	public Album getAlbum() {
+		return album;
+	}
+
+	/**
+	 * @return the formatList
+	 */
+	public LinkedList<Format> getFormatList() {
+		return formatList;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "SearchResult [artist=" + artist + ", album=" + album + ", formatList=" + formatList + "]";
+	}
 }

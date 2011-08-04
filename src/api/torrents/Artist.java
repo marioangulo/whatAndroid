@@ -238,4 +238,17 @@ public class Artist {
 		this.requestList = requestList;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Artist [title=" + title + ", id=" + id + ", url=" + url + ", groups=" + groups + ", torrents=" + torrents
+				+ ", seeders=" + seeders + ", leechers=" + leechers + ", snatches=" + snatches + ", info=" + info
+				+ ", similiarArtistList=" + similiarArtistList + ", tagList=" + tagList + ", albumList=" + albumList
+				+ ", requestList=" + requestList + "]";
+	}
+
 }

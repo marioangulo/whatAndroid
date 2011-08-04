@@ -133,4 +133,16 @@ public class Album {
 	public LinkedList<Format> getFormatList() {
 		return formatList;
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Album [title=" + title + ", artist=" + artist + ", id=" + id + ", url=" + url + ", year=" + year + ", type="
+				+ type + ", info=" + info + ", tagList=" + tagList + ", artistList=" + artistList + ", formatList=" + formatList
+				+ "]";
+	}
 }
