@@ -125,6 +125,28 @@ public abstract class AbstractThread {
 	}
 
 	/**
+	 * Go to the next page
+	 * 
+	 * @throws IOException
+	 */
+	public void nextPage() throws IOException {
+		threadPage++;
+		postList.clear();
+		addPosts(threadPage);
+	}
+
+	/**
+	 * Go to the next page
+	 * 
+	 * @throws IOException
+	 */
+	public void previousPage() throws IOException {
+		threadPage--;
+		postList.clear();
+		addPosts(threadPage);
+	}
+
+	/**
 	 * @return the threadTitle
 	 */
 	public String getThreadTitle() {

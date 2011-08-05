@@ -51,6 +51,10 @@ public class MusicSearch {
 
 	public void nextPage() throws CouldNotLoadException {
 		page++;
-		addSearchResults(searchString, page);
+		try {
+			addSearchResults(searchString, page);
+		} catch (Exception e) {
+			throw new CouldNotLoadException("YOUR SEARCH DID NOT MATCH ANYTHING");
+		}
 	}
 }

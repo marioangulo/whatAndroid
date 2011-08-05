@@ -248,7 +248,7 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 		b.putInt("threadPage", (threadPage + 1));
 		intent.putExtras(b);
 		Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition).clearPosts();
-		startActivity(intent);
+		Manager.getForum().getSectionByName(sectionTitle).getThreads().get(threadPosition).startActivity(intent);
 
 		startActivity(getIntent());
 		finish();
