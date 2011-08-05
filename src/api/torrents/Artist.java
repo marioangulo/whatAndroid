@@ -2,10 +2,13 @@ package api.torrents;
 
 import java.util.LinkedList;
 
+import api.parser.ArtistParser;
+
 public class Artist {
 	String title;
 	String id;
 	String url;
+	String imageUrl;
 	int groups, torrents, seeders, leechers, snatches;
 	String info;
 	LinkedList<Artist> similiarArtistList = new LinkedList<Artist>();
@@ -16,6 +19,7 @@ public class Artist {
 	public Artist(String id, String url) {
 		this.id = id;
 		this.url = url;
+		ArtistParser.init(url);
 	}
 
 	/**
@@ -30,6 +34,7 @@ public class Artist {
 		this.title = title;
 		this.id = id;
 		this.url = url;
+		ArtistParser.init(url);
 	}
 
 	/**
@@ -249,6 +254,21 @@ public class Artist {
 				+ ", seeders=" + seeders + ", leechers=" + leechers + ", snatches=" + snatches + ", info=" + info
 				+ ", similiarArtistList=" + similiarArtistList + ", tagList=" + tagList + ", albumList=" + albumList
 				+ ", requestList=" + requestList + "]";
+	}
+
+	/**
+	 * @return the imageUrl
+	 */
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	/**
+	 * @param imageUrl
+	 *            the imageUrl to set
+	 */
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 }

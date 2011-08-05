@@ -184,7 +184,7 @@ public class PostListActivity extends Activity implements OnClickListener, OnTou
 			postBody.get(i).getSettings().setJavaScriptEnabled(true);
 			postBody.get(i).setBackgroundColor(Color.GRAY);
 
-			postBody.get(i).loadData(body[i], "", "utf-8");
+			postBody.get(i).loadData(body[i], "text/html", "utf-8");
 
 			postBody.get(i).setPadding(45, 0, 0, 0);
 			postBody.get(i).setClickable(true);

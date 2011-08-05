@@ -2,7 +2,7 @@ package api.torrents;
 
 import java.util.LinkedList;
 
-import api.parser.MusicParser;
+import api.parser.MusicSearchParser;
 import api.util.CouldNotLoadException;
 
 /**
@@ -28,14 +28,14 @@ public class MusicSearch {
 	public MusicSearch(String searchString, int page) throws CouldNotLoadException {
 		this.searchString = searchString;
 		this.page = page;
-		MusicParser.init();
+		MusicSearchParser.init();
 		addSearchResults(searchString, page);
 	}
 
 	private void addSearchResults(String searchString, int page) throws CouldNotLoadException {
 		searchResultList.clear();
 		try {
-			searchResultList = MusicParser.parseSearchResult(searchString, page);
+			searchResultList = MusicSearchParser.parseSearchResult(searchString, page);
 		} catch (Exception e) {
 			throw new CouldNotLoadException("YOUR SEARCH DID NOT MATCH ANYTHING");
 		}
@@ -49,7 +49,7 @@ public class MusicSearch {
 		searchResultList.clear();
 	}
 
-	public void nextPage() {
+	public void nextPage() throws CouldNotLoadException {
 		page++;
 		addSearchResults(searchString, page);
 	}

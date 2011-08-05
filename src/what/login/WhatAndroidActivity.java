@@ -79,7 +79,11 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.login);
 		@SuppressWarnings("unused")
 		ReportSender sender = new ReportSender(this);
-		checkForUpdate();
+		try {
+			checkForUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		// Set UI component references
 		username = (TextView) this.findViewById(R.id.username);
@@ -123,17 +127,18 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 	}
 
 	public void displayAlert(String title, String message, Context context) {
-		new AlertDialog.Builder(context).setTitle(title).setMessage(message).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface arg0, int arg1) {
-				openUpdate();
-			}
-		}).setNegativeButton("No", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface arg0, int arg1) {
-				arg0.dismiss();
-			}
-		}).show();
+		new AlertDialog.Builder(context).setTitle(title).setMessage(message)
+				.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+						openUpdate();
+					}
+				}).setNegativeButton("No", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+						arg0.dismiss();
+					}
+				}).show();
 	}
 
 	/**
@@ -194,7 +199,8 @@ public class WhatAndroidActivity extends Activity implements OnClickListener {
 						startActivity(intent);
 					} else if (msg.what == 3) {
 						dialog.dismiss();
-						notification.displayError("Error", "Login failed, wrong username/password or a timeout, try again", WhatAndroidActivity.this);
+						notification.displayError("Error", "Login failed, wrong username/password or a timeout, try again",
+								WhatAndroidActivity.this);
 					}
 				}
 			};
